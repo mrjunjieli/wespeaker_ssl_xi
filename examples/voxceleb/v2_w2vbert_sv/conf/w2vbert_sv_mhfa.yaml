@@ -22,7 +22,7 @@ dataset_args:
     frozen: false
     upstream_args:
       name: config_baseline.json
-      path_or_url: /scratch/project_465002316/junyi/spkreasoner/third_party/w2vbert_sv/convert_w2vbert/w2v-bert-2.0
+      path_or_url: assets/w2v-bert-2.0
   resample_rate: 16000
   cmvn: false
   cmvn_args:

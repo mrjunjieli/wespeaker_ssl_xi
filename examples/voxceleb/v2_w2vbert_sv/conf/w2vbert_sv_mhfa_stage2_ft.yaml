@@ -2,7 +2,7 @@
 ### Ported from wespeaker_hubert v4_pruning
 ### conf/baseline_vox2/mhfa_W2VB_ft_v5.yaml (the recipe that produced the
 ### mhfa_W2VB_ft_v5 checkpoint), with the same two changes as stage-1
-### (w2vbert -> w2vbert_sv key rename, absolute path_or_url).
+### (w2vbert -> w2vbert_sv key rename, assets/ path_or_url).
 ###
 ### Stage handoff (as in the original recipe, run_wavlm_ori.sh stage 8):
 ###   cp <stage1_exp>/models/avg_model.pt <stage2_exp>/models/model_0.pt
@@ -52,7 +52,7 @@ dataset_args:
   w2vbert_sv_args:
     upstream_args:
       name: 'config_baseline.json'
-      path_or_url: /scratch/project_465002316/junyi/spkreasoner/third_party/w2vbert_sv/convert_w2vbert/w2v-bert-2.0
+      path_or_url: assets/w2v-bert-2.0
     frozen: False
     frame_shift: 20
     frame_length: 20

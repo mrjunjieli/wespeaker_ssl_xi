@@ -3,7 +3,8 @@
 ### conf/baseline_vox2/mhfa_W2VB_frozen_intertopk_e15.yaml with two changes:
 ###   - frontend key renamed w2vbert -> w2vbert_sv (upstream 'w2vbert' is the
 ###     LoRA-adapter variant with a different constructor)
-###   - path_or_url made absolute
+###   - path_or_url points at assets/w2v-bert-2.0 (relative to this example
+###     dir, where run.sh is launched from)
 ### Data args (train_data/train_label/noise_data/reverb_data) are passed on
 ### the command line as usual; add --train_lmdb <lmdb_dir> to read raw audio
 ### from an LMDB (keyed by the raw.list "wav" value) instead of the disk.
@@ -45,7 +46,7 @@ dataset_args:
   w2vbert_sv_args:
     upstream_args:
       name: 'config_baseline.json'
-      path_or_url: /scratch/project_465002316/junyi/spkreasoner/third_party/w2vbert_sv/convert_w2vbert/w2v-bert-2.0
+      path_or_url: assets/w2v-bert-2.0
     frozen: True
     frame_shift: 20
     frame_length: 20
