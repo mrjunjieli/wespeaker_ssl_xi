@@ -1,4 +1,5 @@
-# Copyright (c) 2021 Shuai Wang (wsstriving@gmail.com)
+# Copyright (c) 2026 Junjie Li (junjie98.li@connect.polyu.hk)
+#               2021 Shuai Wang (wsstriving@gmail.com)
 #               2021 Zhengyang Chen (chenzhengyang117@gmail.com)
 #               2022 Hongji Wang (jijijiang77@gmail.com)
 #               2023 Bing Han (hanbing97@sjtu.edu.cn)
@@ -34,6 +35,13 @@ def get_projection(conf):
                                       scale=conf['scale'],
                                       margin=0.0,
                                       easy_margin=conf['easy_margin'])
+    elif conf['project_type'] == 'arc_margin_uncertainty':
+        projection = ArcMarginProduct_uncertainty_inter_intra(
+            conf['embed_dim'],
+            conf['num_class'],
+            scale=conf['scale'],
+            margin=0.0,
+            easy_margin=conf['easy_margin'])
     elif conf['project_type'] == 'arc_margin_intertopk_subcenter':
         projection = ArcMarginProduct_intertopk_subcenter(
             conf['embed_dim'],
@@ -244,6 +252,56 @@ class ArcMarginProduct(nn.Module):
                                                       self.out_features,
                                                       self.scale, self.margin,
                                                       self.easy_margin)
+
+
+class ArcMarginProduct_uncertainty_inter_intra(ArcMarginProduct):
+    """ArcMargin with inter/intra-class uncertainty scaling."""
+
+    requires_uncertainty = True
+    uncertainty_weight = 1.0
+
+    def update_uncertainty_weight(self, weight=1.0):
+        self.uncertainty_weight = float(max(0.0, min(1.0, weight)))
+
+    def forward(self, input, covariance, label):
+        cosine = F.linear(F.normalize(input), F.normalize(self.weight))
+        cosine = cosine.clamp(-1.0 + 1.0e-7, 1.0 - 1.0e-7)
+        sine = torch.sqrt((1.0 - cosine.square()).clamp_min(1.0e-7))
+        phi = cosine * self.cos_m - sine * self.sin_m
+        if self.easy_margin:
+            phi = torch.where(cosine > 0, phi, cosine)
+        else:
+            phi = torch.where(cosine > self.th, phi, cosine - self.mmm)
+
+        with torch.no_grad():
+            target_cos = cosine.gather(1, label.view(-1, 1))
+            target_mask = F.one_hot(
+                label, num_classes=cosine.shape[1]).bool()
+            max_non_target = cosine.masked_fill(
+                target_mask, float('-inf')).max(dim=1, keepdim=True).values
+            cosine_gap = target_cos - max_non_target
+            inter = cosine_gap
+            intra = torch.exp(cosine.max(dim=1, keepdim=True).values)
+
+        one_hot = input.new_zeros(cosine.size())
+        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+        output = one_hot * phi + (1.0 - one_hot) * cosine
+
+        epsilon = 1.0e-6
+        gap_offset = -cosine_gap + 0.5
+        covariance_denominator = (
+            covariance + gap_offset + epsilon).clamp_min(epsilon)
+        numerator = input.square().sum(dim=1, keepdim=True)
+        denominator = (
+            input.square() * covariance_denominator).sum(
+                dim=1, keepdim=True).clamp_min(epsilon)
+        uncertainty_scale = torch.sqrt(numerator / denominator)
+        full_uncertainty_multiplier = uncertainty_scale * torch.exp(inter * intra)
+        uncertainty_multiplier = (
+            1.0 + self.uncertainty_weight
+            * (full_uncertainty_multiplier - 1.0))
+        output *= uncertainty_multiplier
+        return output * self.scale
 
 
 class ArcMarginProduct_intertopk_subcenter(nn.Module):

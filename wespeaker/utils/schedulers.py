@@ -1,4 +1,5 @@
-# Copyright (c) 2021 Shuai Wang (wsstriving@gmail.com)
+# Copyright (c) 2026 Junjie Li (junjie98.li@connect.polyu.hk)
+#               2021 Shuai Wang (wsstriving@gmail.com)
 #               2021 Zhengyang Chen (chenzhengyang117@gmail.com)
 #               2022 Hongji Wang (jijijiang77@gmail.com)
 #
@@ -15,6 +16,55 @@
 # limitations under the License.
 
 import math
+
+
+class UncertaintyScheduler:
+    """Curriculum scheduler for uncertainty-aware ArcMargin scaling."""
+
+    def __init__(self,
+                 model,
+                 epoch_iter,
+                 increase_start_epoch=2,
+                 fix_start_epoch=5,
+                 initial_weight=0.0,
+                 final_weight=1.0,
+                 increase_type='linear'):
+        self.model = model
+        self.epoch_iter = epoch_iter
+        self.increase_start_iter = (increase_start_epoch - 1) * epoch_iter
+        self.fix_start_iter = (fix_start_epoch - 1) * epoch_iter
+        self.initial_weight = initial_weight
+        self.final_weight = final_weight
+        self.increase_type = increase_type
+        self.increase_iter = max(1, self.fix_start_iter - self.increase_start_iter)
+        self.current_iter = 0
+        self.update_uncertainty_weight(initial_weight)
+
+    def update_uncertainty_weight(self, weight):
+        projection = self.model.projection
+        if hasattr(projection, 'update_uncertainty_weight'):
+            projection.update_uncertainty_weight(weight)
+
+    def get_weight(self):
+        return self.model.projection.uncertainty_weight
+
+    def _scheduled_weight(self):
+        if self.current_iter < self.increase_start_iter:
+            return self.initial_weight
+        if self.current_iter >= self.fix_start_iter:
+            return self.final_weight
+        progress = ((self.current_iter - self.increase_start_iter)
+                    / self.increase_iter)
+        if self.increase_type == 'exp':
+            progress = 1.0 - math.exp(progress * math.log(1.0e-3))
+        return self.initial_weight + (
+            self.final_weight - self.initial_weight) * progress
+
+    def step(self, current_iter=None):
+        if current_iter is not None:
+            self.current_iter = current_iter
+        self.update_uncertainty_weight(self._scheduled_weight())
+        self.current_iter += 1
 
 
 class MarginScheduler:
@@ -279,6 +329,8 @@ class BaseClass:
         self.current_iter = 0
         self.warm_up_iter = warm_up_epoch * epoch_iter
         self.warm_from_zero = warm_from_zero
+        if frontend_lr_ratio <= 0:
+            raise ValueError("frontend_lr_ratio must be positive")
         self.frontend_lr_ratio = frontend_lr_ratio
         if frontend_modules is None:
             self.frontend_modules = ['frontend']
@@ -292,6 +344,12 @@ class BaseClass:
                 self._param_id_to_name[id(param)] = name
         self._auto_restructure_optimizer()
         self._identify_frontend_param_groups()
+        if self.frontend_lr_ratio != 1.0 and not any(
+                group.get('_is_frontend', False)
+                for group in self.optimizer.param_groups):
+            raise ValueError(
+                "frontend_lr_ratio was requested, but no frontend parameter "
+                "group was found")
 
     def _is_frontend_name(self, param_name):
         return any(
@@ -355,7 +413,20 @@ class BaseClass:
         return 0.0
 
     def get_lr(self):
-        return self.optimizer.param_groups[0]['lr']
+        backend_lr = None
+        frontend_lr = None
+        for param_group in self.optimizer.param_groups:
+            if param_group.get('_is_frontend', False):
+                frontend_lr = param_group['lr']
+            elif backend_lr is None:
+                backend_lr = param_group['lr']
+        return backend_lr if backend_lr is not None else frontend_lr
+
+    def get_frontend_lr(self):
+        for param_group in self.optimizer.param_groups:
+            if param_group.get('_is_frontend', False):
+                return param_group['lr']
+        return None
 
     def set_lr(self):
         current_lr = self.get_current_lr()

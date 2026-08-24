@@ -1,4 +1,5 @@
-# Copyright (c) 2024 Junyi Peng (pengjy@fit.vut.cz)
+# Copyright (c) 2026 Junjie Li (junjie98.li@connect.polyu.hk)
+#               2024 Junyi Peng (pengjy@fit.vut.cz)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -22,6 +23,7 @@ import json
 import torch
 import torch.nn as nn
 import torch.distributed as dist
+from peft import LoraConfig, get_peft_model
 
 from transformers import AutoFeatureExtractor, AutoModel
 from wespeaker.frontend.wav2vecbert.configuration_wav2vec2_bert import Wav2Vec2BertConfig
@@ -70,6 +72,8 @@ class HuggingfaceFrontend_w2vbert(nn.Module):
         frame_shift: int = 20,
         frame_length: int = 20,
         sample_rate: int = 16000,
+        use_lora: bool = False,
+        lora_config_args: Optional[Mapping[str, Any]] = None,
     ):
         """Initializes the HuggingfaceFrontend.
 
@@ -89,6 +93,7 @@ class HuggingfaceFrontend_w2vbert(nn.Module):
         # self.model_config = upstream_args['name'].lower() if upstream_args['name'] is not None else None
         download_dir = upstream_args['path_or_url']
         self.frozen = frozen
+        self.use_lora = use_lora
 
         self.feature_extractor = AutoFeatureExtractor.from_pretrained(
             download_dir,
@@ -96,12 +101,31 @@ class HuggingfaceFrontend_w2vbert(nn.Module):
             )
 
         self._setup_model(download_dir)
+        if self.use_lora:
+            lora_args = dict(lora_config_args or {})
+            lora_args.setdefault('r', 12)
+            lora_args.setdefault('lora_alpha', 24)
+            lora_args.setdefault('target_modules', ['linear_q', 'linear_k'])
+            lora_args.setdefault('lora_dropout', 0.0)
+            lora_args.setdefault('bias', 'none')
+            self.upstream = get_peft_model(
+                self.upstream,
+                LoraConfig(task_type='FEATURE_EXTRACTION', **lora_args))
 
-        # 3. Freeze weights if required.
+        # Freeze the base model while leaving injected LoRA parameters trainable.
         if self.frozen:
-            for param in self.upstream.parameters():
-                param.requires_grad_(False)
+            for name, param in self.upstream.named_parameters():
+                param.requires_grad_('lora_' in name if self.use_lora else False)
             self.upstream.eval()
+            trainable = sum(p.numel() for p in self.upstream.parameters()
+                            if p.requires_grad)
+            if self.use_lora:
+                expected = 24 * 2 * 2 * self.d_model * lora_args['r']
+                if trainable != expected:
+                    raise RuntimeError(
+                        f'Expected {expected} trainable LoRA parameters, '
+                        f'found {trainable}')
+                print(f'Trainable W2V-BERT LoRA parameters: {trainable:,}')
         else:
             for param in self.upstream.parameters():
                 param.requires_grad_(True)
@@ -137,6 +161,16 @@ class HuggingfaceFrontend_w2vbert(nn.Module):
         delattr(self.upstream, 'masked_spec_embed')
 
 
+    def train(self, mode=True):
+        super().train(mode)
+        if self.frozen:
+            self.upstream.eval()
+            if self.use_lora:
+                for name, module in self.upstream.named_modules():
+                    if 'lora_' in name:
+                        module.train(mode)
+        return self
+
     def output_size(self) -> int:
         """Returns the output feature dimension of the model.
 
@@ -170,7 +204,10 @@ class HuggingfaceFrontend_w2vbert(nn.Module):
         # Ensure model is not running on excessively long inputs
         input_tensor = input_wav[:, : self._MAX_INPUT_SAMPLES]
 
-        with torch.no_grad() if self.frozen else contextlib.nullcontext():
+        grad_context = (torch.no_grad()
+                        if self.frozen and not self.use_lora
+                        else contextlib.nullcontext())
+        with grad_context:
             # ssl_hiddens is a tuple of tensors, one for each layer
             out = forward_w2v_bert(self, input_tensor)
 

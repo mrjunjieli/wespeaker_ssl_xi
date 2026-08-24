@@ -1,3 +1,7 @@
+### Modified by Junjie Li (junjie98.li@connect.polyu.hk).
+### Extended from the original WeSpeaker/W2V-BERT recipe with MHFA-LN +
+### U-Cube pooling, Q/K LoRA, and inter/intra uncertainty curriculum training.
+###
 ### Stage-1 training config: frozen W2V-BERT 2.0 frontend + MHFA backend.
 ### Ported from wespeaker_hubert v4_pruning
 ### conf/baseline_vox2/mhfa_W2VB_frozen_intertopk_e15.yaml with two changes:
@@ -5,9 +9,8 @@
 ###     LoRA-adapter variant with a different constructor)
 ###   - path_or_url points at assets/w2v-bert-2.0 (relative to this example
 ###     dir, where run.sh is launched from)
-### Data args (train_data/train_label/noise_data/reverb_data) are passed on
-### the command line as usual; add --train_lmdb <lmdb_dir> to read raw audio
-### from an LMDB (keyed by the raw.list "wav" value) instead of the disk.
+### Training audio is read from shards; MUSAN noise and RIR augmentation are
+### supplied separately as LMDB data by run.sh.
 
 exp_dir: exp/v2_w2vbert_sv/stage1_frozen
 gpus: "[0,1,2,3,4,5,6,7]"
@@ -16,14 +19,14 @@ enable_amp: True # whether enable automatic mixed precision training
 do_lm: False
 
 seed: 716
-num_epochs: 15
-save_epoch_interval: 1 # save model every epoch
+num_epochs: 40
+save_epoch_interval: 5 # save model every epoch
 log_batch_interval: 100 # log every 100 batchs
 
 dataloader_args:
-  batch_size: 128
+  batch_size: 64
   num_workers: 8
-  pin_memory: False
+  pin_memory: True
   prefetch_factor: 8
   drop_last: True
 
@@ -39,7 +42,7 @@ dataset_args:
     min_num_frames: 50
     max_num_frames: 400
   resample_rate: 16000
-  speed_perturb: False
+  speed_perturb: True
   num_frms: 150
   aug_prob: 0.6 # prob to add reverb & noise aug per sample
   frontend: "w2vbert_sv"
@@ -48,6 +51,13 @@ dataset_args:
       name: 'config_baseline.json'
       path_or_url: assets/w2v-bert-2.0
     frozen: True
+    use_lora: True
+    lora_config_args:
+      r: 8
+      lora_alpha: 16
+      target_modules: ["linear_q", "linear_k"]
+      lora_dropout: 0.1
+      bias: "none"
     frame_shift: 20
     frame_length: 20
   cmvn: False
@@ -62,18 +72,22 @@ dataset_args:
     max_f: 8
     prob: 0.6
 
-model: SSL_BACKEND_MHFA_LayerNorm
+model: SSL_BACKEND_MHFA_LN_UCube
 model_init: null
 model_args:
   feat_dim: -1  # overridden by frontend.output_size() (=1024) in train.py
-  head_nb: 64
   embed_dim: 256
   compression_dim: 128
-  feature_grad_mult: 0.0
+  uncertainty_hidden_size: 256
+  uncertainty_num_heads: 8
+  uncertainty_dropout: 0.2
+  train_prior_mean: True
+  train_prior_prec: True
+  feature_grad_mult: 1.0
   nb_layer: 25
 
 projection_args:
-  project_type: "arc_margin_intertopk_subcenter" # add_margin, arc_margin, sphere, softmax, arc_margin_intertopk_subcenter
+  project_type: "arc_margin_uncertainty"
   scale: 32.0
   easy_margin: False
 
@@ -81,10 +95,18 @@ margin_scheduler: MarginScheduler
 margin_update:
   initial_margin: 0.0
   final_margin: 0.2
-  increase_start_epoch: 3
-  fix_start_epoch: 10
+  increase_start_epoch: 10
+  fix_start_epoch: 25
   update_margin: True
-  increase_type: "exp" # exp, linear
+  increase_type: "linear" # exp, linear
+
+uncertainty_scheduler: UncertaintyScheduler
+uncertainty_update:
+  initial_weight: 0.0
+  final_weight: 1.0
+  increase_start_epoch: 2
+  fix_start_epoch: 5
+  increase_type: "linear"
 
 loss: CrossEntropyLoss
 loss_args: {}
@@ -95,7 +117,9 @@ optimizer_args:
 
 scheduler: ExponentialDecrease
 scheduler_args:
-  initial_lr: 1.0e-3
-  final_lr: 5.0e-5
-  warm_up_epoch: 3
+  initial_lr: 1.0e-4
+  final_lr: 1.0e-5
+  warm_up_epoch: 2
   warm_from_zero: True
+  frontend_modules: ["frontend"]
+  frontend_lr_ratio: 0.5  # LoRA lr = 0.5 * backend lr

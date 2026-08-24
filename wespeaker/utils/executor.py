@@ -1,4 +1,5 @@
-# Copyright (c) 2021 Hongji Wang (jijijiang77@gmail.com)
+# Copyright (c) 2026 Junjie Li (junjie98.li@connect.polyu.hk)
+#               2021 Hongji Wang (jijijiang77@gmail.com)
 #               2022 Chengdong Liang (liangchengdong@mail.nwpu.edu.cn)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,7 +22,8 @@ from wespeaker.dataset.dataset_utils import apply_cmvn, spec_aug
 
 
 def run_epoch(dataloader, epoch_iter, model, criterion, optimizer, scheduler,
-              margin_scheduler, epoch, logger, scaler, device, configs):
+              margin_scheduler, uncertainty_scheduler, epoch, logger, scaler,
+              device, configs):
     model.train()
     # By default use average pooling
     loss_meter = tnt.meter.AverageValueMeter()
@@ -32,6 +34,8 @@ def run_epoch(dataloader, epoch_iter, model, criterion, optimizer, scheduler,
         cur_iter = (epoch - 1) * epoch_iter + i
         scheduler.step(cur_iter)
         margin_scheduler.step(cur_iter)
+        if uncertainty_scheduler is not None:
+            uncertainty_scheduler.step(cur_iter)
 
         utts = batch['key']
         targets = batch['label']
@@ -59,7 +63,15 @@ def run_epoch(dataloader, epoch_iter, model, criterion, optimizer, scheduler,
 
             outputs = model(features)  # (embed_a,embed_b) in most cases
             embeds = outputs[-1] if isinstance(outputs, tuple) else outputs
-            outputs = model.module.projection(embeds, targets)
+            if getattr(model.module.projection,
+                       'requires_uncertainty', False):
+                if not isinstance(outputs, tuple) or len(outputs) != 3:
+                    raise ValueError(
+                        "Uncertainty projection requires model outputs "
+                        "(frame_features, variance, embedding)")
+                outputs = model.module.projection(embeds, outputs[1], targets)
+            else:
+                outputs = model.module.projection(embeds, targets)
             if isinstance(outputs, tuple):
                 outputs, loss = outputs
             else:

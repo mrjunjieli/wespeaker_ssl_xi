@@ -6,7 +6,7 @@
 . ./path.sh || exit 1
 
 stage=1        # Start from stage 1 by default
-stop_stage=-1
+stop_stage=
 
 HOST_NODE_ADDR="localhost:29402"  # Keep or adjust as needed
 num_nodes=1

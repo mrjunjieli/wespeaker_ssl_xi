@@ -1,4 +1,5 @@
-# Copyright (c) 2021 Hongji Wang (jijijiang77@gmail.com)
+# Copyright (c) 2026 Junjie Li (junjie98.li@connect.polyu.hk)
+#               2021 Hongji Wang (jijijiang77@gmail.com)
 #               2022 Chengdong Liang (liangchengdong@mail.nwpu.edu.cn)
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,6 +13,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+#
+# Extended by Junjie Li for differential W2V-BERT/LoRA learning rates and
+# uncertainty-curriculum training; the original training flow is preserved.
 
 import os
 import re
@@ -215,6 +219,13 @@ def train(config='conf/config.yaml', **kwargs):
     if rank == 0:
         logger.info("<== Scheduler ==>")
         logger.info("scheduler is: " + configs['scheduler'])
+        frontend_lr = (scheduler.get_frontend_lr()
+                       if hasattr(scheduler, 'get_frontend_lr') else None)
+        if frontend_lr is not None:
+            logger.info(
+                "learning rates: backend=%g, frontend=%g (ratio=%g)",
+                scheduler.get_lr(), frontend_lr,
+                configs['scheduler_args'].get('frontend_lr_ratio', 1.0))
 
     # margin scheduler
     configs['margin_update']['epoch_iter'] = epoch_iter
@@ -222,6 +233,16 @@ def train(config='conf/config.yaml', **kwargs):
         model=model, **configs['margin_update'])
     if rank == 0:
         logger.info("<== MarginScheduler ==>")
+
+    uncertainty_scheduler = None
+    if 'uncertainty_update' in configs:
+        configs['uncertainty_update']['epoch_iter'] = epoch_iter
+        uncertainty_scheduler = getattr(
+            schedulers, configs.get('uncertainty_scheduler',
+                                   'UncertaintyScheduler'))(
+            model=model, **configs['uncertainty_update'])
+        if rank == 0:
+            logger.info("<== UncertaintyScheduler ==>")
 
     # save config.yaml
     if rank == 0:
@@ -250,6 +271,7 @@ def train(config='conf/config.yaml', **kwargs):
                   optimizer,
                   scheduler,
                   margin_scheduler,
+                  uncertainty_scheduler,
                   epoch,
                   logger,
                   scaler,
