@@ -53,6 +53,17 @@ def get_projection(conf):
             mp=conf.get('mp', 0.06),
             k_top=conf.get('k_top', 5),
             do_lm=conf.get('do_lm', False))
+    elif conf['project_type'] == 'arc_margin_intertopk_subcenter_uncertainty':
+        projection = ArcMarginProduct_intertopk_subcenter_uncertainty(
+            conf['embed_dim'],
+            conf['num_class'],
+            scale=conf['scale'],
+            margin=0.0,
+            easy_margin=conf['easy_margin'],
+            K=conf.get('K', 3),
+            mp=conf.get('mp', 0.06),
+            k_top=conf.get('k_top', 5),
+            do_lm=conf.get('do_lm', False))
     elif conf['project_type'] == 'sphere':
         projection = SphereProduct(conf['embed_dim'],
                                    conf['num_class'],
@@ -428,6 +439,66 @@ class ArcMarginProduct_intertopk_subcenter(nn.Module):
             'K={}, mp={}, k_top={}, do_lm={}'.format(
                 self.in_features, self.out_features, self.scale, self.margin,
                 self.easy_margin, self.K, self.mp, self.k_top, self.do_lm)
+
+
+class ArcMarginProduct_intertopk_subcenter_uncertainty(
+        ArcMarginProduct_intertopk_subcenter):
+    """InterTopK/Subcenter ArcMargin with uncertainty scaling."""
+
+    requires_uncertainty = True
+    uncertainty_weight = 1.0
+
+    def update_uncertainty_weight(self, weight=1.0):
+        self.uncertainty_weight = float(max(0.0, min(1.0, weight)))
+
+    def forward(self, input, covariance, label):
+        cosine = F.linear(F.normalize(input), F.normalize(self.weight))
+        cosine = cosine.reshape(-1, self.out_features, self.K).max(dim=2).values
+        cosine = cosine.clamp(-1.0 + 1.0e-7, 1.0 - 1.0e-7)
+        sine = torch.sqrt((1.0 - cosine.square()).clamp_min(1.0e-7))
+        phi = cosine * self.cos_m - sine * self.sin_m
+        phi_mp = cosine * self.cos_mp + sine * self.sin_mp
+
+        if self.easy_margin:
+            phi = torch.where(cosine > 0, phi, cosine)
+        else:
+            phi = torch.where(cosine > self.th, phi, cosine - self.mmm)
+
+        one_hot = input.new_zeros(cosine.size())
+        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+        if self.k_top > 0:
+            _, top_k_index = torch.topk(cosine - 2 * one_hot, self.k_top)
+            top_k_one_hot = input.new_zeros(cosine.size()).scatter_(
+                1, top_k_index, 1)
+            output = (one_hot * phi) + (top_k_one_hot * phi_mp) + (
+                (1.0 - one_hot - top_k_one_hot) * cosine)
+        else:
+            output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
+
+        with torch.no_grad():
+            target_cos = cosine.gather(1, label.view(-1, 1))
+            max_non_target = cosine.masked_fill(
+                one_hot.bool(), float('-inf')).max(dim=1,
+                                                   keepdim=True).values
+            cosine_gap = target_cos - max_non_target
+            inter = cosine_gap
+            intra = torch.exp(cosine.max(dim=1, keepdim=True).values)
+
+        epsilon = 1.0e-6
+        gap_offset = -cosine_gap + 0.5
+        covariance_denominator = (
+            covariance + gap_offset + epsilon).clamp_min(epsilon)
+        numerator = input.square().sum(dim=1, keepdim=True)
+        denominator = (
+            input.square() * covariance_denominator).sum(
+                dim=1, keepdim=True).clamp_min(epsilon)
+        uncertainty_scale = torch.sqrt(numerator / denominator)
+        full_uncertainty_multiplier = uncertainty_scale * torch.exp(inter * intra)
+        uncertainty_multiplier = (
+            1.0 + self.uncertainty_weight
+            * (full_uncertainty_multiplier - 1.0))
+        output *= uncertainty_multiplier
+        return output * self.scale
 
 
 class AddMarginProduct(nn.Module):

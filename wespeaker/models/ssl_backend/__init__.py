@@ -13,3 +13,4 @@
 # limitations under the License.
 
 from .MHFA import *  # noqa
+from .MHFA_LN_UCube_InterTopKSubcenter import *  # noqa
