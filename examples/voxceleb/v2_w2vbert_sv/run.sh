@@ -26,8 +26,8 @@
 
 . ./path.sh || exit 1
 
-stage=1
-stop_stage=1
+stage=2
+stop_stage=2
 
 data=data
 data_type="shard"

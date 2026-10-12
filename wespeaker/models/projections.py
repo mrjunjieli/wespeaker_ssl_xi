@@ -64,6 +64,20 @@ def get_projection(conf):
             mp=conf.get('mp', 0.06),
             k_top=conf.get('k_top', 5),
             do_lm=conf.get('do_lm', False))
+    elif conf['project_type'] == 'arc_margin_intertopk_subcenter_uncertainty_margin':
+        projection = ArcMarginProduct_intertopk_subcenter_uncertainty_margin(
+            conf['embed_dim'],
+            conf['num_class'],
+            scale=conf['scale'],
+            margin=0.0,
+            easy_margin=conf['easy_margin'],
+            K=conf.get('K', 3),
+            mp=conf.get('mp', 0.06),
+            k_top=conf.get('k_top', 5),
+            do_lm=conf.get('do_lm', False),
+            margin_span=conf.get('margin_span', 0.05),
+            margin_clip=conf.get('margin_clip', 2.0),
+            use_log_uncertainty=conf.get('use_log_uncertainty', False))
     elif conf['project_type'] == 'sphere':
         projection = SphereProduct(conf['embed_dim'],
                                    conf['num_class'],
@@ -265,55 +279,6 @@ class ArcMarginProduct(nn.Module):
                                                       self.easy_margin)
 
 
-class ArcMarginProduct_uncertainty_inter_intra(ArcMarginProduct):
-    """ArcMargin with inter/intra-class uncertainty scaling."""
-
-    requires_uncertainty = True
-    uncertainty_weight = 1.0
-
-    def update_uncertainty_weight(self, weight=1.0):
-        self.uncertainty_weight = float(max(0.0, min(1.0, weight)))
-
-    def forward(self, input, covariance, label):
-        cosine = F.linear(F.normalize(input), F.normalize(self.weight))
-        cosine = cosine.clamp(-1.0 + 1.0e-7, 1.0 - 1.0e-7)
-        sine = torch.sqrt((1.0 - cosine.square()).clamp_min(1.0e-7))
-        phi = cosine * self.cos_m - sine * self.sin_m
-        if self.easy_margin:
-            phi = torch.where(cosine > 0, phi, cosine)
-        else:
-            phi = torch.where(cosine > self.th, phi, cosine - self.mmm)
-
-        with torch.no_grad():
-            target_cos = cosine.gather(1, label.view(-1, 1))
-            target_mask = F.one_hot(
-                label, num_classes=cosine.shape[1]).bool()
-            max_non_target = cosine.masked_fill(
-                target_mask, float('-inf')).max(dim=1, keepdim=True).values
-            cosine_gap = target_cos - max_non_target
-            inter = cosine_gap
-            intra = torch.exp(cosine.max(dim=1, keepdim=True).values)
-
-        one_hot = input.new_zeros(cosine.size())
-        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
-        output = one_hot * phi + (1.0 - one_hot) * cosine
-
-        epsilon = 1.0e-6
-        gap_offset = -cosine_gap + 0.5
-        covariance_denominator = (
-            covariance + gap_offset + epsilon).clamp_min(epsilon)
-        numerator = input.square().sum(dim=1, keepdim=True)
-        denominator = (
-            input.square() * covariance_denominator).sum(
-                dim=1, keepdim=True).clamp_min(epsilon)
-        uncertainty_scale = torch.sqrt(numerator / denominator)
-        full_uncertainty_multiplier = uncertainty_scale * torch.exp(inter * intra)
-        uncertainty_multiplier = (
-            1.0 + self.uncertainty_weight
-            * (full_uncertainty_multiplier - 1.0))
-        output *= uncertainty_multiplier
-        return output * self.scale
-
 
 class ArcMarginProduct_intertopk_subcenter(nn.Module):
     r"""Implement of large margin arc distance with intertopk and subcenter:
@@ -485,7 +450,7 @@ class ArcMarginProduct_intertopk_subcenter_uncertainty(
             intra = torch.exp(cosine.max(dim=1, keepdim=True).values)
 
         epsilon = 1.0e-6
-        gap_offset = -cosine_gap + 0.5
+        gap_offset = -cosine_gap + 2.0
         covariance_denominator = (
             covariance + gap_offset + epsilon).clamp_min(epsilon)
         numerator = input.square().sum(dim=1, keepdim=True)
@@ -493,12 +458,153 @@ class ArcMarginProduct_intertopk_subcenter_uncertainty(
             input.square() * covariance_denominator).sum(
                 dim=1, keepdim=True).clamp_min(epsilon)
         uncertainty_scale = torch.sqrt(numerator / denominator)
-        full_uncertainty_multiplier = uncertainty_scale * torch.exp(inter * intra)
-        uncertainty_multiplier = (
-            1.0 + self.uncertainty_weight
-            * (full_uncertainty_multiplier - 1.0))
+        uncertainty_multiplier = uncertainty_scale * torch.exp(inter * intra)
+        # uncertainty_multiplier =  full_uncertainty_multiplier
+        uncertainty_multiplier = uncertainty_multiplier.clamp(min=0.2, max=6)
         output *= uncertainty_multiplier
+
+        m = uncertainty_multiplier.mean().item()
+        print("Uncertainty multiplier stats: mean {:.4f}, min {:.4f}, max {:.4f}, std {:.4f}, scale {:.4f}".format(
+            m,
+            uncertainty_multiplier.min().item(),
+            uncertainty_multiplier.max().item(),
+            uncertainty_multiplier.std(unbiased=False).item(),
+            m * self.scale))
+
+
         return output * self.scale
+
+
+class ArcMarginProduct_intertopk_subcenter_uncertainty_margin(
+        ArcMarginProduct_intertopk_subcenter):
+    """InterTopK/Subcenter ArcMargin with uncertainty-adaptive per-sample margin.
+
+    The target-class margin is no longer a single scalar. Each sample gets
+
+        m_i = margin - margin_span * z_i,
+
+    where z_i in [-1, 1] is the batch-normalized (z-score) embedding
+    uncertainty. Higher uncertainty (low-quality samples) gets a *smaller*
+    margin, lower uncertainty gets a *larger* margin, always centred on the
+    scheduler-provided base margin (e.g. 0.4 during LMFT). The uncertainty path
+    is detached (``torch.no_grad``), so the variance never receives gradient
+    through the margin.
+
+    Normalisation details:
+        u       = mean over dims of the embedding posterior variance [B]
+        z       = (u - mean(u)) / std(u), clipped to [-margin_clip, margin_clip]
+        z_i     = z / margin_clip                       # [-1, 1]
+
+    Using an in-batch z-score (rather than raw variance) keeps the margin
+    deviation bounded and invariant to the absolute variance scale, which
+    drifts during training.
+
+    Args:
+        margin_span: maximum margin deviation (default 0.05 -> margin in
+                     [margin-0.05, margin+0.05]).
+        margin_clip: z-score clipping range in units of std (default 2.0).
+        use_log_uncertainty: apply log to the per-sample variance before
+                     z-scoring (stabilises the heavy-tailed variance).
+    """
+
+    requires_uncertainty = True
+
+    def __init__(self,
+                 in_features,
+                 out_features,
+                 scale=32.0,
+                 margin=0.2,
+                 easy_margin=False,
+                 K=3,
+                 mp=0.06,
+                 k_top=5,
+                 do_lm=False,
+                 margin_span=0.05,
+                 margin_clip=2.0,
+                 use_log_uncertainty=False):
+        super(ArcMarginProduct_intertopk_subcenter_uncertainty_margin,
+              self).__init__(in_features,
+                             out_features,
+                             scale=scale,
+                             margin=margin,
+                             easy_margin=easy_margin,
+                             K=K,
+                             mp=mp,
+                             k_top=k_top,
+                             do_lm=do_lm)
+        self.margin_span = float(margin_span)
+        self.margin_clip = float(margin_clip)
+        self.use_log_uncertainty = bool(use_log_uncertainty)
+
+    def _adaptive_margin(self, covariance):
+        """Build per-sample ArcFace margin constants from uncertainty.
+
+        Returns cos_m, sin_m, th, mmm as [B, 1] tensors (all detached).
+        """
+        # scalar uncertainty per sample = mean posterior variance over dims
+        u = covariance.mean(dim=1)  # [B]
+        with torch.no_grad():
+            if self.use_log_uncertainty:
+                u = torch.log(u.clamp_min(1.0e-6))
+            u_mean = u.mean()
+            u_std = u.std(unbiased=False).clamp_min(1.0e-6)
+            z = ((u - u_mean) / u_std).clamp(-self.margin_clip,
+                                             self.margin_clip)
+            z = z / self.margin_clip  # [-1, 1]
+            span = self.margin_span
+            m_i = (self.margin - span * z).clamp(min=0.0,
+                                                 max=math.pi - 1.0e-3)
+            cos_m = torch.cos(m_i).unsqueeze(-1)   # [B, 1]
+            sin_m = torch.sin(m_i).unsqueeze(-1)
+            th = torch.cos(math.pi - m_i).unsqueeze(-1)
+            mmm = (1.0 + torch.cos(math.pi - m_i)).unsqueeze(-1)
+
+            # expose margin distribution for the training-loop logger
+            # (quantile requires float32; m_i may be fp16 under AMP)
+            m_i_f = m_i.float()
+            q = torch.quantile(
+                m_i_f,
+                torch.tensor([0.1, 0.5, 0.9], device=m_i_f.device))
+            self.last_uncertainty_stats = {
+                'mult_mean': m_i_f.mean().item(),
+                'mult_min': m_i_f.min().item(),
+                'mult_max': m_i_f.max().item(),
+                'mult_std': m_i_f.std(unbiased=False).item(),
+                'mult_p10': q[0].item(),
+                'mult_p50': q[1].item(),
+                'mult_p90': q[2].item(),
+                'eff_scale_mean': m_i_f.mean().item(),
+            }
+        return cos_m, sin_m, th, mmm
+
+    def forward(self, input, covariance, label):
+        cosine = F.linear(F.normalize(input), F.normalize(self.weight))
+        cosine = cosine.reshape(-1, self.out_features, self.K).max(dim=2).values
+        cosine = cosine.clamp(-1.0 + 1.0e-7, 1.0 - 1.0e-7)
+
+        cos_m, sin_m, th, mmm = self._adaptive_margin(covariance)
+
+        sine = torch.sqrt((1.0 - cosine.square()).clamp_min(1.0e-7))
+        phi = cosine * cos_m - sine * sin_m
+        phi_mp = cosine * self.cos_mp + sine * self.sin_mp
+
+        if self.easy_margin:
+            phi = torch.where(cosine > 0, phi, cosine)
+        else:
+            phi = torch.where(cosine > th, phi, cosine - mmm)
+
+        one_hot = input.new_zeros(cosine.size())
+        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+        if self.k_top > 0:
+            _, top_k_index = torch.topk(cosine - 2 * one_hot, self.k_top)
+            top_k_one_hot = input.new_zeros(cosine.size()).scatter_(
+                1, top_k_index, 1)
+            output = (one_hot * phi) + (top_k_one_hot * phi_mp) + (
+                (1.0 - one_hot - top_k_one_hot) * cosine)
+        else:
+            output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
+        output *= self.scale
+        return output
 
 
 class AddMarginProduct(nn.Module):

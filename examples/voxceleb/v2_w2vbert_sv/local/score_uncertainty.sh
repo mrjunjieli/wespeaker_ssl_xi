@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# Copyright (c) 2022 Chengdong Liang (liangchengdong@mail.nwpu.edu.cn)
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#   http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+exp_dir=
+trials="vox1_O_cleaned.kaldi vox1_E_cleaned.kaldi vox1_H_cleaned.kaldi"
+data=data
+WESPEAKER_ROOT=${WESPEAKER_ROOT:-$(cd "$(dirname "${BASH_SOURCE[0]}")/../../../.." && pwd)}
+PYTHON_BIN=${PYTHON_BIN:-python}
+
+stage=-1
+stop_stage=-1
+
+. "$WESPEAKER_ROOT/tools/parse_options.sh"
+
+if [ ${stage} -le 1 ] && [ ${stop_stage} -ge 1 ]; then
+  echo "apply cosine scoring ..."
+  mkdir -p ${exp_dir}/scores_uncertainty
+  trials_dir=${data}/vox1/trials
+  for x in $trials; do
+    echo $x
+    "$PYTHON_BIN" "$WESPEAKER_ROOT/wespeaker/bin/score_uncertainty.py" \
+      --exp_dir ${exp_dir} \
+      --eval_scp_path ${exp_dir}/embeddings/vox1/xvector.scp \
+      --cal_mean True \
+      --cal_mean_dir ${exp_dir}/embeddings/vox2_dev \
+      ${trials_dir}/${x}
+  done
+fi
+
+if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
+  echo "compute metrics (EER/minDCF) ..."
+  scores_dir=${exp_dir}/scores_uncertainty
+  for x in $trials; do
+    "$PYTHON_BIN" "$WESPEAKER_ROOT/wespeaker/bin/compute_metrics.py" \
+        --p_target 0.01 \
+        --c_fa 1 \
+        --c_miss 1 \
+        ${scores_dir}/${x}.score \
+        2>&1 | tee -a ${scores_dir}/vox1_cos_result
+
+    echo "compute DET curve ..."
+    "$PYTHON_BIN" "$WESPEAKER_ROOT/wespeaker/bin/compute_det.py" \
+        ${scores_dir}/${x}.score
+  done
+fi

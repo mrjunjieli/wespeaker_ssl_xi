@@ -1,12 +1,7 @@
-### Modified by Junjie Li (junjie98.li@connect.polyu.hk).
-### No-LoRA Stage-1 experiment with MHFA-LN-U-Cube uncertainty pooling and
-### uncertainty-aware InterTopK/Subcenter ArcMargin.
-###
-### W2V-BERT 2.0 is completely frozen and runs without an autograd graph.
-### Speed perturbation expands 5,994 speakers to 17,982 training classes;
-### K=3 gives three subcenters per expanded class.
+### MHFA Gaussian log-precision posterior experiment.
+### W2V-BERT 2.0 frozen; MHFA logits are used directly as frame log-precision.
 
-exp_dir: exp/v2_w2vbert_sv/stage1_frozen_no_lora_intertopk_subcenter_uncertainty_vox2
+exp_dir: exp/v2_w2vbert_sv/mhfa_gaussian_logprec
 gpus: "[2,3]"
 num_avg: 4
 enable_amp: True
@@ -18,7 +13,7 @@ save_epoch_interval: 5
 log_batch_interval: 100
 
 dataloader_args:
-  batch_size: 64
+  batch_size: 256
   num_workers: 8
   pin_memory: True
   prefetch_factor: 8
@@ -34,7 +29,7 @@ dataset_args:
     min_num_frames: 50
     max_num_frames: 400
   resample_rate: 16000
-  speed_perturb: True
+  speed_perturb: False
   num_frms: 150
   aug_prob: 0.6
   frontend: "w2vbert_sv"
@@ -58,20 +53,15 @@ dataset_args:
     max_f: 8
     prob: 0.6
 
-model: SSL_BACKEND_MHFA_LN_UCube_InterTopKSubcenter
+# model: SSL_BACKEND_MHFA_LN_GaussianLogPrec
+model: SSL_BACKEND_MHFA_LN_GaussianLogPrec_LightAdapter
+# model: SSL_BACKEND_MHFA_LN_JointAttentionUCube
 model_init: null
 model_args:
   feat_dim: -1
   embed_dim: 256
   compression_dim: 128
-  uncertainty_hidden_size: 256
-  # Number of self-attention heads inside the MultiView temporal Transformer.
-  # These heads model temporal context and are merged before precision output.
-  uncertainty_num_heads: 8
-  # Number of independent precision maps and Gaussian posterior pooling heads.
-  # All posterior heads share the same Value representation [B,T,128].
-  uncertainty_pooling_heads: 8
-  uncertainty_dropout: 0.2
+  head_nb: 64
   train_prior_mean: True
   train_prior_prec: True
   feature_grad_mult: 0.0
@@ -81,9 +71,6 @@ projection_args:
   project_type: "arc_margin_intertopk_subcenter_uncertainty"
   scale: 32.0
   easy_margin: False
-  K: 3
-  mp: 0.06
-  k_top: 5
 
 margin_scheduler: MarginScheduler
 margin_update:
@@ -92,15 +79,7 @@ margin_update:
   increase_start_epoch: 6
   fix_start_epoch: 20
   update_margin: True
-  increase_type: "linear"
-
-uncertainty_scheduler: UncertaintyScheduler
-uncertainty_update:
-  initial_weight: 0.0
-  final_weight: 1.0
-  increase_start_epoch: 2
-  fix_start_epoch: 5
-  increase_type: "linear"
+  increase_type: "exp"
 
 loss: CrossEntropyLoss
 loss_args: {}
@@ -111,7 +90,7 @@ optimizer_args:
 
 scheduler: ExponentialDecrease
 scheduler_args:
-  initial_lr: 1.0e-3
+  initial_lr: 7.e-4
   final_lr: 1.0e-5
   warm_up_epoch: 4
   warm_from_zero: True
