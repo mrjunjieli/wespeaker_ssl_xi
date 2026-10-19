@@ -78,6 +78,20 @@ def get_projection(conf):
             margin_span=conf.get('margin_span', 0.05),
             margin_clip=conf.get('margin_clip', 2.0),
             use_log_uncertainty=conf.get('use_log_uncertainty', False))
+    elif conf['project_type'] == 'arc_margin_intertopk_subcenter_gap_margin':
+        projection = ArcMarginProduct_intertopk_subcenter_gap_margin(
+            conf['embed_dim'],
+            conf['num_class'],
+            scale=conf['scale'],
+            margin=0.0,
+            easy_margin=conf['easy_margin'],
+            K=conf.get('K', 3),
+            mp=conf.get('mp', 0.06),
+            k_top=conf.get('k_top', 5),
+            do_lm=conf.get('do_lm', False),
+            margin_span=conf.get('margin_span', 0.05),
+            margin_clip=conf.get('margin_clip', 2.0),
+            gap_momentum=conf.get('gap_momentum', 0.01))
     elif conf['project_type'] == 'sphere':
         projection = SphereProduct(conf['embed_dim'],
                                    conf['num_class'],
@@ -481,11 +495,11 @@ class ArcMarginProduct_intertopk_subcenter_uncertainty_margin(
 
     The target-class margin is no longer a single scalar. Each sample gets
 
-        m_i = margin - margin_span * z_i,
+        m_i = margin + margin_span * z_i,
 
     where z_i in [-1, 1] is the batch-normalized (z-score) embedding
-    uncertainty. Higher uncertainty (low-quality samples) gets a *smaller*
-    margin, lower uncertainty gets a *larger* margin, always centred on the
+    uncertainty. Higher uncertainty (hard samples) gets a *larger* margin,
+    lower uncertainty gets a *smaller* margin, always centred on the
     scheduler-provided base margin (e.g. 0.4 during LMFT). The uncertainty path
     is detached (``torch.no_grad``), so the variance never receives gradient
     through the margin.
@@ -552,7 +566,7 @@ class ArcMarginProduct_intertopk_subcenter_uncertainty_margin(
                                              self.margin_clip)
             z = z / self.margin_clip  # [-1, 1]
             span = self.margin_span
-            m_i = (self.margin - span * z).clamp(min=0.0,
+            m_i = (self.margin + span * z).clamp(min=0.0,
                                                  max=math.pi - 1.0e-3)
             cos_m = torch.cos(m_i).unsqueeze(-1)   # [B, 1]
             sin_m = torch.sin(m_i).unsqueeze(-1)
@@ -595,6 +609,142 @@ class ArcMarginProduct_intertopk_subcenter_uncertainty_margin(
 
         one_hot = input.new_zeros(cosine.size())
         one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+        if self.k_top > 0:
+            _, top_k_index = torch.topk(cosine - 2 * one_hot, self.k_top)
+            top_k_one_hot = input.new_zeros(cosine.size()).scatter_(
+                1, top_k_index, 1)
+            output = (one_hot * phi) + (top_k_one_hot * phi_mp) + (
+                (1.0 - one_hot - top_k_one_hot) * cosine)
+        else:
+            output = (one_hot * phi) + ((1.0 - one_hot) * cosine)
+        output *= self.scale
+        return output
+
+
+class ArcMarginProduct_intertopk_subcenter_gap_margin(
+        ArcMarginProduct_intertopk_subcenter):
+    """InterTopK/Subcenter ArcMargin with target-gap adaptive per-sample margin.
+
+    Uses the class-space target gap (cos(theta_y) - max_non_target_cos) as the
+    difficulty signal, instead of the frame-level uncertainty. A small gap means
+    the sample sits close to the decision boundary (hard), so it gets a *larger*
+    margin — directly aligned with DAM-Softmax.
+
+        m_i = margin - margin_span * z_i,   z_i in [-1, 1]
+
+    where z_i is the gap normalized by an EMA running mean/std (NOT per-batch
+    statistics, which are too noisy for small batches). Normalizing by the EMA
+    keeps the average margin anchored at `margin`, while the gap only modulates
+    the easy/hard ordering, so the mean margin does not drift with the gap
+    distribution. The gap is detached so the margin never produces gradient
+    terms w.r.t. the logits.
+
+    Args:
+        margin_span: maximum margin deviation (default 0.05 -> margin in
+                     [margin-0.05, margin+0.05]).
+        margin_clip: z-score clipping range in units of std (default 2.0).
+        gap_momentum: EMA momentum for the running gap mean/std (default 0.01).
+    """
+
+    def __init__(self,
+                 in_features,
+                 out_features,
+                 scale=32.0,
+                 margin=0.2,
+                 easy_margin=False,
+                 K=3,
+                 mp=0.06,
+                 k_top=5,
+                 do_lm=False,
+                 margin_span=0.05,
+                 margin_clip=2.0,
+                 gap_momentum=0.01):
+        super(ArcMarginProduct_intertopk_subcenter_gap_margin,
+              self).__init__(in_features,
+                             out_features,
+                             scale=scale,
+                             margin=margin,
+                             easy_margin=easy_margin,
+                             K=K,
+                             mp=mp,
+                             k_top=k_top,
+                             do_lm=do_lm)
+        self.margin_span = float(margin_span)
+        self.margin_clip = float(margin_clip)
+        self.gap_momentum = float(gap_momentum)
+        # EMA running stats for the gap (plain attrs, not buffers, so they are
+        # updated independently per rank and never broadcast by DDP)
+        self.gap_mean_ema = None
+        self.gap_std_ema = None
+
+    def forward(self, input, label):
+        cosine = F.linear(F.normalize(input), F.normalize(self.weight))
+        cosine = cosine.reshape(-1, self.out_features, self.K).max(dim=2).values
+        cosine = cosine.clamp(-1.0 + 1.0e-7, 1.0 - 1.0e-7)
+
+        one_hot = input.new_zeros(cosine.size())
+        one_hot.scatter_(1, label.view(-1, 1).long(), 1)
+
+        # ---- difficulty signal: target gap (detached) ----
+        with torch.no_grad():
+            target_cos = cosine.gather(1, label.view(-1, 1)).squeeze(-1)
+            max_non_target = cosine.masked_fill(
+                one_hot.bool(), float('-inf')).max(dim=1).values
+            gap = target_cos - max_non_target  # [B], larger = easier, 0 = boundary
+
+            # EMA running stats (global, not per-batch) to anchor the mean margin
+            b_mean = gap.float().mean().item()
+            b_std = gap.float().std(unbiased=False).item()
+            if self.gap_mean_ema is None:
+                self.gap_mean_ema = b_mean
+                self.gap_std_ema = b_std
+            else:
+                self.gap_mean_ema = (
+                    self.gap_momentum * b_mean
+                    + (1.0 - self.gap_momentum) * self.gap_mean_ema)
+                self.gap_std_ema = (
+                    self.gap_momentum * b_std
+                    + (1.0 - self.gap_momentum) * self.gap_std_ema)
+
+            # normalize by EMA (mean margin anchored at `margin`): gap 小(难)
+            # -> z 负 -> margin 大; gap 大(易) -> z 正 -> margin 小
+            z = ((gap - self.gap_mean_ema) /
+                 max(self.gap_std_ema, 1.0e-2)).clamp(-self.margin_clip,
+                                                       self.margin_clip)
+            z = z / self.margin_clip  # [-1, 1]
+            m_i = (self.margin - self.margin_span * z).clamp(
+                min=0.0, max=math.pi - 1.0e-3)
+            cos_m = torch.cos(m_i).unsqueeze(-1)   # [B, 1]
+            sin_m = torch.sin(m_i).unsqueeze(-1)
+            th = torch.cos(math.pi - m_i).unsqueeze(-1)
+            mmm = (1.0 + torch.cos(math.pi - m_i)).unsqueeze(-1)
+
+            # expose margin distribution for the training-loop logger
+            # (quantile requires float32; m_i may be fp16 under AMP)
+            m_i_f = m_i.float()
+            q = torch.quantile(
+                m_i_f,
+                torch.tensor([0.1, 0.5, 0.9], device=m_i_f.device))
+            self.last_uncertainty_stats = {
+                'mult_mean': m_i_f.mean().item(),
+                'mult_min': m_i_f.min().item(),
+                'mult_max': m_i_f.max().item(),
+                'mult_std': m_i_f.std(unbiased=False).item(),
+                'mult_p10': q[0].item(),
+                'mult_p50': q[1].item(),
+                'mult_p90': q[2].item(),
+                'eff_scale_mean': m_i_f.mean().item(),
+            }
+
+        sine = torch.sqrt((1.0 - cosine.square()).clamp_min(1.0e-7))
+        phi = cosine * cos_m - sine * sin_m
+        phi_mp = cosine * self.cos_mp + sine * self.sin_mp
+
+        if self.easy_margin:
+            phi = torch.where(cosine > 0, phi, cosine)
+        else:
+            phi = torch.where(cosine > th, phi, cosine - mmm)
+
         if self.k_top > 0:
             _, top_k_index = torch.topk(cosine - 2 * one_hot, self.k_top)
             top_k_one_hot = input.new_zeros(cosine.size()).scatter_(

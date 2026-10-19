@@ -1,7 +1,7 @@
 ### Stage-3 large-margin fine-tuning (LMFT) config for the MHFA Gaussian
 ### log-precision recipe. Continues from the stage-2 joint-FT average model.
-### Mirrors the reference recipe's s3 (LMFT): long 5.0s chunks, no augmentation,
-### margin ramped 0.2 -> 0.5 (exp), plain InterTopK+subcenter projection.
+### Mirrors the reference recipe's s3 (LMFT): long 5.0s chunks, with augmentation,
+### margin ramped 0.2 -> 0.4 (exp), plain InterTopK+subcenter projection.
 ### W2V-BERT 2.0 is unfrozen; frontend receives a 0.5x differential lr.
 
 exp_dir: exp/v2_w2vbert_sv/mhfa_gaussian_logprec_stage3_lmft
@@ -34,7 +34,7 @@ dataset_args:
   resample_rate: 16000
   speed_perturb: False
   num_frms: 300          # 5.0s chunks for LMFT
-  aug_prob: 0.2            # no augmentation in LMFT
+  aug_prob: 0.2            # light augmentation in LMFT (prob 0.2)
   frontend: "w2vbert_sv"
   w2vbert_sv_args:
     upstream_args:
@@ -71,12 +71,12 @@ model_args:
   nb_layer: 25
 
 projection_args:
-  project_type: "arc_margin_intertopk_subcenter_uncertainty_margin"
+  project_type: "arc_margin_intertopk_subcenter_gap_margin"
   scale: 32.0
   easy_margin: False
-  margin_span: 0.05
+  margin_span: 0.10
   margin_clip: 2.0
-  use_log_uncertainty: False
+  gap_momentum: 0.01
 
 margin_scheduler: MarginScheduler
 margin_update:

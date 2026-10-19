@@ -3,12 +3,12 @@
 # Three-stage recipe for W2V-BERT 2.0 + MHFA-LN Gaussian log-precision:
 #   stage 1: frozen-frontend backend training           (fixed, unchanged)
 #   stage 2: joint fine-tuning, 3s chunks + stage-1 augmentation, margin 0.2
-#   stage 3: large-margin fine-tuning (LMFT), 5s chunks, no augmentation,
-#            margin 0.2 -> 0.5
+#   stage 3: large-margin fine-tuning (LMFT), 5s chunks, with augmentation,
+#            margin 0.2 -> 0.4
 
 . ./path.sh || exit 1
 
-stage=10
+stage=1
 stop_stage=15
 data=data
 data_type="shard"
@@ -16,7 +16,7 @@ data_type="shard"
 
 exp="exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter"
 # Stage 1: frozen frontend training (fixed, do not change)
-stage1_config=conf/mhfa_gaussian_logprec.yaml
+stage1_config=conf/mhfa_gaussian_logprec_stage1.yaml
 stage1_exp="$exp"_stage1
 stage1_eval_exp=${stage1_exp}/eval
 stage1_num_avg=4
@@ -27,10 +27,11 @@ stage2_exp="$exp"_stage2_joint
 stage2_eval_exp=${stage2_exp}/eval
 stage2_num_avg=1
 
-# Stage 3: large-margin fine-tuning (5s chunks, no augmentation, margin 0.2->0.4)
-#   uncertainty-adaptive per-sample margin (uncertainty is detached)
+# Stage 3: large-margin fine-tuning (5s chunks, with augmentation, margin 0.2->0.4)
+#   target-gap adaptive per-sample margin (gap is detached)
+#   direction: smaller gap (harder) -> larger margin (margin = base + span*z)
 stage3_config=conf/mhfa_gaussian_logprec_stage3_lmft.yaml
-stage3_exp="$exp"_stage3_lmft_uncert_margin
+stage3_exp="$exp"_stage3_lmft_gap_margin_0.4
 stage3_eval_exp=${stage3_exp}/eval
 stage3_num_avg=1
 
@@ -166,7 +167,7 @@ if [ ${stage} -le 13 ] && [ ${stop_stage} -ge 13 ]; then
   cp ${stage3_exp}/config.yaml ${stage3_eval_exp}/config.yaml
   local/extract_vox_uncertainty.sh \
     --exp_dir ${stage3_eval_exp} --model_path ${stage3_exp}/models/avg_model.pt \
-    --nj 8 --gpus "$gpus" --data_type ${data_type} --data ${data}
+    --nj 16 --gpus "$gpus" --data_type ${data_type} --data ${data}
 fi
 
 if [ ${stage} -le 14 ] && [ ${stop_stage} -ge 14 ]; then

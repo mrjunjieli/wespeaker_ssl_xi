@@ -18,4 +18,5 @@ from .MHFA_LN_JointAttentionUCube import *  # noqa
 from .MHFA_LN_Gaussian import *  # noqa
 from .MHFA_LN_Gaussian_Adapter import *  # noqa
 from .MHFA_LN_Gaussian_LightAdapter import *  # noqa
+from .MHFA_LN_Gaussian_WeightedSum import *  # noqa
 from .MHFA_LN_FrameVariance import *  # noqa

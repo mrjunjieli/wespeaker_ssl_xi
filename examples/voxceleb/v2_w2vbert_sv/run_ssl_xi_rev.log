@@ -1,0 +1,1452 @@
+Stage 10: copy stage-2 avg model as stage-3 init ...
+Stage 11: large-margin fine-tuning (LMFT) from stage-2 checkpoint ...
+
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+/home/junjie/.local/lib/python3.13/site-packages/s3prl/upstream/byol_s/byol_a/common.py:20: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. This deprecation is part of a large refactoring effort to transition TorchAudio into a maintenance phase. The decoding and encoding capabilities of PyTorch for both audio and video are being consolidated into TorchCodec. Please see https://github.com/pytorch/audio/issues/3902 for more information. It will be removed from the 2.9 release. 
+  torchaudio.set_audio_backend("sox_io")
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_internal/module_utils.py:71: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  return func(*args, **kwargs)
+/home/junjie/.local/lib/python3.13/site-packages/s3prl/upstream/byol_s/byol_a/common.py:20: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. This deprecation is part of a large refactoring effort to transition TorchAudio into a maintenance phase. The decoding and encoding capabilities of PyTorch for both audio and video are being consolidated into TorchCodec. Please see https://github.com/pytorch/audio/issues/3902 for more information. It will be removed from the 2.9 release. 
+  torchaudio.set_audio_backend("sox_io")
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_internal/module_utils.py:71: UserWarning: torchaudio._backend.set_audio_backend has been deprecated. With dispatcher enabled, this function is no-op. You can remove the function call.
+  return func(*args, **kwargs)
+ESPnet is not installed, cannot use espnet_hubert upstream
+ESPnet is not installed, cannot use espnet_hubert upstream
+[warning] exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev/models already exists !!!
+[ INFO : 2026-10-12 23:03:54,259 ] - training on multiple gpus, this gpu 2
+[ INFO : 2026-10-12 23:03:54,259 ] - training on multiple gpus, this gpu 3
+[ INFO : 2026-10-12 23:03:54,259 ] - exp_dir is: exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev
+[ INFO : 2026-10-12 23:03:54,259 ] - <== Passed Arguments ==>
+[ INFO : 2026-10-12 23:03:54,260 ] - {'checkpoint': 'exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev/models/model_0.pt',
+[ INFO : 2026-10-12 23:03:54,260 ] -  'data_type': 'shard',
+[ INFO : 2026-10-12 23:03:54,260 ] -  'dataloader_args': {'batch_size': 16,
+[ INFO : 2026-10-12 23:03:54,260 ] -                      'drop_last': True,
+[ INFO : 2026-10-12 23:03:54,260 ] -                      'num_workers': 8,
+[ INFO : 2026-10-12 23:03:54,260 ] -                      'pin_memory': False,
+[ INFO : 2026-10-12 23:03:54,260 ] -                      'prefetch_factor': 8},
+[ INFO : 2026-10-12 23:03:54,260 ] -  'dataset_args': {'aug_prob': 0.2,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'cmvn': False,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'cmvn_args': {'norm_mean': False, 'norm_var': False},
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'filter': True,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'filter_args': {'max_num_frames': 400, 'min_num_frames': 50},
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'frontend': 'w2vbert_sv',
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'num_frms': 300,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'resample_rate': 16000,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'sample_num_per_epoch': 0,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'shuffle': True,
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'shuffle_args': {'shuffle_size': 2500},
+[ INFO : 2026-10-12 23:03:54,260 ] -                   'spec_aug': False,
+[ INFO : 2026-10-12 23:03:54,261 ] -                   'spec_aug_args': {'max_f': 8,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                     'max_t': 10,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                     'num_f_mask': 1,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                     'num_t_mask': 1,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                     'prob': 0.6},
+[ INFO : 2026-10-12 23:03:54,261 ] -                   'speed_perturb': False,
+[ INFO : 2026-10-12 23:03:54,261 ] -                   'w2vbert_sv_args': {'frame_length': 20,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                       'frame_shift': 20,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                       'frozen': False,
+[ INFO : 2026-10-12 23:03:54,261 ] -                                       'upstream_args': {'name': 'config_baseline.json',
+[ INFO : 2026-10-12 23:03:54,261 ] -                                                         'path_or_url': 'assets/w2v-bert-2.0'},
+[ INFO : 2026-10-12 23:03:54,261 ] -                                       'use_lora': False}},
+[ INFO : 2026-10-12 23:03:54,261 ] -  'do_lm': False,
+[ INFO : 2026-10-12 23:03:54,261 ] -  'enable_amp': True,
+[ INFO : 2026-10-12 23:03:54,261 ] -  'exp_dir': 'exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev',
+[ INFO : 2026-10-12 23:03:54,261 ] -  'gpus': [2, 3],
+[ INFO : 2026-10-12 23:03:54,261 ] -  'log_batch_interval': 100,
+[ INFO : 2026-10-12 23:03:54,261 ] -  'loss': 'CrossEntropyLoss',
+[ INFO : 2026-10-12 23:03:54,261 ] -  'loss_args': {},
+[ INFO : 2026-10-12 23:03:54,261 ] -  'margin_scheduler': 'MarginScheduler',
+[ INFO : 2026-10-12 23:03:54,261 ] -  'margin_update': {'final_margin': 0.4,
+[ INFO : 2026-10-12 23:03:54,261 ] -                    'fix_start_epoch': 2,
+[ INFO : 2026-10-12 23:03:54,261 ] -                    'increase_start_epoch': 1,
+[ INFO : 2026-10-12 23:03:54,261 ] -                    'increase_type': 'exp',
+[ INFO : 2026-10-12 23:03:54,261 ] -                    'initial_margin': 0.2,
+[ INFO : 2026-10-12 23:03:54,261 ] -                    'update_margin': True},
+[ INFO : 2026-10-12 23:03:54,261 ] -  'model': 'SSL_BACKEND_MHFA_LN_GaussianLogPrec_LightAdapter',
+[ INFO : 2026-10-12 23:03:54,261 ] -  'model_args': {'compression_dim': 128,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'embed_dim': 256,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'feat_dim': -1,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'feature_grad_mult': 1.0,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'head_nb': 64,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'nb_layer': 25,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'train_prior_mean': True,
+[ INFO : 2026-10-12 23:03:54,261 ] -                 'train_prior_prec': True},
+[ INFO : 2026-10-12 23:03:54,261 ] -  'model_init': None,
+[ INFO : 2026-10-12 23:03:54,261 ] -  'noise_data': 'data/musan/lmdb',
+[ INFO : 2026-10-12 23:03:54,262 ] -  'num_avg': 1,
+[ INFO : 2026-10-12 23:03:54,262 ] -  'num_epochs': 3,
+[ INFO : 2026-10-12 23:03:54,262 ] -  'optimizer': 'AdamW',
+[ INFO : 2026-10-12 23:03:54,262 ] -  'optimizer_args': {'weight_decay': 1e-05},
+[ INFO : 2026-10-12 23:03:54,262 ] -  'projection_args': {'easy_margin': False,
+[ INFO : 2026-10-12 23:03:54,262 ] -                      'margin_clip': 2.0,
+[ INFO : 2026-10-12 23:03:54,262 ] -                      'margin_span': 0.1,
+[ INFO : 2026-10-12 23:03:54,262 ] -                      'project_type': 'arc_margin_intertopk_subcenter_uncertainty_margin',
+[ INFO : 2026-10-12 23:03:54,262 ] -                      'scale': 32.0,
+[ INFO : 2026-10-12 23:03:54,262 ] -                      'use_log_uncertainty': False},
+[ INFO : 2026-10-12 23:03:54,262 ] -  'reverb_data': 'data/rirs/lmdb',
+[ INFO : 2026-10-12 23:03:54,262 ] -  'save_epoch_interval': 1,
+[ INFO : 2026-10-12 23:03:54,262 ] -  'scheduler': 'ExponentialDecrease',
+[ INFO : 2026-10-12 23:03:54,262 ] -  'scheduler_args': {'final_lr': 1e-06,
+[ INFO : 2026-10-12 23:03:54,262 ] -                     'frontend_lr_ratio': 1.0,
+[ INFO : 2026-10-12 23:03:54,262 ] -                     'frontend_modules': ['frontend'],
+[ INFO : 2026-10-12 23:03:54,262 ] -                     'initial_lr': 1e-05,
+[ INFO : 2026-10-12 23:03:54,262 ] -                     'warm_from_zero': False,
+[ INFO : 2026-10-12 23:03:54,262 ] -                     'warm_up_epoch': 0},
+[ INFO : 2026-10-12 23:03:54,262 ] -  'seed': 716,
+[ INFO : 2026-10-12 23:03:54,262 ] -  'train_data': 'data/vox2_dev/shard.list',
+[ INFO : 2026-10-12 23:03:54,262 ] -  'train_label': 'data/vox2_dev/utt2spk'}
+[ INFO : 2026-10-12 23:03:56,003 ] - <== Data statistics ==>
+[ INFO : 2026-10-12 23:03:56,003 ] - train data num: 1092009, spk num: 5994
+[ INFO : 2026-10-12 23:03:56,004 ] - <== Model ==>
+[ INFO : 2026-10-12 23:03:56,008 ] - <== Dataloaders ==>
+[ INFO : 2026-10-12 23:03:56,008 ] - train dataloaders created
+[ INFO : 2026-10-12 23:03:56,009 ] - epoch iteration number: 34125
+[ INFO : 2026-10-12 23:03:56,009 ] - <== Model ==>
+[ INFO : 2026-10-12 23:04:00,717 ] - speaker_model size: 586355186
+[ INFO : 2026-10-12 23:04:00,739 ] - SSL_BACKEND_MHFA_LN_GaussianLogPrec_LightAdapter(
+[ INFO : 2026-10-12 23:04:00,739 ] -   (adapter_layers): ModuleList(
+[ INFO : 2026-10-12 23:04:00,740 ] -     (0-24): 25 x Sequential(
+[ INFO : 2026-10-12 23:04:00,740 ] -       (0): Linear(in_features=1024, out_features=128, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -       (1): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -       (2): ReLU(inplace=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -       (3): Linear(in_features=128, out_features=128, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -     )
+[ INFO : 2026-10-12 23:04:00,740 ] -   )
+[ INFO : 2026-10-12 23:04:00,740 ] -   (cmp_linear_k): Linear(in_features=128, out_features=128, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (cmp_linear_v): Linear(in_features=128, out_features=128, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (norm_k): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (norm_v): LayerNorm((128,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (att_head): Linear(in_features=128, out_features=64, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (bn_embed): BatchNorm1d(8192, eps=1e-05, momentum=0.1, affine=True, track_running_stats=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (pooling_fc): Linear(in_features=8192, out_features=256, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -   (frontend): HuggingfaceFrontend_w2vbert(
+[ INFO : 2026-10-12 23:04:00,740 ] -     (upstream): Wav2Vec2BertModel(
+[ INFO : 2026-10-12 23:04:00,740 ] -       (feature_projection): Wav2Vec2BertFeatureProjection(
+[ INFO : 2026-10-12 23:04:00,740 ] -         (layer_norm): LayerNorm((160,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -         (projection): Linear(in_features=160, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -         (dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,740 ] -       )
+[ INFO : 2026-10-12 23:04:00,740 ] -       (encoder): Wav2Vec2BertEncoder(
+[ INFO : 2026-10-12 23:04:00,740 ] -         (dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,740 ] -         (layers): ModuleList(
+[ INFO : 2026-10-12 23:04:00,740 ] -           (0-23): 24 x Wav2Vec2BertEncoderLayer(
+[ INFO : 2026-10-12 23:04:00,740 ] -             (ffn1_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -             (ffn1): Wav2Vec2BertFeedForward(
+[ INFO : 2026-10-12 23:04:00,740 ] -               (intermediate_dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (intermediate_dense): Linear(in_features=1024, out_features=4096, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (intermediate_act_fn): SiLU()
+[ INFO : 2026-10-12 23:04:00,740 ] -               (output_dense): Linear(in_features=4096, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (output_dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,740 ] -             )
+[ INFO : 2026-10-12 23:04:00,740 ] -             (self_attn_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -             (self_attn_dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,740 ] -             (self_attn): Wav2Vec2BertSelfAttention(
+[ INFO : 2026-10-12 23:04:00,740 ] -               (linear_q): Linear(in_features=1024, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (linear_k): Linear(in_features=1024, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (linear_v): Linear(in_features=1024, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (linear_out): Linear(in_features=1024, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,740 ] -               (dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (distance_embedding): Embedding(73, 64)
+[ INFO : 2026-10-12 23:04:00,741 ] -             )
+[ INFO : 2026-10-12 23:04:00,741 ] -             (conv_module): Wav2Vec2BertConvolutionModule(
+[ INFO : 2026-10-12 23:04:00,741 ] -               (layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (pointwise_conv1): Conv1d(1024, 2048, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (glu): GLU(dim=1)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (depthwise_conv): Conv1d(1024, 1024, kernel_size=(31,), stride=(1,), groups=1024, bias=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (depthwise_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (activation): SiLU()
+[ INFO : 2026-10-12 23:04:00,741 ] -               (pointwise_conv2): Conv1d(1024, 1024, kernel_size=(1,), stride=(1,), bias=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (dropout): Dropout(p=0.1, inplace=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -             )
+[ INFO : 2026-10-12 23:04:00,741 ] -             (ffn2_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -             (ffn2): Wav2Vec2BertFeedForward(
+[ INFO : 2026-10-12 23:04:00,741 ] -               (intermediate_dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (intermediate_dense): Linear(in_features=1024, out_features=4096, bias=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (intermediate_act_fn): SiLU()
+[ INFO : 2026-10-12 23:04:00,741 ] -               (output_dense): Linear(in_features=4096, out_features=1024, bias=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -               (output_dropout): Dropout(p=0.0, inplace=False)
+[ INFO : 2026-10-12 23:04:00,741 ] -             )
+[ INFO : 2026-10-12 23:04:00,741 ] -             (final_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+[ INFO : 2026-10-12 23:04:00,741 ] -           )
+[ INFO : 2026-10-12 23:04:00,741 ] -         )
+[ INFO : 2026-10-12 23:04:00,741 ] -       )
+[ INFO : 2026-10-12 23:04:00,741 ] -     )
+[ INFO : 2026-10-12 23:04:00,741 ] -   )
+[ INFO : 2026-10-12 23:04:00,741 ] -   (projection): ArcMarginProduct_intertopk_subcenter_uncertainty_margin(in_features=256, out_features=5994, scale=32.0, margin=0.0, easy_margin=False,K=3, mp=0.06, k_top=5, do_lm=False)
+[ INFO : 2026-10-12 23:04:00,741 ] - )
+[ INFO : 2026-10-12 23:04:02,107 ] - Load checkpoint: exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev/models/model_0.pt
+[ INFO : 2026-10-12 23:04:02,108 ] - start_epoch: 1
+[ INFO : 2026-10-12 23:04:02,126 ] - Load checkpoint: exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter_stage3_lmft_uncert_margin_rev/models/model_0.pt
+[ INFO : 2026-10-12 23:04:02,127 ] - start_epoch: 1
+[ INFO : 2026-10-12 23:04:02,489 ] - <== Loss ==>
+[ INFO : 2026-10-12 23:04:02,490 ] - loss criterion is: CrossEntropyLoss
+[ INFO : 2026-10-12 23:04:02,491 ] - <== Optimizer ==>
+[ INFO : 2026-10-12 23:04:02,491 ] - optimizer is: AdamW
+[ INFO : 2026-10-12 23:04:02,492 ] - <== Scheduler ==>
+[ INFO : 2026-10-12 23:04:02,492 ] - scheduler is: ExponentialDecrease
+[ INFO : 2026-10-12 23:04:02,492 ] - learning rates: backend=1e-05, frontend=1e-05 (ratio=1)
+[ INFO : 2026-10-12 23:04:02,493 ] - <== MarginScheduler ==>
+[ INFO : 2026-10-12 23:04:02,949 ] - <========== Training process ==========>
+[ INFO : 2026-10-12 23:04:02,949 ] - +----------+----------+----------+----------+----------+----------+
+[ INFO : 2026-10-12 23:04:02,949 ] - |     Epoch|     Batch|        Lr|    Margin|      Loss|       Acc|
+[ INFO : 2026-10-12 23:04:02,949 ] - +----------+----------+----------+----------+----------+----------+
+/home/junjie/wespeaker_ssl_xi/examples/voxceleb/v2_w2vbert_sv/wespeaker/bin/train.py:263: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=configs['enable_amp'])
+/home/junjie/wespeaker_ssl_xi/examples/voxceleb/v2_w2vbert_sv/wespeaker/bin/train.py:263: FutureWarning: `torch.cuda.amp.GradScaler(args...)` is deprecated. Please use `torch.amp.GradScaler('cuda', args...)` instead.
+  scaler = torch.cuda.amp.GradScaler(enabled=configs['enable_amp'])
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/wespeaker_ssl_xi/wespeaker/utils/executor.py:110: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=configs['enable_amp']):
+/home/junjie/wespeaker_ssl_xi/wespeaker/utils/executor.py:110: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=configs['enable_amp']):
+/home/junjie/wespeaker_ssl_xi/wespeaker/utils/executor.py:113: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=configs['enable_amp']):
+/home/junjie/wespeaker_ssl_xi/wespeaker/utils/executor.py:113: FutureWarning: `torch.cuda.amp.autocast(args...)` is deprecated. Please use `torch.amp.autocast('cuda', args...)` instead.
+  with torch.cuda.amp.autocast(enabled=configs['enable_amp']):
+[ INFO : 2026-10-12 23:05:35,846 ] - |         1|       100|4.9889e-06|   0.20397|   0.28055|    96.125|
+[ INFO : 2026-10-12 23:05:35,847 ] - |         1|       100|4.9889e-06|   0.20397|   0.25041|    95.625|
+[ INFO : 2026-10-12 23:07:04,290 ] - |         1|       200|4.9777e-06|    0.2079|   0.30733|    95.812|
+[ INFO : 2026-10-12 23:07:04,292 ] - |         1|       200|4.9777e-06|    0.2079|   0.23752|     95.75|
+[ INFO : 2026-10-12 23:08:32,687 ] - |         1|       300|4.9665e-06|   0.21175|   0.29133|    95.917|
+[ INFO : 2026-10-12 23:08:32,688 ] - |         1|       300|4.9665e-06|   0.21175|   0.22471|        96|
+[ INFO : 2026-10-12 23:10:01,093 ] - |         1|       400|4.9553e-06|   0.21552|   0.30203|    95.688|
+[ INFO : 2026-10-12 23:10:01,094 ] - |         1|       400|4.9553e-06|   0.21552|   0.22661|    96.078|
+[ INFO : 2026-10-12 23:11:29,499 ] - |         1|       500|4.9442e-06|   0.21922|   0.30051|    95.513|
+[ INFO : 2026-10-12 23:11:29,501 ] - |         1|       500|4.9442e-06|   0.21922|   0.25068|    95.737|
+[ INFO : 2026-10-12 23:12:57,837 ] - |         1|       600|4.9331e-06|   0.22284|   0.27082|     95.49|
+[ INFO : 2026-10-12 23:12:57,838 ] - |         1|       600|4.9331e-06|   0.22284|   0.29275|    95.552|
+[ INFO : 2026-10-12 23:14:26,179 ] - |         1|       700| 4.922e-06|   0.22639|   0.29578|    95.455|
+[ INFO : 2026-10-12 23:14:26,181 ] - |         1|       700| 4.922e-06|   0.22639|   0.27028|    95.438|
+[ INFO : 2026-10-12 23:15:54,513 ] - |         1|       800|4.9109e-06|   0.22987|   0.30131|    95.344|
+[ INFO : 2026-10-12 23:15:54,515 ] - |         1|       800|4.9109e-06|   0.22987|    0.2774|    95.219|
+[ INFO : 2026-10-12 23:17:22,686 ] - |         1|       900|4.8999e-06|   0.23328|   0.31165|    95.111|
+[ INFO : 2026-10-12 23:17:22,688 ] - |         1|       900|4.8999e-06|   0.23328|   0.28449|    95.118|
+[ INFO : 2026-10-12 23:18:50,976 ] - |         1|      1000|4.8889e-06|   0.23662|   0.31422|    94.981|
+[ INFO : 2026-10-12 23:18:50,977 ] - |         1|      1000|4.8889e-06|   0.23662|   0.29322|    94.956|
+[ INFO : 2026-10-12 23:20:19,382 ] - |         1|      1100|4.8779e-06|   0.23989|   0.31972|    94.784|
+[ INFO : 2026-10-12 23:20:19,383 ] - |         1|      1100|4.8779e-06|   0.23989|   0.30317|     94.75|
+[ INFO : 2026-10-12 23:21:47,726 ] - |         1|      1200| 4.867e-06|    0.2431|   0.33258|     94.51|
+[ INFO : 2026-10-12 23:21:47,726 ] - |         1|      1200| 4.867e-06|    0.2431|   0.30641|    94.604|
+[ INFO : 2026-10-12 23:23:15,961 ] - |         1|      1300| 4.856e-06|   0.24624|    0.3363|    94.466|
+[ INFO : 2026-10-12 23:23:15,963 ] - |         1|      1300| 4.856e-06|   0.24624|   0.31588|    94.447|
+[ INFO : 2026-10-12 23:24:44,213 ] - |         1|      1400|4.8451e-06|   0.24933|   0.34692|    94.228|
+[ INFO : 2026-10-12 23:24:44,214 ] - |         1|      1400|4.8451e-06|   0.24933|   0.32266|    94.268|
+[ INFO : 2026-10-12 23:26:12,543 ] - |         1|      1500|4.8342e-06|   0.25234|   0.35502|    93.975|
+[ INFO : 2026-10-12 23:26:12,544 ] - |         1|      1500|4.8342e-06|   0.25234|   0.32981|    94.079|
+[ INFO : 2026-10-12 23:27:40,794 ] - |         1|      1600|4.8234e-06|    0.2553|    0.3594|     93.82|
+[ INFO : 2026-10-12 23:27:40,795 ] - |         1|      1600|4.8234e-06|    0.2553|   0.33504|    93.973|
+[ INFO : 2026-10-12 23:29:09,234 ] - |         1|      1700|4.8125e-06|    0.2582|   0.36813|    93.618|
+[ INFO : 2026-10-12 23:29:09,235 ] - |         1|      1700|4.8125e-06|    0.2582|   0.34099|    93.783|
+[ INFO : 2026-10-12 23:30:37,516 ] - |         1|      1800|4.8017e-06|   0.26104|   0.37528|    93.451|
+[ INFO : 2026-10-12 23:30:37,517 ] - |         1|      1800|4.8017e-06|   0.26104|   0.35379|      93.5|
+[ INFO : 2026-10-12 23:32:05,838 ] - |         1|      1900|4.7909e-06|   0.26383|   0.38215|    93.289|
+[ INFO : 2026-10-12 23:32:05,840 ] - |         1|      1900|4.7909e-06|   0.26383|    0.3614|    93.326|
+[ INFO : 2026-10-12 23:33:34,140 ] - |         1|      2000|4.7802e-06|   0.26656|   0.39238|    93.072|
+[ INFO : 2026-10-12 23:33:34,141 ] - |         1|      2000|4.7802e-06|   0.26656|   0.36748|      93.1|
+[ INFO : 2026-10-12 23:35:02,426 ] - |         1|      2100|4.7694e-06|   0.26923|   0.40298|    92.807|
+[ INFO : 2026-10-12 23:35:02,428 ] - |         1|      2100|4.7694e-06|   0.26923|   0.37469|    92.869|
+[ INFO : 2026-10-12 23:36:30,663 ] - |         1|      2200|4.7587e-06|   0.27185|   0.40958|    92.625|
+[ INFO : 2026-10-12 23:36:30,665 ] - |         1|      2200|4.7587e-06|   0.27185|   0.38327|    92.665|
+[ INFO : 2026-10-12 23:37:59,000 ] - |         1|      2300| 4.748e-06|   0.27442|    0.4182|    92.378|
+[ INFO : 2026-10-12 23:37:59,001 ] - |         1|      2300| 4.748e-06|   0.27442|   0.39274|    92.486|
+[ INFO : 2026-10-12 23:39:27,230 ] - |         1|      2400|4.7374e-06|   0.27694|   0.42694|    92.159|
+[ INFO : 2026-10-12 23:39:27,230 ] - |         1|      2400|4.7374e-06|   0.27694|   0.39769|    92.336|
+[ INFO : 2026-10-12 23:40:55,564 ] - |         1|      2500|4.7267e-06|    0.2794|   0.43397|    91.965|
+[ INFO : 2026-10-12 23:40:55,566 ] - |         1|      2500|4.7267e-06|    0.2794|   0.40814|      92.1|
+[ INFO : 2026-10-12 23:42:23,869 ] - |         1|      2600|4.7161e-06|   0.28182|   0.44178|    91.791|
+[ INFO : 2026-10-12 23:42:23,870 ] - |         1|      2600|4.7161e-06|   0.28182|   0.41832|     91.87|
+[ INFO : 2026-10-12 23:43:52,211 ] - |         1|      2700|4.7055e-06|   0.28419|   0.44718|    91.606|
+[ INFO : 2026-10-12 23:43:52,212 ] - |         1|      2700|4.7055e-06|   0.28419|   0.42759|    91.644|
+[ INFO : 2026-10-12 23:45:20,538 ] - |         1|      2800|4.6949e-06|   0.28651|   0.45239|    91.435|
+[ INFO : 2026-10-12 23:45:20,538 ] - |         1|      2800|4.6949e-06|   0.28651|   0.43454|    91.467|
+[ INFO : 2026-10-12 23:46:48,882 ] - |         1|      2900|4.6844e-06|   0.28878|   0.46137|    91.216|
+[ INFO : 2026-10-12 23:46:48,883 ] - |         1|      2900|4.6844e-06|   0.28878|   0.44249|     91.28|
+[ INFO : 2026-10-12 23:48:17,217 ] - |         1|      3000|4.6739e-06|   0.29101|   0.46801|    91.029|
+[ INFO : 2026-10-12 23:48:17,218 ] - |         1|      3000|4.6739e-06|   0.29101|   0.45095|    91.058|
+[ INFO : 2026-10-12 23:49:45,511 ] - |         1|      3100|4.6634e-06|    0.2932|   0.47676|    90.833|
+[ INFO : 2026-10-12 23:49:45,512 ] - |         1|      3100|4.6634e-06|    0.2932|   0.46134|     90.81|
+[ INFO : 2026-10-12 23:51:13,808 ] - |         1|      3200|4.6529e-06|   0.29534|   0.48517|    90.607|
+[ INFO : 2026-10-12 23:51:13,809 ] - |         1|      3200|4.6529e-06|   0.29534|   0.47114|    90.594|
+[ INFO : 2026-10-12 23:52:42,119 ] - |         1|      3300|4.6424e-06|   0.29743|   0.49248|    90.402|
+[ INFO : 2026-10-12 23:52:42,121 ] - |         1|      3300|4.6424e-06|   0.29743|    0.4797|    90.407|
+[ INFO : 2026-10-12 23:54:10,359 ] - |         1|      3400| 4.632e-06|   0.29949|   0.50174|    90.165|
+[ INFO : 2026-10-12 23:54:10,361 ] - |         1|      3400| 4.632e-06|   0.29949|    0.4874|    90.208|
+[ INFO : 2026-10-12 23:55:38,741 ] - |         1|      3500|4.6216e-06|    0.3015|   0.51207|     89.93|
+[ INFO : 2026-10-12 23:55:38,742 ] - |         1|      3500|4.6216e-06|    0.3015|    0.4997|    89.961|
+[ INFO : 2026-10-12 23:57:07,077 ] - |         1|      3600|4.6112e-06|   0.30348|   0.50784|    89.722|
+[ INFO : 2026-10-12 23:57:07,079 ] - |         1|      3600|4.6112e-06|   0.30348|   0.52112|    89.712|
+[ INFO : 2026-10-12 23:58:35,468 ] - |         1|      3700|4.6009e-06|   0.30541|   0.52923|    89.471|
+[ INFO : 2026-10-12 23:58:35,469 ] - |         1|      3700|4.6009e-06|   0.30541|    0.5167|    89.471|
+[ INFO : 2026-10-13 00:00:03,734 ] - |         1|      3800|4.5905e-06|   0.30731|   0.53707|    89.255|
+[ INFO : 2026-10-13 00:00:03,735 ] - |         1|      3800|4.5905e-06|   0.30731|   0.52663|    89.212|
+[ INFO : 2026-10-13 00:01:32,162 ] - |         1|      3900|4.5802e-06|   0.30916|    0.5367|    88.955|
+[ INFO : 2026-10-13 00:01:32,163 ] - |         1|      3900|4.5802e-06|   0.30916|   0.54625|    89.027|
+[ INFO : 2026-10-13 00:03:00,535 ] - |         1|      4000|4.5699e-06|   0.31098|   0.55592|    88.823|
+[ INFO : 2026-10-13 00:03:00,536 ] - |         1|      4000|4.5699e-06|   0.31098|   0.54679|    88.744|
+[ INFO : 2026-10-13 00:04:28,826 ] - |         1|      4100|4.5596e-06|   0.31277|   0.56431|    88.613|
+[ INFO : 2026-10-13 00:04:28,828 ] - |         1|      4100|4.5596e-06|   0.31277|   0.55554|    88.529|
+[ INFO : 2026-10-13 00:05:57,291 ] - |         1|      4200|4.5494e-06|   0.31452|   0.57381|    88.381|
+[ INFO : 2026-10-13 00:05:57,293 ] - |         1|      4200|4.5494e-06|   0.31452|   0.56579|    88.317|
+[ INFO : 2026-10-13 00:07:25,562 ] - |         1|      4300|4.5392e-06|   0.31623|   0.58293|    88.157|
+[ INFO : 2026-10-13 00:07:25,564 ] - |         1|      4300|4.5392e-06|   0.31623|   0.57546|    88.128|
+[ INFO : 2026-10-13 00:08:53,909 ] - |         1|      4400| 4.529e-06|   0.31791|   0.58978|    87.967|
+[ INFO : 2026-10-13 00:08:53,911 ] - |         1|      4400| 4.529e-06|   0.31791|   0.58556|    87.884|
+[ INFO : 2026-10-13 00:10:22,281 ] - |         1|      4500|4.5188e-06|   0.31955|   0.59909|    87.761|
+[ INFO : 2026-10-13 00:10:22,282 ] - |         1|      4500|4.5188e-06|   0.31955|   0.59629|    87.619|
+[ INFO : 2026-10-13 00:11:50,576 ] - |         1|      4600|4.5087e-06|   0.32116|   0.60933|    87.515|
+[ INFO : 2026-10-13 00:11:50,577 ] - |         1|      4600|4.5087e-06|   0.32116|   0.60839|     87.34|
+[ INFO : 2026-10-13 00:13:18,949 ] - |         1|      4700|4.4985e-06|   0.32274|   0.61841|    87.307|
+[ INFO : 2026-10-13 00:13:18,950 ] - |         1|      4700|4.4985e-06|   0.32274|   0.61863|     87.08|
+[ INFO : 2026-10-13 00:14:47,236 ] - |         1|      4800|4.4884e-06|   0.32429|   0.62831|    87.081|
+[ INFO : 2026-10-13 00:14:47,238 ] - |         1|      4800|4.4884e-06|   0.32429|   0.62965|    86.832|
+[ INFO : 2026-10-13 00:16:15,626 ] - |         1|      4900|4.4783e-06|   0.32581|   0.63691|    86.899|
+[ INFO : 2026-10-13 00:16:15,627 ] - |         1|      4900|4.4783e-06|   0.32581|   0.64115|    86.584|
+[ INFO : 2026-10-13 00:17:43,986 ] - |         1|      5000|4.4683e-06|    0.3273|   0.64596|    86.692|
+[ INFO : 2026-10-13 00:17:43,986 ] - |         1|      5000|4.4683e-06|    0.3273|   0.65022|    86.354|
+[ INFO : 2026-10-13 00:19:12,273 ] - |         1|      5100|4.4582e-06|   0.32875|   0.65452|    86.453|
+[ INFO : 2026-10-13 00:19:12,273 ] - |         1|      5100|4.4582e-06|   0.32875|   0.66059|    86.103|
+[ INFO : 2026-10-13 00:20:40,560 ] - |         1|      5200|4.4482e-06|   0.33018|      0.67|    85.879|
+[ INFO : 2026-10-13 00:20:40,561 ] - |         1|      5200|4.4482e-06|   0.33018|   0.66473|    86.232|
+[ INFO : 2026-10-13 00:22:08,828 ] - |         1|      5300|4.4382e-06|   0.33158|   0.67367|    85.996|
+[ INFO : 2026-10-13 00:22:08,829 ] - |         1|      5300|4.4382e-06|   0.33158|   0.67963|    85.683|
+[ INFO : 2026-10-13 00:23:37,127 ] - |         1|      5400|4.4283e-06|   0.33295|   0.68537|    85.722|
+[ INFO : 2026-10-13 00:23:37,128 ] - |         1|      5400|4.4283e-06|   0.33295|   0.68833|    85.457|
+[ INFO : 2026-10-13 00:25:05,387 ] - |         1|      5500|4.4183e-06|   0.33429|   0.69329|    85.475|
+[ INFO : 2026-10-13 00:25:05,389 ] - |         1|      5500|4.4183e-06|   0.33429|   0.69971|    85.188|
+[ INFO : 2026-10-13 00:26:33,641 ] - |         1|      5600|4.4084e-06|   0.33561|   0.70319|    85.221|
+[ INFO : 2026-10-13 00:26:33,641 ] - |         1|      5600|4.4084e-06|   0.33561|   0.71023|    84.946|
+[ INFO : 2026-10-13 00:28:00,812 ] - |         1|      5700|4.3985e-06|    0.3369|   0.70984|    85.042|
+[ INFO : 2026-10-13 00:28:00,814 ] - |         1|      5700|4.3985e-06|    0.3369|   0.71984|    84.701|
+[ INFO : 2026-10-13 00:29:27,933 ] - |         1|      5800|4.3886e-06|   0.33817|   0.71863|    84.805|
+[ INFO : 2026-10-13 00:29:27,934 ] - |         1|      5800|4.3886e-06|   0.33817|   0.72993|     84.45|
+[ INFO : 2026-10-13 00:30:55,027 ] - |         1|      5900|4.3787e-06|   0.33941|   0.72734|    84.577|
+[ INFO : 2026-10-13 00:30:55,028 ] - |         1|      5900|4.3787e-06|   0.33941|   0.73824|     84.23|
+[ INFO : 2026-10-13 00:32:22,118 ] - |         1|      6000|4.3689e-06|   0.34062|   0.73843|     84.32|
+[ INFO : 2026-10-13 00:32:22,118 ] - |         1|      6000|4.3689e-06|   0.34062|   0.74717|    84.006|
+[ INFO : 2026-10-13 00:33:49,222 ] - |         1|      6100|4.3591e-06|   0.34181|   0.74753|    84.107|
+[ INFO : 2026-10-13 00:33:49,223 ] - |         1|      6100|4.3591e-06|   0.34181|   0.75658|    83.795|
+[ INFO : 2026-10-13 00:35:16,293 ] - |         1|      6200|4.3493e-06|   0.34298|   0.75828|    83.846|
+[ INFO : 2026-10-13 00:35:16,293 ] - |         1|      6200|4.3493e-06|   0.34298|   0.76597|    83.583|
+[ INFO : 2026-10-13 00:36:43,386 ] - |         1|      6300|4.3395e-06|   0.34412|   0.76776|    83.635|
+[ INFO : 2026-10-13 00:36:43,387 ] - |         1|      6300|4.3395e-06|   0.34412|   0.77454|    83.339|
+[ INFO : 2026-10-13 00:38:10,478 ] - |         1|      6400|4.3298e-06|   0.34524|   0.77706|    83.428|
+[ INFO : 2026-10-13 00:38:10,478 ] - |         1|      6400|4.3298e-06|   0.34524|   0.78302|    83.142|
+[ INFO : 2026-10-13 00:39:37,574 ] - |         1|      6500|  4.32e-06|   0.34634|    0.7854|    83.206|
+[ INFO : 2026-10-13 00:39:37,575 ] - |         1|      6500|  4.32e-06|   0.34634|   0.79282|    82.902|
+[ INFO : 2026-10-13 00:41:04,648 ] - |         1|      6600|4.3103e-06|   0.34741|   0.79612|    82.963|
+[ INFO : 2026-10-13 00:41:04,648 ] - |         1|      6600|4.3103e-06|   0.34741|   0.80211|    82.675|
+[ INFO : 2026-10-13 00:42:31,686 ] - |         1|      6700|4.3007e-06|   0.34846|   0.80653|    82.737|
+[ INFO : 2026-10-13 00:42:31,686 ] - |         1|      6700|4.3007e-06|   0.34846|   0.81033|    82.449|
+[ INFO : 2026-10-13 00:43:58,735 ] - |         1|      6800| 4.291e-06|    0.3495|    0.8159|    82.496|
+[ INFO : 2026-10-13 00:43:58,736 ] - |         1|      6800| 4.291e-06|    0.3495|   0.81911|    82.239|
+[ INFO : 2026-10-13 00:45:25,797 ] - |         1|      6900|4.2813e-06|   0.35051|   0.82495|    82.288|
+[ INFO : 2026-10-13 00:45:25,797 ] - |         1|      6900|4.2813e-06|   0.35051|   0.82772|    82.034|
+[ INFO : 2026-10-13 00:46:52,883 ] - |         1|      7000|4.2717e-06|    0.3515|   0.83278|    82.095|
+[ INFO : 2026-10-13 00:46:52,884 ] - |         1|      7000|4.2717e-06|    0.3515|   0.83658|    81.836|
+[ INFO : 2026-10-13 00:48:19,942 ] - |         1|      7100|4.2621e-06|   0.35247|   0.84472|    81.626|
+[ INFO : 2026-10-13 00:48:19,942 ] - |         1|      7100|4.2621e-06|   0.35247|   0.84129|     81.88|
+[ INFO : 2026-10-13 00:49:46,987 ] - |         1|      7200|4.2526e-06|   0.35343|   0.85017|    81.678|
+[ INFO : 2026-10-13 00:49:46,989 ] - |         1|      7200|4.2526e-06|   0.35343|   0.85306|     81.43|
+[ INFO : 2026-10-13 00:51:14,077 ] - |         1|      7300| 4.243e-06|   0.35436|   0.85796|    81.475|
+[ INFO : 2026-10-13 00:51:14,078 ] - |         1|      7300| 4.243e-06|   0.35436|   0.86214|     81.21|
+[ INFO : 2026-10-13 00:52:41,192 ] - |         1|      7400|4.2335e-06|   0.35527|   0.86806|    81.243|
+[ INFO : 2026-10-13 00:52:41,193 ] - |         1|      7400|4.2335e-06|   0.35527|   0.87035|    81.001|
+[ INFO : 2026-10-13 00:54:08,376 ] - |         1|      7500| 4.224e-06|   0.35617|   0.87764|    81.032|
+[ INFO : 2026-10-13 00:54:08,377 ] - |         1|      7500| 4.224e-06|   0.35617|   0.87915|    80.799|
+[ INFO : 2026-10-13 00:55:35,441 ] - |         1|      7600|4.2145e-06|   0.35705|   0.88826|    80.598|
+[ INFO : 2026-10-13 00:55:35,441 ] - |         1|      7600|4.2145e-06|   0.35705|   0.88885|    80.789|
+[ INFO : 2026-10-13 00:57:02,506 ] - |         1|      7700| 4.205e-06|   0.35791|   0.89597|      80.6|
+[ INFO : 2026-10-13 00:57:02,506 ] - |         1|      7700| 4.205e-06|   0.35791|   0.89513|    80.416|
+[ INFO : 2026-10-13 00:58:29,590 ] - |         1|      7800|4.1956e-06|   0.35875|   0.90373|    80.384|
+[ INFO : 2026-10-13 00:58:29,591 ] - |         1|      7800|4.1956e-06|   0.35875|   0.90315|    80.211|
+[ INFO : 2026-10-13 00:59:56,672 ] - |         1|      7900|4.1861e-06|   0.35958|   0.91263|    80.172|
+[ INFO : 2026-10-13 00:59:56,673 ] - |         1|      7900|4.1861e-06|   0.35958|   0.91191|    80.014|
+[ INFO : 2026-10-13 01:01:23,737 ] - |         1|      8000|4.1767e-06|   0.36039|   0.92038|    79.972|
+[ INFO : 2026-10-13 01:01:23,738 ] - |         1|      8000|4.1767e-06|   0.36039|   0.91962|     79.83|
+[ INFO : 2026-10-13 01:02:50,821 ] - |         1|      8100|4.1673e-06|   0.36118|   0.92832|    79.769|
+[ INFO : 2026-10-13 01:02:50,822 ] - |         1|      8100|4.1673e-06|   0.36118|   0.92725|    79.657|
+[ INFO : 2026-10-13 01:04:17,883 ] - |         1|      8200| 4.158e-06|   0.36196|   0.93581|    79.581|
+[ INFO : 2026-10-13 01:04:17,883 ] - |         1|      8200| 4.158e-06|   0.36196|   0.93579|    79.467|
+[ INFO : 2026-10-13 01:05:44,907 ] - |         1|      8300|4.1486e-06|   0.36272|   0.94371|    79.393|
+[ INFO : 2026-10-13 01:05:44,908 ] - |         1|      8300|4.1486e-06|   0.36272|   0.94308|    79.282|
+[ INFO : 2026-10-13 01:07:11,996 ] - |         1|      8400|4.1393e-06|   0.36347|   0.95156|    79.199|
+[ INFO : 2026-10-13 01:07:11,997 ] - |         1|      8400|4.1393e-06|   0.36347|    0.9521|    79.078|
+[ INFO : 2026-10-13 01:08:39,111 ] - |         1|      8500|  4.13e-06|    0.3642|    0.9599|    79.003|
+[ INFO : 2026-10-13 01:08:39,111 ] - |         1|      8500|  4.13e-06|    0.3642|   0.96085|    78.892|
+[ INFO : 2026-10-13 01:10:06,175 ] - |         1|      8600|4.1207e-06|   0.36492|    0.9685|    78.811|
+[ INFO : 2026-10-13 01:10:06,176 ] - |         1|      8600|4.1207e-06|   0.36492|    0.9691|    78.688|
+[ INFO : 2026-10-13 01:11:33,305 ] - |         1|      8700|4.1115e-06|   0.36562|   0.97681|    78.604|
+[ INFO : 2026-10-13 01:11:33,306 ] - |         1|      8700|4.1115e-06|   0.36562|   0.97641|    78.478|
+[ INFO : 2026-10-13 01:13:00,364 ] - |         1|      8800|4.1022e-06|   0.36631|   0.98489|    78.418|
+[ INFO : 2026-10-13 01:13:00,365 ] - |         1|      8800|4.1022e-06|   0.36631|   0.98364|    78.282|
+[ INFO : 2026-10-13 01:14:27,423 ] - |         1|      8900| 4.093e-06|   0.36699|   0.99259|    78.225|
+[ INFO : 2026-10-13 01:14:27,424 ] - |         1|      8900| 4.093e-06|   0.36699|   0.99152|    78.091|
+[ INFO : 2026-10-13 01:15:54,502 ] - |         1|      9000|4.0838e-06|   0.36765|    1.0008|    78.044|
+[ INFO : 2026-10-13 01:15:54,502 ] - |         1|      9000|4.0838e-06|   0.36765|   0.99931|    77.904|
+[ INFO : 2026-10-13 01:17:21,580 ] - |         1|      9100|4.0747e-06|    0.3683|    1.0086|    77.864|
+[ INFO : 2026-10-13 01:17:21,582 ] - |         1|      9100|4.0747e-06|    0.3683|     1.008|    77.709|
+[ INFO : 2026-10-13 01:18:48,616 ] - |         1|      9200|4.0655e-06|   0.36893|    1.0153|    77.707|
+[ INFO : 2026-10-13 01:18:48,617 ] - |         1|      9200|4.0655e-06|   0.36893|    1.0155|    77.524|
+[ INFO : 2026-10-13 01:20:15,679 ] - |         1|      9300|4.0564e-06|   0.36955|    1.0214|    77.561|
+[ INFO : 2026-10-13 01:20:15,679 ] - |         1|      9300|4.0564e-06|   0.36955|    1.0239|    77.326|
+[ INFO : 2026-10-13 01:21:42,804 ] - |         1|      9400|4.0473e-06|   0.37016|    1.0291|    77.378|
+[ INFO : 2026-10-13 01:21:42,805 ] - |         1|      9400|4.0473e-06|   0.37016|    1.0315|    77.144|
+[ INFO : 2026-10-13 01:23:09,833 ] - |         1|      9500|4.0382e-06|   0.37076|    1.0366|    77.182|
+[ INFO : 2026-10-13 01:23:09,834 ] - |         1|      9500|4.0382e-06|   0.37076|    1.0396|    76.953|
+[ INFO : 2026-10-13 01:24:36,898 ] - |         1|      9600|4.0291e-06|   0.37135|    1.0433|    77.005|
+[ INFO : 2026-10-13 01:24:36,899 ] - |         1|      9600|4.0291e-06|   0.37135|    1.0468|    76.771|
+[ INFO : 2026-10-13 01:26:03,922 ] - |         1|      9700|  4.02e-06|   0.37192|      1.05|    76.824|
+[ INFO : 2026-10-13 01:26:03,922 ] - |         1|      9700|  4.02e-06|   0.37192|    1.0547|    76.586|
+[ INFO : 2026-10-13 01:27:30,998 ] - |         1|      9800| 4.011e-06|   0.37248|    1.0582|    76.636|
+[ INFO : 2026-10-13 01:27:30,998 ] - |         1|      9800| 4.011e-06|   0.37248|    1.0625|    76.392|
+[ INFO : 2026-10-13 01:28:58,071 ] - |         1|      9900| 4.002e-06|   0.37304|    1.0659|     76.46|
+[ INFO : 2026-10-13 01:28:58,072 ] - |         1|      9900| 4.002e-06|   0.37304|    1.0691|    76.214|
+[ INFO : 2026-10-13 01:30:25,220 ] - |         1|     10000| 3.993e-06|   0.37358|    1.0738|    76.279|
+[ INFO : 2026-10-13 01:30:25,221 ] - |         1|     10000| 3.993e-06|   0.37358|    1.0759|    76.051|
+[ INFO : 2026-10-13 01:31:52,272 ] - |         1|     10100| 3.984e-06|   0.37411|    1.0808|    76.114|
+[ INFO : 2026-10-13 01:31:52,272 ] - |         1|     10100| 3.984e-06|   0.37411|    1.0831|    75.883|
+[ INFO : 2026-10-13 01:33:19,333 ] - |         1|     10200|3.9751e-06|   0.37462|    1.0881|    75.922|
+[ INFO : 2026-10-13 01:33:19,334 ] - |         1|     10200|3.9751e-06|   0.37462|    1.0907|    75.695|
+[ INFO : 2026-10-13 01:34:46,362 ] - |         1|     10300|3.9662e-06|   0.37513|    1.0948|    75.758|
+[ INFO : 2026-10-13 01:34:46,363 ] - |         1|     10300|3.9662e-06|   0.37513|    1.0976|    75.522|
+[ INFO : 2026-10-13 01:36:13,428 ] - |         1|     10400|3.9572e-06|   0.37563|    1.1025|    75.597|
+[ INFO : 2026-10-13 01:36:13,428 ] - |         1|     10400|3.9572e-06|   0.37563|    1.1042|    75.355|
+[ INFO : 2026-10-13 01:37:40,471 ] - |         1|     10500|3.9484e-06|   0.37612|    1.1097|     75.44|
+[ INFO : 2026-10-13 01:37:40,472 ] - |         1|     10500|3.9484e-06|   0.37612|    1.1111|     75.21|
+[ INFO : 2026-10-13 01:39:07,516 ] - |         1|     10600|3.9395e-06|    0.3766|    1.1167|    75.278|
+[ INFO : 2026-10-13 01:39:07,516 ] - |         1|     10600|3.9395e-06|    0.3766|    1.1181|    75.061|
+[ INFO : 2026-10-13 01:40:34,561 ] - |         1|     10700|3.9306e-06|   0.37707|    1.1232|    75.106|
+[ INFO : 2026-10-13 01:40:34,562 ] - |         1|     10700|3.9306e-06|   0.37707|    1.1244|    74.905|
+[ INFO : 2026-10-13 01:42:01,658 ] - |         1|     10800|3.9218e-06|   0.37753|    1.1284|    74.958|
+[ INFO : 2026-10-13 01:42:01,659 ] - |         1|     10800|3.9218e-06|   0.37753|    1.1311|    74.738|
+[ INFO : 2026-10-13 01:43:28,693 ] - |         1|     10900| 3.913e-06|   0.37798|    1.1384|    74.579|
+[ INFO : 2026-10-13 01:43:28,693 ] - |         1|     10900| 3.913e-06|   0.37798|    1.1355|    74.786|
+[ INFO : 2026-10-13 01:44:55,799 ] - |         1|     11000|3.9042e-06|   0.37842|    1.1424|    74.627|
+[ INFO : 2026-10-13 01:44:55,799 ] - |         1|     11000|3.9042e-06|   0.37842|    1.1452|    74.406|
+[ INFO : 2026-10-13 01:46:22,851 ] - |         1|     11100|3.8954e-06|   0.37885|    1.1493|    74.472|
+[ INFO : 2026-10-13 01:46:22,851 ] - |         1|     11100|3.8954e-06|   0.37885|    1.1517|    74.265|
+[ INFO : 2026-10-13 01:47:50,014 ] - |         1|     11200|3.8867e-06|   0.37927|    1.1558|    74.321|
+[ INFO : 2026-10-13 01:47:50,014 ] - |         1|     11200|3.8867e-06|   0.37927|    1.1588|    74.105|
+[ INFO : 2026-10-13 01:49:17,135 ] - |         1|     11300|3.8779e-06|   0.37969|    1.1621|     74.18|
+[ INFO : 2026-10-13 01:49:17,136 ] - |         1|     11300|3.8779e-06|   0.37969|    1.1652|    73.965|
+[ INFO : 2026-10-13 01:50:44,237 ] - |         1|     11400|3.8692e-06|    0.3801|    1.1686|    74.034|
+[ INFO : 2026-10-13 01:50:44,238 ] - |         1|     11400|3.8692e-06|    0.3801|    1.1704|    73.818|
+[ INFO : 2026-10-13 01:52:11,257 ] - |         1|     11500|3.8605e-06|    0.3805|    1.1751|    73.887|
+[ INFO : 2026-10-13 01:52:11,258 ] - |         1|     11500|3.8605e-06|    0.3805|    1.1762|    73.679|
+[ INFO : 2026-10-13 01:53:38,330 ] - |         1|     11600|3.8519e-06|   0.38089|    1.1809|    73.737|
+[ INFO : 2026-10-13 01:53:38,330 ] - |         1|     11600|3.8519e-06|   0.38089|    1.1826|    73.529|
+[ INFO : 2026-10-13 01:55:05,325 ] - |         1|     11700|3.8432e-06|   0.38127|    1.1878|     73.59|
+[ INFO : 2026-10-13 01:55:05,326 ] - |         1|     11700|3.8432e-06|   0.38127|    1.1898|    73.368|
+[ INFO : 2026-10-13 01:56:32,408 ] - |         1|     11800|3.8346e-06|   0.38164|    1.1939|    73.456|
+[ INFO : 2026-10-13 01:56:32,409 ] - |         1|     11800|3.8346e-06|   0.38164|    1.1964|    73.218|
+[ INFO : 2026-10-13 01:57:59,562 ] - |         1|     11900| 3.826e-06|   0.38201|     1.201|    73.302|
+[ INFO : 2026-10-13 01:57:59,563 ] - |         1|     11900| 3.826e-06|   0.38201|    1.2026|     73.08|
+[ INFO : 2026-10-13 01:59:26,613 ] - |         1|     12000|3.8174e-06|   0.38237|    1.2069|     73.16|
+[ INFO : 2026-10-13 01:59:26,613 ] - |         1|     12000|3.8174e-06|   0.38237|    1.2077|     72.97|
+[ INFO : 2026-10-13 02:00:53,694 ] - |         1|     12100|3.8088e-06|   0.38273|    1.2136|    72.999|
+[ INFO : 2026-10-13 02:00:53,695 ] - |         1|     12100|3.8088e-06|   0.38273|    1.2136|    72.833|
+[ INFO : 2026-10-13 02:02:20,754 ] - |         1|     12200|3.8002e-06|   0.38307|    1.2193|    72.863|
+[ INFO : 2026-10-13 02:02:20,755 ] - |         1|     12200|3.8002e-06|   0.38307|    1.2188|    72.691|
+[ INFO : 2026-10-13 02:03:47,827 ] - |         1|     12300|3.7917e-06|   0.38341|     1.226|    72.726|
+[ INFO : 2026-10-13 02:03:47,828 ] - |         1|     12300|3.7917e-06|   0.38341|    1.2248|    72.553|
+[ INFO : 2026-10-13 02:05:14,866 ] - |         1|     12400|3.7832e-06|   0.38374|    1.2319|    72.588|
+[ INFO : 2026-10-13 02:05:14,867 ] - |         1|     12400|3.7832e-06|   0.38374|    1.2296|    72.435|
+[ INFO : 2026-10-13 02:06:42,009 ] - |         1|     12500|3.7747e-06|   0.38407|    1.2368|     72.46|
+[ INFO : 2026-10-13 02:06:42,009 ] - |         1|     12500|3.7747e-06|   0.38407|    1.2353|    72.297|
+[ INFO : 2026-10-13 02:08:09,084 ] - |         1|     12600|3.7662e-06|   0.38439|     1.243|    72.324|
+[ INFO : 2026-10-13 02:08:09,084 ] - |         1|     12600|3.7662e-06|   0.38439|     1.242|    72.161|
+[ INFO : 2026-10-13 02:09:36,128 ] - |         1|     12700|3.7577e-06|    0.3847|     1.249|    72.182|
+[ INFO : 2026-10-13 02:09:36,129 ] - |         1|     12700|3.7577e-06|    0.3847|    1.2481|    72.022|
+[ INFO : 2026-10-13 02:11:03,187 ] - |         1|     12800|3.7493e-06|   0.38501|    1.2553|    72.052|
+[ INFO : 2026-10-13 02:11:03,187 ] - |         1|     12800|3.7493e-06|   0.38501|    1.2534|    71.895|
+[ INFO : 2026-10-13 02:12:30,213 ] - |         1|     12900|3.7409e-06|   0.38531|    1.2608|    71.917|
+[ INFO : 2026-10-13 02:12:30,213 ] - |         1|     12900|3.7409e-06|   0.38531|    1.2595|    71.761|
+[ INFO : 2026-10-13 02:13:57,275 ] - |         1|     13000|3.7325e-06|    0.3856|    1.2648|    71.627|
+[ INFO : 2026-10-13 02:13:57,275 ] - |         1|     13000|3.7325e-06|    0.3856|     1.266|    71.793|
+[ INFO : 2026-10-13 02:15:24,348 ] - |         1|     13100|3.7241e-06|   0.38589|    1.2717|    71.659|
+[ INFO : 2026-10-13 02:15:24,348 ] - |         1|     13100|3.7241e-06|   0.38589|    1.2704|      71.5|
+[ INFO : 2026-10-13 02:16:51,406 ] - |         1|     13200|3.7157e-06|   0.38617|    1.2774|    71.532|
+[ INFO : 2026-10-13 02:16:51,407 ] - |         1|     13200|3.7157e-06|   0.38617|     1.276|    71.364|
+[ INFO : 2026-10-13 02:18:18,475 ] - |         1|     13300|3.7074e-06|   0.38645|    1.2825|    71.409|
+[ INFO : 2026-10-13 02:18:18,476 ] - |         1|     13300|3.7074e-06|   0.38645|    1.2812|    71.244|
+[ INFO : 2026-10-13 02:19:45,516 ] - |         1|     13400| 3.699e-06|   0.38672|    1.2877|    71.277|
+[ INFO : 2026-10-13 02:19:45,516 ] - |         1|     13400| 3.699e-06|   0.38672|    1.2867|    71.111|
+[ INFO : 2026-10-13 02:21:12,607 ] - |         1|     13500|3.6907e-06|   0.38699|    1.2933|    71.167|
+[ INFO : 2026-10-13 02:21:12,608 ] - |         1|     13500|3.6907e-06|   0.38699|    1.2915|    70.983|
+[ INFO : 2026-10-13 02:22:39,652 ] - |         1|     13600|3.6824e-06|   0.38725|    1.2987|     71.04|
+[ INFO : 2026-10-13 02:22:39,653 ] - |         1|     13600|3.6824e-06|   0.38725|    1.2966|    70.862|
+[ INFO : 2026-10-13 02:24:06,819 ] - |         1|     13700|3.6742e-06|   0.38751|    1.3039|    70.917|
+[ INFO : 2026-10-13 02:24:06,819 ] - |         1|     13700|3.6742e-06|   0.38751|    1.3018|    70.748|
+[ INFO : 2026-10-13 02:25:33,876 ] - |         1|     13800|3.6659e-06|   0.38776|    1.3092|    70.803|
+[ INFO : 2026-10-13 02:25:33,876 ] - |         1|     13800|3.6659e-06|   0.38776|    1.3069|     70.63|
+[ INFO : 2026-10-13 02:27:00,969 ] - |         1|     13900|3.6577e-06|     0.388|    1.3156|    70.661|
+[ INFO : 2026-10-13 02:27:00,969 ] - |         1|     13900|3.6577e-06|     0.388|    1.3118|    70.517|
+[ INFO : 2026-10-13 02:28:27,963 ] - |         1|     14000|3.6495e-06|   0.38824|    1.3209|    70.543|
+[ INFO : 2026-10-13 02:28:27,964 ] - |         1|     14000|3.6495e-06|   0.38824|     1.317|    70.405|
+[ INFO : 2026-10-13 02:29:55,000 ] - |         1|     14100|3.6413e-06|   0.38848|    1.3259|    70.418|
+[ INFO : 2026-10-13 02:29:55,001 ] - |         1|     14100|3.6413e-06|   0.38848|    1.3226|     70.29|
+[ INFO : 2026-10-13 02:31:22,150 ] - |         1|     14200|3.6331e-06|   0.38871|    1.3304|    70.312|
+[ INFO : 2026-10-13 02:31:22,151 ] - |         1|     14200|3.6331e-06|   0.38871|    1.3283|    70.173|
+[ INFO : 2026-10-13 02:32:49,176 ] - |         1|     14300|3.6249e-06|   0.38893|    1.3352|    70.199|
+[ INFO : 2026-10-13 02:32:49,176 ] - |         1|     14300|3.6249e-06|   0.38893|    1.3335|    70.056|
+[ INFO : 2026-10-13 02:34:16,278 ] - |         1|     14400|3.6168e-06|   0.38916|    1.3403|    70.079|
+[ INFO : 2026-10-13 02:34:16,278 ] - |         1|     14400|3.6168e-06|   0.38916|    1.3381|    69.934|
+[ INFO : 2026-10-13 02:35:43,307 ] - |         1|     14500|3.6086e-06|   0.38937|     1.345|    69.964|
+[ INFO : 2026-10-13 02:35:43,308 ] - |         1|     14500|3.6086e-06|   0.38937|    1.3435|    69.816|
+[ INFO : 2026-10-13 02:37:10,419 ] - |         1|     14600|3.6005e-06|   0.38959|    1.3501|    69.859|
+[ INFO : 2026-10-13 02:37:10,420 ] - |         1|     14600|3.6005e-06|   0.38959|    1.3487|    69.721|
+[ INFO : 2026-10-13 02:38:37,469 ] - |         1|     14700|3.5924e-06|    0.3898|    1.3549|    69.751|
+[ INFO : 2026-10-13 02:38:37,469 ] - |         1|     14700|3.5924e-06|    0.3898|    1.3544|    69.606|
+[ INFO : 2026-10-13 02:40:04,527 ] - |         1|     14800|3.5844e-06|      0.39|    1.3596|    69.637|
+[ INFO : 2026-10-13 02:40:04,528 ] - |         1|     14800|3.5844e-06|      0.39|    1.3592|    69.493|
+[ INFO : 2026-10-13 02:41:31,588 ] - |         1|     14900|3.5763e-06|    0.3902|     1.364|    69.534|
+[ INFO : 2026-10-13 02:41:31,588 ] - |         1|     14900|3.5763e-06|    0.3902|    1.3639|    69.385|
+[ INFO : 2026-10-13 02:42:58,698 ] - |         1|     15000|3.5683e-06|    0.3904|    1.3693|    69.418|
+[ INFO : 2026-10-13 02:42:58,699 ] - |         1|     15000|3.5683e-06|    0.3904|    1.3685|    69.279|
+[ INFO : 2026-10-13 02:44:25,747 ] - |         1|     15100|3.5603e-06|   0.39059|     1.374|    69.313|
+[ INFO : 2026-10-13 02:44:25,747 ] - |         1|     15100|3.5603e-06|   0.39059|    1.3731|    69.174|
+[ INFO : 2026-10-13 02:45:52,811 ] - |         1|     15200|3.5523e-06|   0.39078|    1.3786|    69.214|
+[ INFO : 2026-10-13 02:45:52,813 ] - |         1|     15200|3.5523e-06|   0.39078|    1.3779|    69.069|
+[ INFO : 2026-10-13 02:47:19,875 ] - |         1|     15300|3.5443e-06|   0.39096|    1.3823|    68.969|
+[ INFO : 2026-10-13 02:47:19,876 ] - |         1|     15300|3.5443e-06|   0.39096|     1.383|    69.107|
+[ INFO : 2026-10-13 02:48:46,918 ] - |         1|     15400|3.5363e-06|   0.39114|    1.3873|    69.007|
+[ INFO : 2026-10-13 02:48:46,918 ] - |         1|     15400|3.5363e-06|   0.39114|    1.3869|    68.868|
+[ INFO : 2026-10-13 02:50:13,990 ] - |         1|     15500|3.5284e-06|   0.39132|    1.3913|    68.913|
+[ INFO : 2026-10-13 02:50:13,990 ] - |         1|     15500|3.5284e-06|   0.39132|    1.3915|    68.765|
+[ INFO : 2026-10-13 02:51:41,107 ] - |         1|     15600|3.5205e-06|   0.39149|    1.3953|    68.812|
+[ INFO : 2026-10-13 02:51:41,108 ] - |         1|     15600|3.5205e-06|   0.39149|    1.3958|    68.661|
+[ INFO : 2026-10-13 02:53:08,170 ] - |         1|     15700|3.5125e-06|   0.39167|    1.3998|    68.717|
+[ INFO : 2026-10-13 02:53:08,171 ] - |         1|     15700|3.5125e-06|   0.39167|    1.4004|    68.553|
+[ INFO : 2026-10-13 02:54:35,198 ] - |         1|     15800|3.5047e-06|   0.39183|    1.4041|    68.614|
+[ INFO : 2026-10-13 02:54:35,199 ] - |         1|     15800|3.5047e-06|   0.39183|    1.4045|     68.46|
+[ INFO : 2026-10-13 02:56:02,266 ] - |         1|     15900|3.4968e-06|     0.392|    1.4075|    68.514|
+[ INFO : 2026-10-13 02:56:02,267 ] - |         1|     15900|3.4968e-06|     0.392|    1.4092|    68.361|
+[ INFO : 2026-10-13 02:57:29,360 ] - |         1|     16000|3.4889e-06|   0.39216|    1.4117|    68.427|
+[ INFO : 2026-10-13 02:57:29,361 ] - |         1|     16000|3.4889e-06|   0.39216|    1.4134|    68.267|
+[ INFO : 2026-10-13 02:58:56,428 ] - |         1|     16100|3.4811e-06|   0.39231|    1.4161|    68.325|
+[ INFO : 2026-10-13 02:58:56,428 ] - |         1|     16100|3.4811e-06|   0.39231|    1.4178|     68.17|
+[ INFO : 2026-10-13 03:00:23,562 ] - |         1|     16200|3.4733e-06|   0.39247|    1.4208|    68.226|
+[ INFO : 2026-10-13 03:00:23,564 ] - |         1|     16200|3.4733e-06|   0.39247|    1.4219|    68.072|
+[ INFO : 2026-10-13 03:01:50,631 ] - |         1|     16300|3.4655e-06|   0.39262|    1.4246|     68.14|
+[ INFO : 2026-10-13 03:01:50,632 ] - |         1|     16300|3.4655e-06|   0.39262|    1.4257|     67.98|
+[ INFO : 2026-10-13 03:03:17,662 ] - |         1|     16400|3.4577e-06|   0.39277|    1.4289|     68.05|
+[ INFO : 2026-10-13 03:03:17,663 ] - |         1|     16400|3.4577e-06|   0.39277|    1.4295|    67.896|
+[ INFO : 2026-10-13 03:04:44,706 ] - |         1|     16500|3.4499e-06|   0.39291|     1.433|     67.96|
+[ INFO : 2026-10-13 03:04:44,706 ] - |         1|     16500|3.4499e-06|   0.39291|    1.4336|    67.809|
+[ INFO : 2026-10-13 03:06:11,796 ] - |         1|     16600|3.4422e-06|   0.39305|    1.4378|    67.716|
+[ INFO : 2026-10-13 03:06:11,797 ] - |         1|     16600|3.4422e-06|   0.39305|    1.4371|     67.86|
+[ INFO : 2026-10-13 03:07:38,885 ] - |         1|     16700|3.4344e-06|   0.39319|     1.441|    67.778|
+[ INFO : 2026-10-13 03:07:38,885 ] - |         1|     16700|3.4344e-06|   0.39319|    1.4417|    67.626|
+[ INFO : 2026-10-13 03:09:05,949 ] - |         1|     16800|3.4267e-06|   0.39333|    1.4455|    67.683|
+[ INFO : 2026-10-13 03:09:05,950 ] - |         1|     16800|3.4267e-06|   0.39333|    1.4461|    67.524|
+[ INFO : 2026-10-13 03:10:33,041 ] - |         1|     16900| 3.419e-06|   0.39346|      1.45|    67.586|
+[ INFO : 2026-10-13 03:10:33,042 ] - |         1|     16900| 3.419e-06|   0.39346|      1.45|    67.447|
+[ INFO : 2026-10-13 03:12:00,074 ] - |         1|     17000|3.4113e-06|   0.39359|    1.4538|     67.36|
+[ INFO : 2026-10-13 03:12:00,074 ] - |         1|     17000|3.4113e-06|   0.39359|    1.4538|    67.495|
+[ INFO : 2026-10-13 03:13:27,198 ] - |         1|     17100|3.4037e-06|   0.39372|    1.4579|    67.416|
+[ INFO : 2026-10-13 03:13:27,199 ] - |         1|     17100|3.4037e-06|   0.39372|     1.458|    67.272|
+[ INFO : 2026-10-13 03:14:54,284 ] - |         1|     17200| 3.396e-06|   0.39385|    1.4618|    67.327|
+[ INFO : 2026-10-13 03:14:54,285 ] - |         1|     17200| 3.396e-06|   0.39385|    1.4622|    67.182|
+[ INFO : 2026-10-13 03:16:21,339 ] - |         1|     17300|3.3884e-06|   0.39397|    1.4659|     67.24|
+[ INFO : 2026-10-13 03:16:21,340 ] - |         1|     17300|3.3884e-06|   0.39397|     1.466|    67.099|
+[ INFO : 2026-10-13 03:17:48,437 ] - |         1|     17400|3.3808e-06|   0.39409|    1.4697|    67.154|
+[ INFO : 2026-10-13 03:17:48,438 ] - |         1|     17400|3.3808e-06|   0.39409|      1.47|    67.011|
+[ INFO : 2026-10-13 03:19:15,629 ] - |         1|     17500|3.3732e-06|   0.39421|    1.4733|    67.058|
+[ INFO : 2026-10-13 03:19:15,629 ] - |         1|     17500|3.3732e-06|   0.39421|    1.4737|    66.924|
+[ INFO : 2026-10-13 03:20:42,727 ] - |         1|     17600|3.3656e-06|   0.39433|    1.4773|    66.974|
+[ INFO : 2026-10-13 03:20:42,728 ] - |         1|     17600|3.3656e-06|   0.39433|     1.477|    66.843|
+[ INFO : 2026-10-13 03:22:09,796 ] - |         1|     17700| 3.358e-06|   0.39444|    1.4816|    66.884|
+[ INFO : 2026-10-13 03:22:09,797 ] - |         1|     17700| 3.358e-06|   0.39444|    1.4806|    66.763|
+[ INFO : 2026-10-13 03:23:36,864 ] - |         1|     17800|3.3505e-06|   0.39455|    1.4852|    66.796|
+[ INFO : 2026-10-13 03:23:36,864 ] - |         1|     17800|3.3505e-06|   0.39455|    1.4846|    66.686|
+[ INFO : 2026-10-13 03:25:03,923 ] - |         1|     17900| 3.343e-06|   0.39466|    1.4891|    66.717|
+[ INFO : 2026-10-13 03:25:03,924 ] - |         1|     17900| 3.343e-06|   0.39466|    1.4889|    66.602|
+[ INFO : 2026-10-13 03:26:31,006 ] - |         1|     18000|3.3355e-06|   0.39477|    1.4928|    66.637|
+[ INFO : 2026-10-13 03:26:31,006 ] - |         1|     18000|3.3355e-06|   0.39477|    1.4926|    66.526|
+[ INFO : 2026-10-13 03:27:58,108 ] - |         1|     18100| 3.328e-06|   0.39487|    1.4972|    66.549|
+[ INFO : 2026-10-13 03:27:58,109 ] - |         1|     18100| 3.328e-06|   0.39487|    1.4954|    66.465|
+[ INFO : 2026-10-13 03:29:25,165 ] - |         1|     18200|3.3205e-06|   0.39498|    1.5015|    66.468|
+[ INFO : 2026-10-13 03:29:25,166 ] - |         1|     18200|3.3205e-06|   0.39498|    1.4992|    66.383|
+[ INFO : 2026-10-13 03:30:52,290 ] - |         1|     18300| 3.313e-06|   0.39508|    1.5048|    66.403|
+[ INFO : 2026-10-13 03:30:52,291 ] - |         1|     18300| 3.313e-06|   0.39508|     1.502|    66.311|
+[ INFO : 2026-10-13 03:32:19,341 ] - |         1|     18400|3.3056e-06|   0.39517|    1.5084|    66.325|
+[ INFO : 2026-10-13 03:32:19,342 ] - |         1|     18400|3.3056e-06|   0.39517|     1.506|    66.229|
+[ INFO : 2026-10-13 03:33:46,407 ] - |         1|     18500|3.2982e-06|   0.39527|    1.5123|    66.247|
+[ INFO : 2026-10-13 03:33:46,408 ] - |         1|     18500|3.2982e-06|   0.39527|    1.5095|    66.155|
+[ INFO : 2026-10-13 03:35:13,421 ] - |         1|     18600|3.2907e-06|   0.39537|    1.5157|    66.175|
+[ INFO : 2026-10-13 03:35:13,422 ] - |         1|     18600|3.2907e-06|   0.39537|    1.5125|    66.076|
+[ INFO : 2026-10-13 03:36:40,617 ] - |         1|     18700|3.2834e-06|   0.39546|    1.5194|    66.095|
+[ INFO : 2026-10-13 03:36:40,617 ] - |         1|     18700|3.2834e-06|   0.39546|    1.5159|    66.002|
+[ INFO : 2026-10-13 03:38:07,670 ] - |         1|     18800| 3.276e-06|   0.39555|    1.5223|    66.025|
+[ INFO : 2026-10-13 03:38:07,670 ] - |         1|     18800| 3.276e-06|   0.39555|    1.5195|    65.932|
+[ INFO : 2026-10-13 03:39:34,744 ] - |         1|     18900|3.2686e-06|   0.39564|     1.525|    65.953|
+[ INFO : 2026-10-13 03:39:34,744 ] - |         1|     18900|3.2686e-06|   0.39564|    1.5226|    65.867|
+[ INFO : 2026-10-13 03:41:01,789 ] - |         1|     19000|3.2613e-06|   0.39573|    1.5282|    65.879|
+[ INFO : 2026-10-13 03:41:01,789 ] - |         1|     19000|3.2613e-06|   0.39573|    1.5261|    65.798|
+[ INFO : 2026-10-13 03:42:28,860 ] - |         1|     19100|3.2539e-06|   0.39581|    1.5316|    65.801|
+[ INFO : 2026-10-13 03:42:28,860 ] - |         1|     19100|3.2539e-06|   0.39581|    1.5292|     65.73|
+[ INFO : 2026-10-13 03:43:55,906 ] - |         1|     19200|3.2466e-06|    0.3959|    1.5353|    65.716|
+[ INFO : 2026-10-13 03:43:55,907 ] - |         1|     19200|3.2466e-06|    0.3959|    1.5329|    65.662|
+[ INFO : 2026-10-13 03:45:23,010 ] - |         1|     19300|3.2393e-06|   0.39598|    1.5387|    65.649|
+[ INFO : 2026-10-13 03:45:23,010 ] - |         1|     19300|3.2393e-06|   0.39598|    1.5359|    65.595|
+[ INFO : 2026-10-13 03:46:50,085 ] - |         1|     19400|3.2321e-06|   0.39606|    1.5412|    65.583|
+[ INFO : 2026-10-13 03:46:50,085 ] - |         1|     19400|3.2321e-06|   0.39606|    1.5393|    65.518|
+[ INFO : 2026-10-13 03:48:17,158 ] - |         1|     19500|3.2248e-06|   0.39614|    1.5446|    65.511|
+[ INFO : 2026-10-13 03:48:17,159 ] - |         1|     19500|3.2248e-06|   0.39614|    1.5422|    65.446|
+[ INFO : 2026-10-13 03:49:44,219 ] - |         1|     19600|3.2176e-06|   0.39622|    1.5478|     65.44|
+[ INFO : 2026-10-13 03:49:44,220 ] - |         1|     19600|3.2176e-06|   0.39622|    1.5453|    65.371|
+[ INFO : 2026-10-13 03:51:11,285 ] - |         1|     19700|3.2103e-06|   0.39629|    1.5506|    65.365|
+[ INFO : 2026-10-13 03:51:11,285 ] - |         1|     19700|3.2103e-06|   0.39629|    1.5483|    65.308|
+[ INFO : 2026-10-13 03:52:38,357 ] - |         1|     19800|3.2031e-06|   0.39637|     1.554|    65.294|
+[ INFO : 2026-10-13 03:52:38,357 ] - |         1|     19800|3.2031e-06|   0.39637|    1.5514|    65.234|
+[ INFO : 2026-10-13 03:54:05,403 ] - |         1|     19900|3.1959e-06|   0.39644|    1.5572|     65.23|
+[ INFO : 2026-10-13 03:54:05,404 ] - |         1|     19900|3.1959e-06|   0.39644|    1.5547|    65.166|
+[ INFO : 2026-10-13 03:55:32,532 ] - |         1|     20000|3.1887e-06|   0.39651|      1.56|    65.165|
+[ INFO : 2026-10-13 03:55:32,532 ] - |         1|     20000|3.1887e-06|   0.39651|    1.5581|    65.101|
+[ INFO : 2026-10-13 03:56:59,645 ] - |         1|     20100|3.1816e-06|   0.39658|    1.5617|    65.029|
+[ INFO : 2026-10-13 03:56:59,645 ] - |         1|     20100|3.1816e-06|   0.39658|    1.5629|      65.1|
+[ INFO : 2026-10-13 03:58:26,741 ] - |         1|     20200|3.1744e-06|   0.39665|    1.5648|    64.965|
+[ INFO : 2026-10-13 03:58:26,741 ] - |         1|     20200|3.1744e-06|   0.39665|    1.5656|     65.03|
+[ INFO : 2026-10-13 03:59:53,815 ] - |         1|     20300|3.1673e-06|   0.39672|    1.5686|    64.964|
+[ INFO : 2026-10-13 03:59:53,815 ] - |         1|     20300|3.1673e-06|   0.39672|    1.5677|      64.9|
+[ INFO : 2026-10-13 04:01:20,911 ] - |         1|     20400|3.1602e-06|   0.39678|    1.5716|      64.9|
+[ INFO : 2026-10-13 04:01:20,912 ] - |         1|     20400|3.1602e-06|   0.39678|    1.5704|    64.839|
+[ INFO : 2026-10-13 04:02:47,986 ] - |         1|     20500|3.1531e-06|   0.39685|    1.5748|    64.828|
+[ INFO : 2026-10-13 04:02:47,987 ] - |         1|     20500|3.1531e-06|   0.39685|    1.5733|    64.781|
+[ INFO : 2026-10-13 04:04:15,098 ] - |         1|     20600| 3.146e-06|   0.39691|    1.5778|    64.767|
+[ INFO : 2026-10-13 04:04:15,098 ] - |         1|     20600| 3.146e-06|   0.39691|    1.5754|    64.731|
+[ INFO : 2026-10-13 04:05:42,172 ] - |         1|     20700|3.1389e-06|   0.39697|    1.5803|    64.704|
+[ INFO : 2026-10-13 04:05:42,172 ] - |         1|     20700|3.1389e-06|   0.39697|    1.5782|    64.673|
+[ INFO : 2026-10-13 04:07:09,266 ] - |         1|     20800|3.1319e-06|   0.39703|    1.5833|    64.644|
+[ INFO : 2026-10-13 04:07:09,267 ] - |         1|     20800|3.1319e-06|   0.39703|     1.581|    64.613|
+[ INFO : 2026-10-13 04:08:36,350 ] - |         1|     20900|3.1248e-06|   0.39709|    1.5859|    64.585|
+[ INFO : 2026-10-13 04:08:36,350 ] - |         1|     20900|3.1248e-06|   0.39709|    1.5833|     64.56|
+[ INFO : 2026-10-13 04:10:03,467 ] - |         1|     21000|3.1178e-06|   0.39715|    1.5888|     64.51|
+[ INFO : 2026-10-13 04:10:03,468 ] - |         1|     21000|3.1178e-06|   0.39715|     1.586|    64.499|
+[ INFO : 2026-10-13 04:11:30,560 ] - |         1|     21100|3.1108e-06|   0.39721|    1.5913|    64.454|
+[ INFO : 2026-10-13 04:11:30,560 ] - |         1|     21100|3.1108e-06|   0.39721|    1.5888|     64.44|
+[ INFO : 2026-10-13 04:12:57,701 ] - |         1|     21200|3.1038e-06|   0.39726|    1.5939|    64.402|
+[ INFO : 2026-10-13 04:12:57,701 ] - |         1|     21200|3.1038e-06|   0.39726|    1.5919|     64.38|
+[ INFO : 2026-10-13 04:14:24,752 ] - |         1|     21300|3.0969e-06|   0.39732|    1.5965|     64.34|
+[ INFO : 2026-10-13 04:14:24,753 ] - |         1|     21300|3.0969e-06|   0.39732|    1.5951|    64.316|
+[ INFO : 2026-10-13 04:15:51,826 ] - |         1|     21400|3.0899e-06|   0.39737|    1.5993|    64.281|
+[ INFO : 2026-10-13 04:15:51,827 ] - |         1|     21400|3.0899e-06|   0.39737|    1.5974|    64.256|
+[ INFO : 2026-10-13 04:17:18,872 ] - |         1|     21500| 3.083e-06|   0.39742|    1.6017|     64.22|
+[ INFO : 2026-10-13 04:17:18,873 ] - |         1|     21500| 3.083e-06|   0.39742|    1.5998|    64.206|
+[ INFO : 2026-10-13 04:18:45,959 ] - |         1|     21600| 3.076e-06|   0.39748|    1.6048|    64.154|
+[ INFO : 2026-10-13 04:18:45,959 ] - |         1|     21600| 3.076e-06|   0.39748|    1.6025|    64.152|
+[ INFO : 2026-10-13 04:20:13,043 ] - |         1|     21700|3.0691e-06|   0.39753|    1.6074|    64.098|
+[ INFO : 2026-10-13 04:20:13,043 ] - |         1|     21700|3.0691e-06|   0.39753|     1.605|      64.1|
+[ INFO : 2026-10-13 04:21:40,160 ] - |         1|     21800|3.0622e-06|   0.39758|    1.6096|    64.043|
+[ INFO : 2026-10-13 04:21:40,160 ] - |         1|     21800|3.0622e-06|   0.39758|    1.6073|    64.055|
+[ INFO : 2026-10-13 04:23:07,235 ] - |         1|     21900|3.0553e-06|   0.39762|    1.6122|    63.989|
+[ INFO : 2026-10-13 04:23:07,236 ] - |         1|     21900|3.0553e-06|   0.39762|    1.6096|    64.003|
+[ INFO : 2026-10-13 04:24:34,296 ] - |         1|     22000|3.0485e-06|   0.39767|    1.6147|    63.922|
+[ INFO : 2026-10-13 04:24:34,297 ] - |         1|     22000|3.0485e-06|   0.39767|    1.6119|    63.953|
+[ INFO : 2026-10-13 04:26:01,363 ] - |         1|     22100|3.0416e-06|   0.39772|     1.617|    63.874|
+[ INFO : 2026-10-13 04:26:01,364 ] - |         1|     22100|3.0416e-06|   0.39772|    1.6146|    63.896|
+[ INFO : 2026-10-13 04:27:28,427 ] - |         1|     22200|3.0348e-06|   0.39776|    1.6193|    63.816|
+[ INFO : 2026-10-13 04:27:28,427 ] - |         1|     22200|3.0348e-06|   0.39776|    1.6172|    63.836|
+[ INFO : 2026-10-13 04:28:55,525 ] - |         1|     22300| 3.028e-06|   0.39781|    1.6219|    63.764|
+[ INFO : 2026-10-13 04:28:55,526 ] - |         1|     22300| 3.028e-06|   0.39781|    1.6197|    63.783|
+[ INFO : 2026-10-13 04:30:22,596 ] - |         1|     22400|3.0212e-06|   0.39785|    1.6238|     63.72|
+[ INFO : 2026-10-13 04:30:22,596 ] - |         1|     22400|3.0212e-06|   0.39785|     1.622|    63.737|
+[ INFO : 2026-10-13 04:31:49,733 ] - |         1|     22500|3.0144e-06|    0.3979|    1.6258|    63.674|
+[ INFO : 2026-10-13 04:31:49,733 ] - |         1|     22500|3.0144e-06|    0.3979|    1.6245|    63.684|
+[ INFO : 2026-10-13 04:33:16,738 ] - |         1|     22600|3.0076e-06|   0.39794|    1.6277|    63.628|
+[ INFO : 2026-10-13 04:33:16,738 ] - |         1|     22600|3.0076e-06|   0.39794|    1.6269|    63.632|
+[ INFO : 2026-10-13 04:34:43,766 ] - |         1|     22700|3.0009e-06|   0.39798|      1.63|    63.582|
+[ INFO : 2026-10-13 04:34:43,767 ] - |         1|     22700|3.0009e-06|   0.39798|     1.629|    63.586|
+[ INFO : 2026-10-13 04:36:10,867 ] - |         1|     22800|2.9941e-06|   0.39802|    1.6329|     63.53|
+[ INFO : 2026-10-13 04:36:10,868 ] - |         1|     22800|2.9941e-06|   0.39802|    1.6313|    63.541|
+[ INFO : 2026-10-13 04:37:37,917 ] - |         1|     22900|2.9874e-06|   0.39806|    1.6354|    63.477|
+[ INFO : 2026-10-13 04:37:37,918 ] - |         1|     22900|2.9874e-06|   0.39806|    1.6335|     63.49|
+[ INFO : 2026-10-13 04:39:04,996 ] - |         1|     23000|2.9807e-06|    0.3981|    1.6375|    63.423|
+[ INFO : 2026-10-13 04:39:04,996 ] - |         1|     23000|2.9807e-06|    0.3981|    1.6359|     63.44|
+[ INFO : 2026-10-13 04:40:32,077 ] - |         1|     23100| 2.974e-06|   0.39814|    1.6394|    63.378|
+[ INFO : 2026-10-13 04:40:32,078 ] - |         1|     23100| 2.974e-06|   0.39814|     1.638|    63.394|
+[ INFO : 2026-10-13 04:41:59,163 ] - |         1|     23200|2.9673e-06|   0.39817|    1.6413|    63.334|
+[ INFO : 2026-10-13 04:41:59,163 ] - |         1|     23200|2.9673e-06|   0.39817|    1.6401|    63.345|
+[ INFO : 2026-10-13 04:43:26,245 ] - |         1|     23300|2.9606e-06|   0.39821|    1.6432|    63.292|
+[ INFO : 2026-10-13 04:43:26,245 ] - |         1|     23300|2.9606e-06|   0.39821|    1.6424|    63.305|
+[ INFO : 2026-10-13 04:44:53,344 ] - |         1|     23400| 2.954e-06|   0.39825|    1.6449|    63.248|
+[ INFO : 2026-10-13 04:44:53,345 ] - |         1|     23400| 2.954e-06|   0.39825|    1.6442|    63.253|
+[ INFO : 2026-10-13 04:46:20,404 ] - |         1|     23500|2.9473e-06|   0.39828|    1.6471|    63.205|
+[ INFO : 2026-10-13 04:46:20,404 ] - |         1|     23500|2.9473e-06|   0.39828|    1.6468|    63.203|
+[ INFO : 2026-10-13 04:47:47,460 ] - |         1|     23600|2.9407e-06|   0.39832|    1.6496|    63.149|
+[ INFO : 2026-10-13 04:47:47,460 ] - |         1|     23600|2.9407e-06|   0.39832|    1.6491|    63.145|
+[ INFO : 2026-10-13 04:49:14,648 ] - |         1|     23700|2.9341e-06|   0.39835|    1.6515|    63.107|
+[ INFO : 2026-10-13 04:49:14,648 ] - |         1|     23700|2.9341e-06|   0.39835|    1.6517|    63.105|
+[ INFO : 2026-10-13 04:50:41,758 ] - |         1|     23800|2.9275e-06|   0.39838|    1.6534|    63.066|
+[ INFO : 2026-10-13 04:50:41,759 ] - |         1|     23800|2.9275e-06|   0.39838|    1.6537|    63.062|
+[ INFO : 2026-10-13 04:52:08,796 ] - |         1|     23900| 2.921e-06|   0.39842|    1.6553|    63.017|
+[ INFO : 2026-10-13 04:52:08,797 ] - |         1|     23900| 2.921e-06|   0.39842|    1.6555|    63.019|
+[ INFO : 2026-10-13 04:53:35,879 ] - |         1|     24000|2.9144e-06|   0.39845|    1.6577|    62.967|
+[ INFO : 2026-10-13 04:53:35,880 ] - |         1|     24000|2.9144e-06|   0.39845|    1.6576|    62.976|
+[ INFO : 2026-10-13 04:55:02,933 ] - |         1|     24100|2.9078e-06|   0.39848|    1.6594|    62.926|
+[ INFO : 2026-10-13 04:55:02,934 ] - |         1|     24100|2.9078e-06|   0.39848|    1.6598|    62.931|
+[ INFO : 2026-10-13 04:56:29,976 ] - |         1|     24200|2.9013e-06|   0.39851|    1.6613|    62.879|
+[ INFO : 2026-10-13 04:56:29,976 ] - |         1|     24200|2.9013e-06|   0.39851|    1.6614|    62.896|
+[ INFO : 2026-10-13 04:57:57,074 ] - |         1|     24300|2.8948e-06|   0.39854|    1.6634|    62.831|
+[ INFO : 2026-10-13 04:57:57,075 ] - |         1|     24300|2.8948e-06|   0.39854|    1.6636|    62.854|
+[ INFO : 2026-10-13 04:59:24,200 ] - |         1|     24400|2.8883e-06|   0.39857|    1.6652|    62.786|
+[ INFO : 2026-10-13 04:59:24,200 ] - |         1|     24400|2.8883e-06|   0.39857|    1.6657|    62.816|
+[ INFO : 2026-10-13 05:00:51,293 ] - |         1|     24500|2.8818e-06|    0.3986|    1.6674|    62.741|
+[ INFO : 2026-10-13 05:00:51,294 ] - |         1|     24500|2.8818e-06|    0.3986|    1.6672|    62.782|
+[ INFO : 2026-10-13 05:02:18,377 ] - |         1|     24600|2.8753e-06|   0.39862|    1.6692|    62.696|
+[ INFO : 2026-10-13 05:02:18,378 ] - |         1|     24600|2.8753e-06|   0.39862|    1.6695|     62.74|
+[ INFO : 2026-10-13 05:03:45,410 ] - |         1|     24700|2.8689e-06|   0.39865|    1.6708|    62.663|
+[ INFO : 2026-10-13 05:03:45,410 ] - |         1|     24700|2.8689e-06|   0.39865|    1.6713|    62.698|
+[ INFO : 2026-10-13 05:05:12,460 ] - |         1|     24800|2.8624e-06|   0.39868|    1.6726|    62.622|
+[ INFO : 2026-10-13 05:05:12,461 ] - |         1|     24800|2.8624e-06|   0.39868|    1.6732|    62.655|
+[ INFO : 2026-10-13 05:06:39,512 ] - |         1|     24900| 2.856e-06|   0.39871|    1.6748|     62.58|
+[ INFO : 2026-10-13 05:06:39,513 ] - |         1|     24900| 2.856e-06|   0.39871|    1.6749|    62.609|
+[ INFO : 2026-10-13 05:08:06,689 ] - |         1|     25000|2.8496e-06|   0.39873|    1.6766|    62.543|
+[ INFO : 2026-10-13 05:08:06,690 ] - |         1|     25000|2.8496e-06|   0.39873|    1.6767|    62.575|
+[ INFO : 2026-10-13 05:09:33,765 ] - |         1|     25100|2.8432e-06|   0.39876|    1.6784|    62.508|
+[ INFO : 2026-10-13 05:09:33,766 ] - |         1|     25100|2.8432e-06|   0.39876|    1.6789|    62.534|
+[ INFO : 2026-10-13 05:11:00,917 ] - |         1|     25200|2.8368e-06|   0.39878|    1.6808|    62.455|
+[ INFO : 2026-10-13 05:11:00,917 ] - |         1|     25200|2.8368e-06|   0.39878|     1.681|    62.486|
+[ INFO : 2026-10-13 05:12:28,056 ] - |         1|     25300|2.8304e-06|   0.39881|    1.6828|    62.408|
+[ INFO : 2026-10-13 05:12:28,056 ] - |         1|     25300|2.8304e-06|   0.39881|     1.683|    62.448|
+[ INFO : 2026-10-13 05:13:55,150 ] - |         1|     25400| 2.824e-06|   0.39883|    1.6844|    62.376|
+[ INFO : 2026-10-13 05:13:55,151 ] - |         1|     25400| 2.824e-06|   0.39883|    1.6846|    62.408|
+[ INFO : 2026-10-13 05:15:22,223 ] - |         1|     25500|2.8177e-06|   0.39885|    1.6865|    62.337|
+[ INFO : 2026-10-13 05:15:22,223 ] - |         1|     25500|2.8177e-06|   0.39885|    1.6867|     62.37|
+[ INFO : 2026-10-13 05:16:49,263 ] - |         1|     25600|2.8114e-06|   0.39888|    1.6883|     62.29|
+[ INFO : 2026-10-13 05:16:49,263 ] - |         1|     25600|2.8114e-06|   0.39888|    1.6889|    62.332|
+[ INFO : 2026-10-13 05:18:16,364 ] - |         1|     25700|2.8051e-06|    0.3989|    1.6901|    62.253|
+[ INFO : 2026-10-13 05:18:16,365 ] - |         1|     25700|2.8051e-06|    0.3989|    1.6904|    62.293|
+[ INFO : 2026-10-13 05:19:43,472 ] - |         1|     25800|2.7988e-06|   0.39892|    1.6916|    62.212|
+[ INFO : 2026-10-13 05:19:43,472 ] - |         1|     25800|2.7988e-06|   0.39892|    1.6919|    62.255|
+[ INFO : 2026-10-13 05:21:10,547 ] - |         1|     25900|2.7925e-06|   0.39894|    1.6937|    62.172|
+[ INFO : 2026-10-13 05:21:10,548 ] - |         1|     25900|2.7925e-06|   0.39894|    1.6941|    62.209|
+[ INFO : 2026-10-13 05:22:37,643 ] - |         1|     26000|2.7862e-06|   0.39896|    1.6954|     62.14|
+[ INFO : 2026-10-13 05:22:37,643 ] - |         1|     26000|2.7862e-06|   0.39896|    1.6955|     62.17|
+[ INFO : 2026-10-13 05:24:04,713 ] - |         1|     26100|2.7799e-06|   0.39898|    1.6968|    62.101|
+[ INFO : 2026-10-13 05:24:04,713 ] - |         1|     26100|2.7799e-06|   0.39898|    1.6975|    62.135|
+[ INFO : 2026-10-13 05:25:31,845 ] - |         1|     26200|2.7737e-06|   0.39901|    1.6984|    62.067|
+[ INFO : 2026-10-13 05:25:31,846 ] - |         1|     26200|2.7737e-06|   0.39901|    1.6995|    62.089|
+[ INFO : 2026-10-13 05:26:58,907 ] - |         1|     26300|2.7675e-06|   0.39902|       1.7|    62.036|
+[ INFO : 2026-10-13 05:26:58,907 ] - |         1|     26300|2.7675e-06|   0.39902|    1.7008|     62.06|
+[ INFO : 2026-10-13 05:28:25,952 ] - |         1|     26400|2.7612e-06|   0.39904|    1.7016|    62.001|
+[ INFO : 2026-10-13 05:28:25,952 ] - |         1|     26400|2.7612e-06|   0.39904|    1.7021|    62.028|
+[ INFO : 2026-10-13 05:29:53,044 ] - |         1|     26500| 2.755e-06|   0.39906|    1.7037|    61.962|
+[ INFO : 2026-10-13 05:29:53,044 ] - |         1|     26500| 2.755e-06|   0.39906|    1.7037|    61.991|
+[ INFO : 2026-10-13 05:31:20,086 ] - |         1|     26600|2.7488e-06|   0.39908|    1.7052|    61.931|
+[ INFO : 2026-10-13 05:31:20,087 ] - |         1|     26600|2.7488e-06|   0.39908|    1.7056|    61.951|
+[ INFO : 2026-10-13 05:32:47,156 ] - |         1|     26700|2.7427e-06|    0.3991|    1.7068|     61.89|
+[ INFO : 2026-10-13 05:32:47,157 ] - |         1|     26700|2.7427e-06|    0.3991|    1.7075|    61.915|
+[ INFO : 2026-10-13 05:34:14,234 ] - |         1|     26800|2.7365e-06|   0.39912|    1.7085|    61.858|
+[ INFO : 2026-10-13 05:34:14,234 ] - |         1|     26800|2.7365e-06|   0.39912|    1.7093|    61.881|
+[ INFO : 2026-10-13 05:35:41,274 ] - |         1|     26900|2.7304e-06|   0.39914|    1.7103|    61.826|
+[ INFO : 2026-10-13 05:35:41,275 ] - |         1|     26900|2.7304e-06|   0.39914|     1.711|    61.849|
+[ INFO : 2026-10-13 05:37:08,349 ] - |         1|     27000|2.7242e-06|   0.39915|    1.7117|    61.797|
+[ INFO : 2026-10-13 05:37:08,350 ] - |         1|     27000|2.7242e-06|   0.39915|    1.7127|    61.815|
+[ INFO : 2026-10-13 05:38:35,391 ] - |         1|     27100|2.7181e-06|   0.39917|    1.7131|    61.763|
+[ INFO : 2026-10-13 05:38:35,391 ] - |         1|     27100|2.7181e-06|   0.39917|    1.7143|    61.787|
+[ INFO : 2026-10-13 05:40:02,415 ] - |         1|     27200| 2.712e-06|   0.39919|    1.7148|    61.727|
+[ INFO : 2026-10-13 05:40:02,417 ] - |         1|     27200| 2.712e-06|   0.39919|    1.7162|    61.751|
+[ INFO : 2026-10-13 05:41:29,468 ] - |         1|     27300|2.7059e-06|    0.3992|    1.7164|    61.693|
+[ INFO : 2026-10-13 05:41:29,469 ] - |         1|     27300|2.7059e-06|    0.3992|    1.7176|     61.72|
+[ INFO : 2026-10-13 05:42:56,541 ] - |         1|     27400|2.6998e-06|   0.39922|    1.7181|    61.659|
+[ INFO : 2026-10-13 05:42:56,541 ] - |         1|     27400|2.6998e-06|   0.39922|    1.7193|     61.68|
+[ INFO : 2026-10-13 05:44:23,700 ] - |         1|     27500|2.6938e-06|   0.39924|    1.7196|    61.628|
+[ INFO : 2026-10-13 05:44:23,701 ] - |         1|     27500|2.6938e-06|   0.39924|    1.7211|    61.642|
+[ INFO : 2026-10-13 05:45:50,728 ] - |         1|     27600|2.6877e-06|   0.39925|    1.7208|    61.597|
+[ INFO : 2026-10-13 05:45:50,728 ] - |         1|     27600|2.6877e-06|   0.39925|    1.7224|    61.608|
+[ INFO : 2026-10-13 05:47:17,823 ] - |         1|     27700|2.6817e-06|   0.39927|    1.7222|    61.571|
+[ INFO : 2026-10-13 05:47:17,823 ] - |         1|     27700|2.6817e-06|   0.39927|    1.7239|    61.573|
+[ INFO : 2026-10-13 05:48:44,931 ] - |         1|     27800|2.6756e-06|   0.39928|    1.7238|    61.537|
+[ INFO : 2026-10-13 05:48:44,931 ] - |         1|     27800|2.6756e-06|   0.39928|    1.7256|    61.546|
+[ INFO : 2026-10-13 05:50:12,063 ] - |         1|     27900|2.6696e-06|   0.39929|    1.7251|    61.512|
+[ INFO : 2026-10-13 05:50:12,064 ] - |         1|     27900|2.6696e-06|   0.39929|    1.7272|    61.514|
+[ INFO : 2026-10-13 05:51:39,182 ] - |         1|     28000|2.6636e-06|   0.39931|    1.7266|    61.482|
+[ INFO : 2026-10-13 05:51:39,183 ] - |         1|     28000|2.6636e-06|   0.39931|    1.7285|    61.485|
+[ INFO : 2026-10-13 05:53:06,332 ] - |         1|     28100|2.6577e-06|   0.39932|     1.728|    61.454|
+[ INFO : 2026-10-13 05:53:06,333 ] - |         1|     28100|2.6577e-06|   0.39932|    1.7301|    61.454|
+[ INFO : 2026-10-13 05:54:33,426 ] - |         1|     28200|2.6517e-06|   0.39934|    1.7297|     61.42|
+[ INFO : 2026-10-13 05:54:33,427 ] - |         1|     28200|2.6517e-06|   0.39934|    1.7316|    61.419|
+[ INFO : 2026-10-13 05:56:00,562 ] - |         1|     28300|2.6457e-06|   0.39935|    1.7311|    61.385|
+[ INFO : 2026-10-13 05:56:00,563 ] - |         1|     28300|2.6457e-06|   0.39935|    1.7325|    61.396|
+[ INFO : 2026-10-13 05:57:27,642 ] - |         1|     28400|2.6398e-06|   0.39936|    1.7326|    61.358|
+[ INFO : 2026-10-13 05:57:27,643 ] - |         1|     28400|2.6398e-06|   0.39936|    1.7338|    61.371|
+[ INFO : 2026-10-13 05:58:54,699 ] - |         1|     28500|2.6339e-06|   0.39938|    1.7342|    61.328|
+[ INFO : 2026-10-13 05:58:54,699 ] - |         1|     28500|2.6339e-06|   0.39938|     1.735|    61.342|
+[ INFO : 2026-10-13 06:00:21,775 ] - |         1|     28600|2.6279e-06|   0.39939|    1.7357|    61.297|
+[ INFO : 2026-10-13 06:00:21,776 ] - |         1|     28600|2.6279e-06|   0.39939|    1.7364|     61.31|
+[ INFO : 2026-10-13 06:01:48,964 ] - |         1|     28700| 2.622e-06|    0.3994|     1.737|    61.271|
+[ INFO : 2026-10-13 06:01:48,964 ] - |         1|     28700| 2.622e-06|    0.3994|    1.7377|    61.279|
+[ INFO : 2026-10-13 06:03:16,031 ] - |         1|     28800|2.6161e-06|   0.39941|    1.7384|    61.243|
+[ INFO : 2026-10-13 06:03:16,031 ] - |         1|     28800|2.6161e-06|   0.39941|    1.7392|    61.245|
+[ INFO : 2026-10-13 06:04:43,126 ] - |         1|     28900|2.6103e-06|   0.39942|    1.7397|    61.213|
+[ INFO : 2026-10-13 06:04:43,126 ] - |         1|     28900|2.6103e-06|   0.39942|    1.7405|    61.215|
+[ INFO : 2026-10-13 06:06:10,216 ] - |         1|     29000|2.6044e-06|   0.39944|    1.7412|    61.181|
+[ INFO : 2026-10-13 06:06:10,216 ] - |         1|     29000|2.6044e-06|   0.39944|    1.7418|    61.186|
+[ INFO : 2026-10-13 06:07:37,322 ] - |         1|     29100|2.5985e-06|   0.39945|    1.7422|    61.161|
+[ INFO : 2026-10-13 06:07:37,322 ] - |         1|     29100|2.5985e-06|   0.39945|    1.7428|    61.166|
+[ INFO : 2026-10-13 06:09:04,407 ] - |         1|     29200|2.5927e-06|   0.39946|    1.7438|    61.132|
+[ INFO : 2026-10-13 06:09:04,407 ] - |         1|     29200|2.5927e-06|   0.39946|    1.7443|    61.134|
+[ INFO : 2026-10-13 06:10:31,512 ] - |         1|     29300|2.5869e-06|   0.39947|     1.745|    61.103|
+[ INFO : 2026-10-13 06:10:31,513 ] - |         1|     29300|2.5869e-06|   0.39947|    1.7453|    61.109|
+[ INFO : 2026-10-13 06:11:58,590 ] - |         1|     29400|2.5811e-06|   0.39948|    1.7463|    61.078|
+[ INFO : 2026-10-13 06:11:58,590 ] - |         1|     29400|2.5811e-06|   0.39948|    1.7467|    61.081|
+[ INFO : 2026-10-13 06:13:25,647 ] - |         1|     29500|2.5753e-06|   0.39949|     1.748|    61.055|
+[ INFO : 2026-10-13 06:13:25,647 ] - |         1|     29500|2.5753e-06|   0.39949|    1.7479|    61.042|
+[ INFO : 2026-10-13 06:14:52,700 ] - |         1|     29600|2.5695e-06|    0.3995|    1.7494|    61.018|
+[ INFO : 2026-10-13 06:14:52,700 ] - |         1|     29600|2.5695e-06|    0.3995|    1.7493|    61.026|
+[ INFO : 2026-10-13 06:16:19,795 ] - |         1|     29700|2.5637e-06|   0.39951|     1.751|     60.99|
+[ INFO : 2026-10-13 06:16:19,795 ] - |         1|     29700|2.5637e-06|   0.39951|    1.7504|        61|
+[ INFO : 2026-10-13 06:17:46,900 ] - |         1|     29800| 2.558e-06|   0.39952|    1.7521|    60.965|
+[ INFO : 2026-10-13 06:17:46,901 ] - |         1|     29800| 2.558e-06|   0.39952|    1.7519|    60.973|
+[ INFO : 2026-10-13 06:19:13,981 ] - |         1|     29900|2.5522e-06|   0.39953|    1.7533|    60.939|
+[ INFO : 2026-10-13 06:19:13,982 ] - |         1|     29900|2.5522e-06|   0.39953|    1.7531|    60.941|
+[ INFO : 2026-10-13 06:20:41,179 ] - |         1|     30000|2.5465e-06|   0.39954|    1.7551|     60.91|
+[ INFO : 2026-10-13 06:20:41,180 ] - |         1|     30000|2.5465e-06|   0.39954|    1.7543|    60.914|
+[ INFO : 2026-10-13 06:22:08,214 ] - |         1|     30100|2.5408e-06|   0.39955|    1.7566|    60.882|
+[ INFO : 2026-10-13 06:22:08,214 ] - |         1|     30100|2.5408e-06|   0.39955|    1.7557|    60.885|
+[ INFO : 2026-10-13 06:23:35,288 ] - |         1|     30200| 2.535e-06|   0.39956|     1.758|    60.855|
+[ INFO : 2026-10-13 06:23:35,288 ] - |         1|     30200| 2.535e-06|   0.39956|    1.7568|    60.864|
+[ INFO : 2026-10-13 06:25:02,399 ] - |         1|     30300|2.5294e-06|   0.39957|    1.7593|    60.829|
+[ INFO : 2026-10-13 06:25:02,400 ] - |         1|     30300|2.5294e-06|   0.39957|     1.758|    60.839|
+[ INFO : 2026-10-13 06:26:29,461 ] - |         1|     30400|2.5237e-06|   0.39957|    1.7607|    60.808|
+[ INFO : 2026-10-13 06:26:29,462 ] - |         1|     30400|2.5237e-06|   0.39957|    1.7592|    60.815|
+[ INFO : 2026-10-13 06:27:56,560 ] - |         1|     30500| 2.518e-06|   0.39958|    1.7622|    60.775|
+[ INFO : 2026-10-13 06:27:56,560 ] - |         1|     30500| 2.518e-06|   0.39958|    1.7603|    60.793|
+[ INFO : 2026-10-13 06:29:23,599 ] - |         1|     30600|2.5123e-06|   0.39959|    1.7632|    60.754|
+[ INFO : 2026-10-13 06:29:23,600 ] - |         1|     30600|2.5123e-06|   0.39959|    1.7614|    60.769|
+[ INFO : 2026-10-13 06:30:50,656 ] - |         1|     30700|2.5067e-06|    0.3996|    1.7642|     60.73|
+[ INFO : 2026-10-13 06:30:50,656 ] - |         1|     30700|2.5067e-06|    0.3996|    1.7627|    60.738|
+[ INFO : 2026-10-13 06:32:17,671 ] - |         1|     30800|2.5011e-06|   0.39961|    1.7655|      60.7|
+[ INFO : 2026-10-13 06:32:17,672 ] - |         1|     30800|2.5011e-06|   0.39961|     1.764|    60.715|
+[ INFO : 2026-10-13 06:33:44,709 ] - |         1|     30900|2.4954e-06|   0.39962|    1.7666|    60.677|
+[ INFO : 2026-10-13 06:33:44,709 ] - |         1|     30900|2.4954e-06|   0.39962|    1.7649|    60.695|
+[ INFO : 2026-10-13 06:35:11,764 ] - |         1|     31000|2.4898e-06|   0.39962|    1.7677|    60.649|
+[ INFO : 2026-10-13 06:35:11,764 ] - |         1|     31000|2.4898e-06|   0.39962|    1.7663|    60.667|
+[ INFO : 2026-10-13 06:36:38,823 ] - |         1|     31100|2.4842e-06|   0.39963|     1.769|    60.618|
+[ INFO : 2026-10-13 06:36:38,823 ] - |         1|     31100|2.4842e-06|   0.39963|    1.7672|    60.648|
+[ INFO : 2026-10-13 06:38:05,992 ] - |         1|     31200|2.4787e-06|   0.39964|    1.7701|    60.593|
+[ INFO : 2026-10-13 06:38:05,993 ] - |         1|     31200|2.4787e-06|   0.39964|    1.7683|    60.624|
+[ INFO : 2026-10-13 06:39:33,024 ] - |         1|     31300|2.4731e-06|   0.39965|    1.7708|    60.575|
+[ INFO : 2026-10-13 06:39:33,024 ] - |         1|     31300|2.4731e-06|   0.39965|    1.7694|    60.601|
+[ INFO : 2026-10-13 06:41:00,164 ] - |         1|     31400|2.4675e-06|   0.39965|    1.7721|    60.549|
+[ INFO : 2026-10-13 06:41:00,165 ] - |         1|     31400|2.4675e-06|   0.39965|    1.7704|    60.579|
+[ INFO : 2026-10-13 06:42:27,233 ] - |         1|     31500| 2.462e-06|   0.39966|    1.7729|     60.53|
+[ INFO : 2026-10-13 06:42:27,233 ] - |         1|     31500| 2.462e-06|   0.39966|    1.7714|    60.558|
+[ INFO : 2026-10-13 06:43:54,351 ] - |         1|     31600|2.4565e-06|   0.39967|    1.7743|    60.511|
+[ INFO : 2026-10-13 06:43:54,351 ] - |         1|     31600|2.4565e-06|   0.39967|    1.7725|    60.532|
+[ INFO : 2026-10-13 06:45:21,431 ] - |         1|     31700|2.4509e-06|   0.39967|    1.7757|    60.488|
+[ INFO : 2026-10-13 06:45:21,432 ] - |         1|     31700|2.4509e-06|   0.39967|    1.7733|    60.518|
+[ INFO : 2026-10-13 06:46:48,522 ] - |         1|     31800|2.4454e-06|   0.39968|    1.7771|    60.465|
+[ INFO : 2026-10-13 06:46:48,522 ] - |         1|     31800|2.4454e-06|   0.39968|    1.7745|    60.492|
+[ INFO : 2026-10-13 06:48:15,679 ] - |         1|     31900|2.4399e-06|   0.39969|    1.7782|    60.441|
+[ INFO : 2026-10-13 06:48:15,679 ] - |         1|     31900|2.4399e-06|   0.39969|    1.7758|    60.475|
+[ INFO : 2026-10-13 06:49:42,741 ] - |         1|     32000|2.4345e-06|   0.39969|    1.7794|    60.413|
+[ INFO : 2026-10-13 06:49:42,742 ] - |         1|     32000|2.4345e-06|   0.39969|    1.7765|    60.456|
+[ INFO : 2026-10-13 06:51:09,800 ] - |         1|     32100| 2.429e-06|    0.3997|    1.7807|    60.391|
+[ INFO : 2026-10-13 06:51:09,801 ] - |         1|     32100| 2.429e-06|    0.3997|    1.7775|    60.433|
+[ INFO : 2026-10-13 06:52:36,897 ] - |         1|     32200|2.4235e-06|    0.3997|    1.7818|    60.366|
+[ INFO : 2026-10-13 06:52:36,898 ] - |         1|     32200|2.4235e-06|    0.3997|    1.7785|    60.412|
+[ INFO : 2026-10-13 06:54:03,967 ] - |         1|     32300|2.4181e-06|   0.39971|    1.7829|    60.342|
+[ INFO : 2026-10-13 06:54:03,967 ] - |         1|     32300|2.4181e-06|   0.39971|    1.7798|    60.388|
+[ INFO : 2026-10-13 06:55:31,029 ] - |         1|     32400|2.4127e-06|   0.39972|     1.781|    60.364|
+[ INFO : 2026-10-13 06:55:31,030 ] - |         1|     32400|2.4127e-06|   0.39972|     1.784|    60.319|
+[ INFO : 2026-10-13 06:56:58,205 ] - |         1|     32500|2.4072e-06|   0.39972|    1.7853|    60.297|
+[ INFO : 2026-10-13 06:56:58,205 ] - |         1|     32500|2.4072e-06|   0.39972|    1.7817|    60.347|
+[ INFO : 2026-10-13 06:58:25,333 ] - |         1|     32600|2.4018e-06|   0.39973|     1.786|    60.284|
+[ INFO : 2026-10-13 06:58:25,333 ] - |         1|     32600|2.4018e-06|   0.39973|    1.7832|    60.319|
+[ INFO : 2026-10-13 06:59:52,382 ] - |         1|     32700|2.3964e-06|   0.39973|    1.7867|    60.269|
+[ INFO : 2026-10-13 06:59:52,382 ] - |         1|     32700|2.3964e-06|   0.39973|    1.7844|    60.292|
+[ INFO : 2026-10-13 07:01:19,493 ] - |         1|     32800|2.3911e-06|   0.39974|    1.7875|    60.245|
+[ INFO : 2026-10-13 07:01:19,494 ] - |         1|     32800|2.3911e-06|   0.39974|    1.7856|     60.27|
+[ INFO : 2026-10-13 07:02:46,573 ] - |         1|     32900|2.3857e-06|   0.39974|    1.7884|    60.228|
+[ INFO : 2026-10-13 07:02:46,574 ] - |         1|     32900|2.3857e-06|   0.39974|    1.7862|    60.256|
+[ INFO : 2026-10-13 07:04:13,640 ] - |         1|     33000|2.3803e-06|   0.39975|    1.7895|    60.208|
+[ INFO : 2026-10-13 07:04:13,640 ] - |         1|     33000|2.3803e-06|   0.39975|    1.7872|    60.233|
+[ INFO : 2026-10-13 07:05:40,671 ] - |         1|     33100| 2.375e-06|   0.39975|    1.7905|    60.185|
+[ INFO : 2026-10-13 07:05:40,671 ] - |         1|     33100| 2.375e-06|   0.39975|    1.7884|    60.212|
+[ INFO : 2026-10-13 07:07:07,733 ] - |         1|     33200|2.3696e-06|   0.39976|    1.7916|    60.163|
+[ INFO : 2026-10-13 07:07:07,734 ] - |         1|     33200|2.3696e-06|   0.39976|    1.7896|    60.195|
+[ INFO : 2026-10-13 07:08:34,842 ] - |         1|     33300|2.3643e-06|   0.39976|    1.7924|    60.148|
+[ INFO : 2026-10-13 07:08:34,842 ] - |         1|     33300|2.3643e-06|   0.39976|    1.7906|    60.177|
+[ INFO : 2026-10-13 07:10:01,908 ] - |         1|     33400| 2.359e-06|   0.39977|    1.7934|    60.125|
+[ INFO : 2026-10-13 07:10:01,908 ] - |         1|     33400| 2.359e-06|   0.39977|    1.7914|    60.165|
+[ INFO : 2026-10-13 07:11:29,008 ] - |         1|     33500|2.3537e-06|   0.39977|    1.7941|    60.111|
+[ INFO : 2026-10-13 07:11:29,009 ] - |         1|     33500|2.3537e-06|   0.39977|    1.7924|    60.142|
+[ INFO : 2026-10-13 07:12:56,072 ] - |         1|     33600|2.3484e-06|   0.39978|    1.7951|    60.089|
+[ INFO : 2026-10-13 07:12:56,073 ] - |         1|     33600|2.3484e-06|   0.39978|    1.7933|     60.13|
+[ INFO : 2026-10-13 07:14:23,237 ] - |         1|     33700|2.3431e-06|   0.39978|     1.796|    60.074|
+[ INFO : 2026-10-13 07:14:23,238 ] - |         1|     33700|2.3431e-06|   0.39978|    1.7941|    60.107|
+[ INFO : 2026-10-13 07:15:50,291 ] - |         1|     33800|2.3379e-06|   0.39979|    1.7968|    60.059|
+[ INFO : 2026-10-13 07:15:50,291 ] - |         1|     33800|2.3379e-06|   0.39979|    1.7946|    60.095|
+[ INFO : 2026-10-13 07:17:17,335 ] - |         1|     33900|2.3326e-06|   0.39979|    1.7978|    60.039|
+[ INFO : 2026-10-13 07:17:17,335 ] - |         1|     33900|2.3326e-06|   0.39979|    1.7954|    60.072|
+[ INFO : 2026-10-13 07:18:44,392 ] - |         1|     34000|2.3274e-06|   0.39979|    1.7987|     60.02|
+[ INFO : 2026-10-13 07:18:44,393 ] - |         1|     34000|2.3274e-06|   0.39979|    1.7964|    60.054|
+[ INFO : 2026-10-13 07:20:11,451 ] - |         1|     34100|2.3222e-06|    0.3998|    1.7991|    60.003|
+[ INFO : 2026-10-13 07:20:11,452 ] - |         1|     34100|2.3222e-06|    0.3998|    1.7973|    60.036|
+[ INFO : 2026-10-13 07:20:33,892 ] - |         1|     34125|2.3208e-06|    0.3998|    1.7991|    60.001|
+[ INFO : 2026-10-13 07:20:34,058 ] - |         1|     34125|2.3208e-06|    0.3998|    1.7975|    60.032|
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+/home/junjie/.local/lib/python3.13/site-packages/torchaudio/_backend/utils.py:213: UserWarning: In 2.9, this function's implementation will be changed to use torchaudio.load_with_torchcodec` under the hood. Some parameters like ``normalize``, ``format``, ``buffer_size``, and ``backend`` will be ignored. We recommend that you port your code to rely directly on TorchCodec's decoder instead: https://docs.pytorch.org/torchcodec/stable/generated/torchcodec.decoders.AudioDecoder.html#torchcodec.decoders.AudioDecoder.
+  warnings.warn(
+[ INFO : 2026-10-13 07:22:04,596 ] - |         2|       100|2.3156e-06|       0.4|    1.9821|    56.125|
+[ INFO : 2026-10-13 07:22:04,596 ] - |         2|       100|2.3156e-06|       0.4|    1.9557|    54.438|
+[ INFO : 2026-10-13 07:23:31,680 ] - |         2|       200|2.3104e-06|       0.4|     1.982|    56.219|
+[ INFO : 2026-10-13 07:23:31,680 ] - |         2|       200|2.3104e-06|       0.4|    1.9837|    54.469|
+[ INFO : 2026-10-13 07:24:58,779 ] - |         2|       300|2.3052e-06|       0.4|     1.972|    56.292|
+[ INFO : 2026-10-13 07:24:58,779 ] - |         2|       300|2.3052e-06|       0.4|    1.9807|    54.958|
+[ INFO : 2026-10-13 07:26:25,860 ] - |         2|       400|2.3001e-06|       0.4|    2.0014|        55|
+[ INFO : 2026-10-13 07:26:25,860 ] - |         2|       400|2.3001e-06|       0.4|      1.97|     55.75|
+[ INFO : 2026-10-13 07:27:52,884 ] - |         2|       500|2.2949e-06|       0.4|    1.9944|    55.012|
+[ INFO : 2026-10-13 07:27:52,884 ] - |         2|       500|2.2949e-06|       0.4|    1.9789|    55.925|
+[ INFO : 2026-10-13 07:29:19,957 ] - |         2|       600|2.2897e-06|       0.4|    1.9763|    55.854|
+[ INFO : 2026-10-13 07:29:19,957 ] - |         2|       600|2.2897e-06|       0.4|    1.9902|    55.146|
+[ INFO : 2026-10-13 07:30:47,120 ] - |         2|       700|2.2846e-06|       0.4|    1.9716|    55.705|
+[ INFO : 2026-10-13 07:30:47,120 ] - |         2|       700|2.2846e-06|       0.4|    1.9918|     55.42|
+[ INFO : 2026-10-13 07:32:14,155 ] - |         2|       800|2.2795e-06|       0.4|    1.9698|    55.586|
+[ INFO : 2026-10-13 07:32:14,155 ] - |         2|       800|2.2795e-06|       0.4|    1.9996|    55.516|
+[ INFO : 2026-10-13 07:33:41,293 ] - |         2|       900|2.2743e-06|       0.4|    1.9655|    55.604|
+[ INFO : 2026-10-13 07:33:41,294 ] - |         2|       900|2.2743e-06|       0.4|    2.0142|    55.319|
+[ INFO : 2026-10-13 07:35:08,374 ] - |         2|      1000|2.2692e-06|       0.4|     1.975|    55.388|
+[ INFO : 2026-10-13 07:35:08,374 ] - |         2|      1000|2.2692e-06|       0.4|     2.014|    55.412|
+[ INFO : 2026-10-13 07:36:35,430 ] - |         2|      1100|2.2641e-06|       0.4|    1.9765|    55.392|
+[ INFO : 2026-10-13 07:36:35,430 ] - |         2|      1100|2.2641e-06|       0.4|    2.0121|    55.455|
+[ INFO : 2026-10-13 07:38:02,571 ] - |         2|      1200| 2.259e-06|       0.4|     2.009|    55.432|
+[ INFO : 2026-10-13 07:38:02,571 ] - |         2|      1200| 2.259e-06|       0.4|    1.9725|    55.474|
+[ INFO : 2026-10-13 07:39:29,655 ] - |         2|      1300| 2.254e-06|       0.4|    1.9739|    55.375|
+[ INFO : 2026-10-13 07:39:29,656 ] - |         2|      1300| 2.254e-06|       0.4|    2.0058|     55.49|
+[ INFO : 2026-10-13 07:40:56,730 ] - |         2|      1400|2.2489e-06|       0.4|    1.9739|    55.522|
+[ INFO : 2026-10-13 07:40:56,730 ] - |         2|      1400|2.2489e-06|       0.4|    2.0042|    55.487|
+[ INFO : 2026-10-13 07:42:23,831 ] - |         2|      1500|2.2439e-06|       0.4|    1.9713|    55.546|
+[ INFO : 2026-10-13 07:42:23,831 ] - |         2|      1500|2.2439e-06|       0.4|    2.0039|    55.504|
+[ INFO : 2026-10-13 07:43:50,890 ] - |         2|      1600|2.2388e-06|       0.4|    1.9737|    55.578|
+[ INFO : 2026-10-13 07:43:50,890 ] - |         2|      1600|2.2388e-06|       0.4|    2.0071|    55.504|
+[ INFO : 2026-10-13 07:45:17,937 ] - |         2|      1700|2.2338e-06|       0.4|    1.9744|    55.548|
+[ INFO : 2026-10-13 07:45:17,938 ] - |         2|      1700|2.2338e-06|       0.4|    2.0061|    55.485|
+[ INFO : 2026-10-13 07:46:44,992 ] - |         2|      1800|2.2288e-06|       0.4|    1.9722|    55.566|
+[ INFO : 2026-10-13 07:46:44,992 ] - |         2|      1800|2.2288e-06|       0.4|     2.003|    55.569|
+[ INFO : 2026-10-13 07:48:12,039 ] - |         2|      1900|2.2238e-06|       0.4|    1.9711|    55.658|
+[ INFO : 2026-10-13 07:48:12,039 ] - |         2|      1900|2.2238e-06|       0.4|    2.0012|    55.569|
+[ INFO : 2026-10-13 07:49:39,121 ] - |         2|      2000|2.2188e-06|       0.4|    1.9708|    55.659|
+[ INFO : 2026-10-13 07:49:39,121 ] - |         2|      2000|2.2188e-06|       0.4|    1.9984|    55.547|
+[ INFO : 2026-10-13 07:51:06,219 ] - |         2|      2100|2.2138e-06|       0.4|    1.9724|     55.64|
+[ INFO : 2026-10-13 07:51:06,219 ] - |         2|      2100|2.2138e-06|       0.4|     1.995|    55.589|
+[ INFO : 2026-10-13 07:52:33,243 ] - |         2|      2200|2.2088e-06|       0.4|    1.9803|    55.608|
+[ INFO : 2026-10-13 07:52:33,243 ] - |         2|      2200|2.2088e-06|       0.4|     1.998|    55.582|
+[ INFO : 2026-10-13 07:54:00,289 ] - |         2|      2300|2.2038e-06|       0.4|    1.9943|    55.715|
+[ INFO : 2026-10-13 07:54:00,289 ] - |         2|      2300|2.2038e-06|       0.4|    1.9808|    55.546|
+[ INFO : 2026-10-13 07:55:27,321 ] - |         2|      2400|2.1989e-06|       0.4|    1.9846|    55.542|
+[ INFO : 2026-10-13 07:55:27,321 ] - |         2|      2400|2.1989e-06|       0.4|      1.99|    55.742|
+[ INFO : 2026-10-13 07:56:54,403 ] - |         2|      2500|2.1939e-06|       0.4|    1.9849|     55.51|
+[ INFO : 2026-10-13 07:56:54,403 ] - |         2|      2500|2.1939e-06|       0.4|    1.9925|    55.757|
+[ INFO : 2026-10-13 07:58:21,449 ] - |         2|      2600| 2.189e-06|       0.4|    1.9843|    55.538|
+[ INFO : 2026-10-13 07:58:21,449 ] - |         2|      2600| 2.189e-06|       0.4|     1.993|    55.719|
+[ INFO : 2026-10-13 07:59:48,461 ] - |         2|      2700|2.1841e-06|       0.4|    1.9849|    55.544|
+[ INFO : 2026-10-13 07:59:48,461 ] - |         2|      2700|2.1841e-06|       0.4|    1.9904|    55.708|
+[ INFO : 2026-10-13 08:01:15,532 ] - |         2|      2800|2.1792e-06|       0.4|    1.9832|    55.578|
+[ INFO : 2026-10-13 08:01:15,532 ] - |         2|      2800|2.1792e-06|       0.4|    1.9894|     55.67|
+[ INFO : 2026-10-13 08:02:42,569 ] - |         2|      2900|2.1743e-06|       0.4|    1.9866|    55.552|
+[ INFO : 2026-10-13 08:02:42,570 ] - |         2|      2900|2.1743e-06|       0.4|     1.988|    55.675|
+[ INFO : 2026-10-13 08:04:09,572 ] - |         2|      3000|2.1694e-06|       0.4|    1.9829|    55.585|
+[ INFO : 2026-10-13 08:04:09,572 ] - |         2|      3000|2.1694e-06|       0.4|    1.9881|    55.698|
+[ INFO : 2026-10-13 08:05:36,571 ] - |         2|      3100|2.1645e-06|       0.4|    1.9875|    55.643|
+[ INFO : 2026-10-13 08:05:36,571 ] - |         2|      3100|2.1645e-06|       0.4|    1.9821|    55.615|
+[ INFO : 2026-10-13 08:07:03,592 ] - |         2|      3200|2.1597e-06|       0.4|    1.9811|    55.605|
+[ INFO : 2026-10-13 08:07:03,592 ] - |         2|      3200|2.1597e-06|       0.4|    1.9886|    55.604|
+[ INFO : 2026-10-13 08:08:30,655 ] - |         2|      3300|2.1548e-06|       0.4|    1.9818|    55.602|
+[ INFO : 2026-10-13 08:08:30,655 ] - |         2|      3300|2.1548e-06|       0.4|    1.9885|    55.597|
+[ INFO : 2026-10-13 08:09:57,690 ] - |         2|      3400|  2.15e-06|       0.4|      1.99|    55.561|
+[ INFO : 2026-10-13 08:09:57,690 ] - |         2|      3400|  2.15e-06|       0.4|    1.9813|    55.592|
+[ INFO : 2026-10-13 08:11:24,787 ] - |         2|      3500|2.1452e-06|       0.4|    1.9803|    55.577|
+[ INFO : 2026-10-13 08:11:24,787 ] - |         2|      3500|2.1452e-06|       0.4|    1.9916|    55.498|
+[ INFO : 2026-10-13 08:12:51,813 ] - |         2|      3600|2.1403e-06|       0.4|    1.9802|    55.573|
+[ INFO : 2026-10-13 08:12:51,814 ] - |         2|      3600|2.1403e-06|       0.4|     1.994|    55.503|
+[ INFO : 2026-10-13 08:14:18,980 ] - |         2|      3700|2.1355e-06|       0.4|    1.9818|    55.551|
+[ INFO : 2026-10-13 08:14:18,980 ] - |         2|      3700|2.1355e-06|       0.4|    1.9952|    55.492|
+[ INFO : 2026-10-13 08:15:45,989 ] - |         2|      3800|2.1307e-06|       0.4|    1.9796|    55.561|
+[ INFO : 2026-10-13 08:15:45,989 ] - |         2|      3800|2.1307e-06|       0.4|    1.9967|    55.467|
+[ INFO : 2026-10-13 08:17:13,080 ] - |         2|      3900|2.1259e-06|       0.4|    1.9791|    55.562|
+[ INFO : 2026-10-13 08:17:13,080 ] - |         2|      3900|2.1259e-06|       0.4|    1.9987|     55.47|
+[ INFO : 2026-10-13 08:18:40,105 ] - |         2|      4000|2.1212e-06|       0.4|    1.9801|    55.553|
+[ INFO : 2026-10-13 08:18:40,105 ] - |         2|      4000|2.1212e-06|       0.4|    1.9991|    55.491|
+[ INFO : 2026-10-13 08:20:07,175 ] - |         2|      4100|2.1164e-06|       0.4|    1.9821|    55.535|
+[ INFO : 2026-10-13 08:20:07,176 ] - |         2|      4100|2.1164e-06|       0.4|    1.9975|    55.497|
+[ INFO : 2026-10-13 08:21:34,225 ] - |         2|      4200|2.1116e-06|       0.4|    1.9826|    55.534|
+[ INFO : 2026-10-13 08:21:34,226 ] - |         2|      4200|2.1116e-06|       0.4|    1.9972|    55.501|
+[ INFO : 2026-10-13 08:23:01,292 ] - |         2|      4300|2.1069e-06|       0.4|    1.9833|    55.522|
+[ INFO : 2026-10-13 08:23:01,292 ] - |         2|      4300|2.1069e-06|       0.4|    1.9989|    55.483|
+[ INFO : 2026-10-13 08:24:28,342 ] - |         2|      4400|2.1022e-06|       0.4|    1.9807|    55.536|
+[ INFO : 2026-10-13 08:24:28,343 ] - |         2|      4400|2.1022e-06|       0.4|    1.9986|    55.501|
+[ INFO : 2026-10-13 08:25:55,417 ] - |         2|      4500|2.0974e-06|       0.4|    1.9831|    55.526|
+[ INFO : 2026-10-13 08:25:55,417 ] - |         2|      4500|2.0974e-06|       0.4|    1.9992|    55.504|
+[ INFO : 2026-10-13 08:27:22,511 ] - |         2|      4600|2.0927e-06|       0.4|    1.9812|    55.535|
+[ INFO : 2026-10-13 08:27:22,511 ] - |         2|      4600|2.0927e-06|       0.4|    2.0006|    55.495|
+[ INFO : 2026-10-13 08:28:49,516 ] - |         2|      4700| 2.088e-06|       0.4|    1.9804|    55.565|
+[ INFO : 2026-10-13 08:28:49,516 ] - |         2|      4700| 2.088e-06|       0.4|    2.0005|    55.473|
+[ INFO : 2026-10-13 08:30:16,605 ] - |         2|      4800|2.0833e-06|       0.4|    1.9801|    55.543|
+[ INFO : 2026-10-13 08:30:16,605 ] - |         2|      4800|2.0833e-06|       0.4|    1.9994|    55.503|
+[ INFO : 2026-10-13 08:31:43,674 ] - |         2|      4900|2.0787e-06|       0.4|    1.9986|    55.492|
+[ INFO : 2026-10-13 08:31:43,674 ] - |         2|      4900|2.0787e-06|       0.4|    1.9784|    55.565|
+[ INFO : 2026-10-13 08:33:10,833 ] - |         2|      5000| 2.074e-06|       0.4|    1.9772|    55.586|
+[ INFO : 2026-10-13 08:33:10,833 ] - |         2|      5000| 2.074e-06|       0.4|    1.9984|    55.477|
+[ INFO : 2026-10-13 08:34:37,906 ] - |         2|      5100|2.0693e-06|       0.4|    1.9783|    55.555|
+[ INFO : 2026-10-13 08:34:37,906 ] - |         2|      5100|2.0693e-06|       0.4|    1.9961|     55.52|
+[ INFO : 2026-10-13 08:36:05,020 ] - |         2|      5200|2.0647e-06|       0.4|    1.9777|    55.571|
+[ INFO : 2026-10-13 08:36:05,020 ] - |         2|      5200|2.0647e-06|       0.4|     1.996|     55.51|
+[ INFO : 2026-10-13 08:37:32,084 ] - |         2|      5300|  2.06e-06|       0.4|    1.9949|    55.518|
+[ INFO : 2026-10-13 08:37:32,085 ] - |         2|      5300|  2.06e-06|       0.4|    1.9782|     55.58|
+[ INFO : 2026-10-13 08:38:59,134 ] - |         2|      5400|2.0554e-06|       0.4|    1.9777|    55.596|
+[ INFO : 2026-10-13 08:38:59,134 ] - |         2|      5400|2.0554e-06|       0.4|    1.9936|    55.528|
+[ INFO : 2026-10-13 08:40:26,162 ] - |         2|      5500|2.0508e-06|       0.4|    1.9929|    55.514|
+[ INFO : 2026-10-13 08:40:26,163 ] - |         2|      5500|2.0508e-06|       0.4|    1.9779|    55.597|
+[ INFO : 2026-10-13 08:41:53,192 ] - |         2|      5600|2.0462e-06|       0.4|    1.9766|    55.624|
+[ INFO : 2026-10-13 08:41:53,193 ] - |         2|      5600|2.0462e-06|       0.4|    1.9942|     55.52|
+[ INFO : 2026-10-13 08:43:20,233 ] - |         2|      5700|2.0416e-06|       0.4|    1.9755|    55.617|
+[ INFO : 2026-10-13 08:43:20,233 ] - |         2|      5700|2.0416e-06|       0.4|    1.9943|    55.511|
+[ INFO : 2026-10-13 08:44:47,259 ] - |         2|      5800| 2.037e-06|       0.4|    1.9764|    55.593|
+[ INFO : 2026-10-13 08:44:47,259 ] - |         2|      5800| 2.037e-06|       0.4|     1.993|    55.568|
+[ INFO : 2026-10-13 08:46:14,315 ] - |         2|      5900|2.0324e-06|       0.4|    1.9756|    55.602|
+[ INFO : 2026-10-13 08:46:14,316 ] - |         2|      5900|2.0324e-06|       0.4|    1.9926|    55.562|
+[ INFO : 2026-10-13 08:47:41,351 ] - |         2|      6000|2.0279e-06|       0.4|    1.9746|    55.607|
+[ INFO : 2026-10-13 08:47:41,352 ] - |         2|      6000|2.0279e-06|       0.4|    1.9915|    55.599|
+[ INFO : 2026-10-13 08:49:08,364 ] - |         2|      6100|2.0233e-06|       0.4|    1.9763|      55.6|
+[ INFO : 2026-10-13 08:49:08,364 ] - |         2|      6100|2.0233e-06|       0.4|    1.9925|    55.581|
+[ INFO : 2026-10-13 08:50:35,539 ] - |         2|      6200|2.0188e-06|       0.4|    1.9763|    55.614|
+[ INFO : 2026-10-13 08:50:35,539 ] - |         2|      6200|2.0188e-06|       0.4|    1.9924|    55.577|
+[ INFO : 2026-10-13 08:52:02,564 ] - |         2|      6300|2.0142e-06|       0.4|    1.9758|    55.612|
+[ INFO : 2026-10-13 08:52:02,564 ] - |         2|      6300|2.0142e-06|       0.4|    1.9911|     55.59|
+[ INFO : 2026-10-13 08:53:29,682 ] - |         2|      6400|2.0097e-06|       0.4|    1.9908|    55.598|
+[ INFO : 2026-10-13 08:53:29,682 ] - |         2|      6400|2.0097e-06|       0.4|    1.9738|    55.618|
+[ INFO : 2026-10-13 08:54:56,761 ] - |         2|      6500|2.0052e-06|       0.4|    1.9727|    55.627|
+[ INFO : 2026-10-13 08:54:56,762 ] - |         2|      6500|2.0052e-06|       0.4|    1.9895|    55.608|
+[ INFO : 2026-10-13 08:56:23,851 ] - |         2|      6600|2.0007e-06|       0.4|    1.9725|    55.647|
+[ INFO : 2026-10-13 08:56:23,851 ] - |         2|      6600|2.0007e-06|       0.4|    1.9887|     55.62|
+[ INFO : 2026-10-13 08:57:50,950 ] - |         2|      6700|1.9962e-06|       0.4|    1.9726|    55.672|
+[ INFO : 2026-10-13 08:57:50,951 ] - |         2|      6700|1.9962e-06|       0.4|    1.9888|    55.611|
+[ INFO : 2026-10-13 08:59:17,998 ] - |         2|      6800|1.9917e-06|       0.4|    1.9716|    55.681|
+[ INFO : 2026-10-13 08:59:17,998 ] - |         2|      6800|1.9917e-06|       0.4|     1.987|    55.644|
+[ INFO : 2026-10-13 09:00:45,056 ] - |         2|      6900|1.9872e-06|       0.4|    1.9725|    55.703|
+[ INFO : 2026-10-13 09:00:45,056 ] - |         2|      6900|1.9872e-06|       0.4|     1.988|    55.632|
+[ INFO : 2026-10-13 09:02:12,101 ] - |         2|      7000|1.9828e-06|       0.4|    1.9717|    55.693|
+[ INFO : 2026-10-13 09:02:12,102 ] - |         2|      7000|1.9828e-06|       0.4|    1.9869|    55.639|
+[ INFO : 2026-10-13 09:03:39,131 ] - |         2|      7100|1.9783e-06|       0.4|    1.9735|    55.678|
+[ INFO : 2026-10-13 09:03:39,132 ] - |         2|      7100|1.9783e-06|       0.4|    1.9865|    55.638|
+[ INFO : 2026-10-13 09:05:06,235 ] - |         2|      7200|1.9739e-06|       0.4|    1.9729|    55.688|
+[ INFO : 2026-10-13 09:05:06,235 ] - |         2|      7200|1.9739e-06|       0.4|    1.9869|     55.63|
+[ INFO : 2026-10-13 09:06:33,313 ] - |         2|      7300|1.9694e-06|       0.4|     1.973|    55.708|
+[ INFO : 2026-10-13 09:06:33,313 ] - |         2|      7300|1.9694e-06|       0.4|    1.9872|    55.635|
+[ INFO : 2026-10-13 09:08:00,362 ] - |         2|      7400| 1.965e-06|       0.4|    1.9726|    55.723|
+[ INFO : 2026-10-13 09:08:00,363 ] - |         2|      7400| 1.965e-06|       0.4|    1.9877|     55.64|
+[ INFO : 2026-10-13 09:09:27,466 ] - |         2|      7500|1.9606e-06|       0.4|    1.9721|    55.717|
+[ INFO : 2026-10-13 09:09:27,467 ] - |         2|      7500|1.9606e-06|       0.4|    1.9864|    55.664|
+[ INFO : 2026-10-13 09:10:54,566 ] - |         2|      7600|1.9562e-06|       0.4|    1.9853|    55.693|
+[ INFO : 2026-10-13 09:10:54,566 ] - |         2|      7600|1.9562e-06|       0.4|    1.9716|    55.709|
+[ INFO : 2026-10-13 09:12:21,667 ] - |         2|      7700|1.9518e-06|       0.4|    1.9729|    55.693|
+[ INFO : 2026-10-13 09:12:21,667 ] - |         2|      7700|1.9518e-06|       0.4|    1.9842|    55.717|
+[ INFO : 2026-10-13 09:13:48,743 ] - |         2|      7800|1.9474e-06|       0.4|     1.972|    55.688|
+[ INFO : 2026-10-13 09:13:48,743 ] - |         2|      7800|1.9474e-06|       0.4|    1.9829|    55.745|
+[ INFO : 2026-10-13 09:15:15,818 ] - |         2|      7900| 1.943e-06|       0.4|    1.9715|    55.677|
+[ INFO : 2026-10-13 09:15:15,819 ] - |         2|      7900| 1.943e-06|       0.4|    1.9816|    55.762|
+[ INFO : 2026-10-13 09:16:42,909 ] - |         2|      8000|1.9387e-06|       0.4|    1.9823|    55.762|
+[ INFO : 2026-10-13 09:16:42,910 ] - |         2|      8000|1.9387e-06|       0.4|     1.971|    55.686|
+[ INFO : 2026-10-13 09:18:09,938 ] - |         2|      8100|1.9343e-06|       0.4|    1.9817|    55.777|
+[ INFO : 2026-10-13 09:18:09,939 ] - |         2|      8100|1.9343e-06|       0.4|    1.9714|      55.7|
+[ INFO : 2026-10-13 09:19:37,006 ] - |         2|      8200|  1.93e-06|       0.4|    1.9707|    55.679|
+[ INFO : 2026-10-13 09:19:37,007 ] - |         2|      8200|  1.93e-06|       0.4|    1.9828|    55.768|
+[ INFO : 2026-10-13 09:21:04,145 ] - |         2|      8300|1.9256e-06|       0.4|    1.9825|    55.767|
+[ INFO : 2026-10-13 09:21:04,145 ] - |         2|      8300|1.9256e-06|       0.4|    1.9699|    55.694|
+[ INFO : 2026-10-13 09:22:31,197 ] - |         2|      8400|1.9213e-06|       0.4|    1.9699|    55.711|
+[ INFO : 2026-10-13 09:22:31,197 ] - |         2|      8400|1.9213e-06|       0.4|    1.9816|    55.783|
+[ INFO : 2026-10-13 09:23:58,222 ] - |         2|      8500| 1.917e-06|       0.4|    1.9701|    55.715|
+[ INFO : 2026-10-13 09:23:58,222 ] - |         2|      8500| 1.917e-06|       0.4|    1.9814|    55.779|
+[ INFO : 2026-10-13 09:25:25,210 ] - |         2|      8600|1.9127e-06|       0.4|    1.9696|    55.727|
+[ INFO : 2026-10-13 09:25:25,210 ] - |         2|      8600|1.9127e-06|       0.4|    1.9812|    55.778|
+[ INFO : 2026-10-13 09:26:52,348 ] - |         2|      8700|1.9084e-06|       0.4|    1.9683|    55.744|
+[ INFO : 2026-10-13 09:26:52,348 ] - |         2|      8700|1.9084e-06|       0.4|    1.9808|    55.781|
+[ INFO : 2026-10-13 09:28:19,394 ] - |         2|      8800|1.9041e-06|       0.4|    1.9685|    55.739|
+[ INFO : 2026-10-13 09:28:19,394 ] - |         2|      8800|1.9041e-06|       0.4|    1.9796|    55.815|
+[ INFO : 2026-10-13 09:29:46,470 ] - |         2|      8900|1.8998e-06|       0.4|    1.9683|    55.749|
+[ INFO : 2026-10-13 09:29:46,471 ] - |         2|      8900|1.8998e-06|       0.4|     1.979|    55.807|
+[ INFO : 2026-10-13 09:31:13,491 ] - |         2|      9000|1.8955e-06|       0.4|    1.9688|    55.742|
+[ INFO : 2026-10-13 09:31:13,491 ] - |         2|      9000|1.8955e-06|       0.4|     1.979|    55.833|
+[ INFO : 2026-10-13 09:32:40,498 ] - |         2|      9100|1.8913e-06|       0.4|     1.969|    55.725|
+[ INFO : 2026-10-13 09:32:40,498 ] - |         2|      9100|1.8913e-06|       0.4|    1.9787|    55.824|
+[ INFO : 2026-10-13 09:34:07,592 ] - |         2|      9200| 1.887e-06|       0.4|    1.9684|    55.743|
+[ INFO : 2026-10-13 09:34:07,592 ] - |         2|      9200| 1.887e-06|       0.4|    1.9784|     55.82|
+[ INFO : 2026-10-13 09:35:34,661 ] - |         2|      9300|1.8828e-06|       0.4|    1.9681|    55.744|
+[ INFO : 2026-10-13 09:35:34,662 ] - |         2|      9300|1.8828e-06|       0.4|    1.9793|    55.823|
+[ INFO : 2026-10-13 09:37:01,770 ] - |         2|      9400|1.8786e-06|       0.4|    1.9686|    55.741|
+[ INFO : 2026-10-13 09:37:01,771 ] - |         2|      9400|1.8786e-06|       0.4|    1.9786|    55.844|
+[ INFO : 2026-10-13 09:38:28,875 ] - |         2|      9500|1.8743e-06|       0.4|    1.9685|    55.752|
+[ INFO : 2026-10-13 09:38:28,876 ] - |         2|      9500|1.8743e-06|       0.4|    1.9776|    55.866|
+[ INFO : 2026-10-13 09:39:55,955 ] - |         2|      9600|1.8701e-06|       0.4|    1.9682|    55.768|
+[ INFO : 2026-10-13 09:39:55,955 ] - |         2|      9600|1.8701e-06|       0.4|    1.9776|    55.875|
+[ INFO : 2026-10-13 09:41:23,005 ] - |         2|      9700|1.8659e-06|       0.4|    1.9681|    55.762|
+[ INFO : 2026-10-13 09:41:23,005 ] - |         2|      9700|1.8659e-06|       0.4|    1.9774|    55.888|
+[ INFO : 2026-10-13 09:42:50,123 ] - |         2|      9800|1.8617e-06|       0.4|    1.9671|     55.78|
+[ INFO : 2026-10-13 09:42:50,124 ] - |         2|      9800|1.8617e-06|       0.4|    1.9767|    55.907|
+[ INFO : 2026-10-13 09:44:17,187 ] - |         2|      9900|1.8576e-06|       0.4|    1.9658|    55.811|
+[ INFO : 2026-10-13 09:44:17,188 ] - |         2|      9900|1.8576e-06|       0.4|    1.9765|    55.908|
+[ INFO : 2026-10-13 09:45:44,327 ] - |         2|     10000|1.8534e-06|       0.4|    1.9659|    55.818|
+[ INFO : 2026-10-13 09:45:44,327 ] - |         2|     10000|1.8534e-06|       0.4|    1.9761|    55.935|
+[ INFO : 2026-10-13 09:47:11,380 ] - |         2|     10100|1.8492e-06|       0.4|    1.9651|    55.817|
+[ INFO : 2026-10-13 09:47:11,380 ] - |         2|     10100|1.8492e-06|       0.4|    1.9761|    55.946|
+[ INFO : 2026-10-13 09:48:38,363 ] - |         2|     10200|1.8451e-06|       0.4|    1.9651|     55.82|
+[ INFO : 2026-10-13 09:48:38,363 ] - |         2|     10200|1.8451e-06|       0.4|    1.9751|    55.957|
+[ INFO : 2026-10-13 09:50:05,398 ] - |         2|     10300|1.8409e-06|       0.4|    1.9641|    55.837|
+[ INFO : 2026-10-13 09:50:05,399 ] - |         2|     10300|1.8409e-06|       0.4|    1.9749|    55.968|
+[ INFO : 2026-10-13 09:51:32,448 ] - |         2|     10400|1.8368e-06|       0.4|    1.9641|    55.859|
+[ INFO : 2026-10-13 09:51:32,448 ] - |         2|     10400|1.8368e-06|       0.4|     1.974|    55.987|
+[ INFO : 2026-10-13 09:52:59,512 ] - |         2|     10500|1.8327e-06|       0.4|    1.9646|    55.876|
+[ INFO : 2026-10-13 09:52:59,512 ] - |         2|     10500|1.8327e-06|       0.4|    1.9736|    55.985|
+[ INFO : 2026-10-13 09:54:26,618 ] - |         2|     10600|1.8285e-06|       0.4|    1.9641|    55.892|
+[ INFO : 2026-10-13 09:54:26,619 ] - |         2|     10600|1.8285e-06|       0.4|    1.9734|    55.995|
+[ INFO : 2026-10-13 09:55:53,712 ] - |         2|     10700|1.8244e-06|       0.4|    1.9633|    55.905|
+[ INFO : 2026-10-13 09:55:53,712 ] - |         2|     10700|1.8244e-06|       0.4|    1.9727|     56.02|
+[ INFO : 2026-10-13 09:57:20,818 ] - |         2|     10800|1.8203e-06|       0.4|    1.9642|      55.9|
+[ INFO : 2026-10-13 09:57:20,818 ] - |         2|     10800|1.8203e-06|       0.4|    1.9728|    56.024|
+[ INFO : 2026-10-13 09:58:47,886 ] - |         2|     10900|1.8162e-06|       0.4|    1.9626|     55.94|
+[ INFO : 2026-10-13 09:58:47,887 ] - |         2|     10900|1.8162e-06|       0.4|    1.9732|    56.026|
+[ INFO : 2026-10-13 10:00:14,971 ] - |         2|     11000|1.8122e-06|       0.4|    1.9625|    55.948|
+[ INFO : 2026-10-13 10:00:14,971 ] - |         2|     11000|1.8122e-06|       0.4|    1.9723|    56.033|
+[ INFO : 2026-10-13 10:01:42,054 ] - |         2|     11100|1.8081e-06|       0.4|    1.9629|    55.961|
+[ INFO : 2026-10-13 10:01:42,054 ] - |         2|     11100|1.8081e-06|       0.4|     1.971|     56.06|
+[ INFO : 2026-10-13 10:03:09,251 ] - |         2|     11200| 1.804e-06|       0.4|    1.9711|    56.059|
+[ INFO : 2026-10-13 10:03:09,252 ] - |         2|     11200| 1.804e-06|       0.4|    1.9625|    55.958|
+[ INFO : 2026-10-13 10:04:36,326 ] - |         2|     11300|   1.8e-06|       0.4|    1.9626|    55.957|
+[ INFO : 2026-10-13 10:04:36,327 ] - |         2|     11300|   1.8e-06|       0.4|    1.9715|    56.072|
+[ INFO : 2026-10-13 10:06:03,389 ] - |         2|     11400|1.7959e-06|       0.4|    1.9614|    55.981|
+[ INFO : 2026-10-13 10:06:03,389 ] - |         2|     11400|1.7959e-06|       0.4|    1.9707|    56.073|
+[ INFO : 2026-10-13 10:07:30,469 ] - |         2|     11500|1.7919e-06|       0.4|    1.9613|    55.989|
+[ INFO : 2026-10-13 10:07:30,469 ] - |         2|     11500|1.7919e-06|       0.4|     1.971|    56.074|
+[ INFO : 2026-10-13 10:08:57,595 ] - |         2|     11600|1.7879e-06|       0.4|    1.9607|    56.004|
+[ INFO : 2026-10-13 10:08:57,596 ] - |         2|     11600|1.7879e-06|       0.4|    1.9704|    56.076|
+[ INFO : 2026-10-13 10:10:24,746 ] - |         2|     11700|1.7839e-06|       0.4|    1.9611|    56.009|
+[ INFO : 2026-10-13 10:10:24,746 ] - |         2|     11700|1.7839e-06|       0.4|    1.9707|    56.071|
+[ INFO : 2026-10-13 10:11:51,816 ] - |         2|     11800|1.7799e-06|       0.4|    1.9612|    56.024|
+[ INFO : 2026-10-13 10:11:51,816 ] - |         2|     11800|1.7799e-06|       0.4|    1.9713|    56.069|
+[ INFO : 2026-10-13 10:13:18,881 ] - |         2|     11900|1.7759e-06|       0.4|    1.9614|    56.034|
+[ INFO : 2026-10-13 10:13:18,881 ] - |         2|     11900|1.7759e-06|       0.4|    1.9711|    56.077|
+[ INFO : 2026-10-13 10:14:45,891 ] - |         2|     12000|1.7719e-06|       0.4|    1.9617|    56.032|
+[ INFO : 2026-10-13 10:14:45,892 ] - |         2|     12000|1.7719e-06|       0.4|    1.9713|    56.075|
+[ INFO : 2026-10-13 10:16:12,968 ] - |         2|     12100|1.7679e-06|       0.4|    1.9609|    56.052|
+[ INFO : 2026-10-13 10:16:12,968 ] - |         2|     12100|1.7679e-06|       0.4|    1.9721|    56.067|
+[ INFO : 2026-10-13 10:17:40,017 ] - |         2|     12200|1.7639e-06|       0.4|    1.9604|    56.066|
+[ INFO : 2026-10-13 10:17:40,017 ] - |         2|     12200|1.7639e-06|       0.4|    1.9719|    56.065|
+[ INFO : 2026-10-13 10:19:07,062 ] - |         2|     12300|1.7599e-06|       0.4|    1.9602|    56.074|
+[ INFO : 2026-10-13 10:19:07,062 ] - |         2|     12300|1.7599e-06|       0.4|    1.9713|    56.075|
+[ INFO : 2026-10-13 10:20:34,161 ] - |         2|     12400| 1.756e-06|       0.4|    1.9604|    56.068|
+[ INFO : 2026-10-13 10:20:34,162 ] - |         2|     12400| 1.756e-06|       0.4|    1.9718|    56.067|
+[ INFO : 2026-10-13 10:22:01,301 ] - |         2|     12500| 1.752e-06|       0.4|    1.9599|    56.092|
+[ INFO : 2026-10-13 10:22:01,302 ] - |         2|     12500| 1.752e-06|       0.4|    1.9723|    56.061|
+[ INFO : 2026-10-13 10:23:28,329 ] - |         2|     12600|1.7481e-06|       0.4|    1.9602|    56.097|
+[ INFO : 2026-10-13 10:23:28,329 ] - |         2|     12600|1.7481e-06|       0.4|    1.9723|    56.068|
+[ INFO : 2026-10-13 10:24:55,374 ] - |         2|     12700|1.7442e-06|       0.4|    1.9594|    56.105|
+[ INFO : 2026-10-13 10:24:55,374 ] - |         2|     12700|1.7442e-06|       0.4|    1.9714|    56.089|
+[ INFO : 2026-10-13 10:26:22,426 ] - |         2|     12800|1.7403e-06|       0.4|    1.9593|    56.111|
+[ INFO : 2026-10-13 10:26:22,426 ] - |         2|     12800|1.7403e-06|       0.4|    1.9713|    56.093|
+[ INFO : 2026-10-13 10:27:49,477 ] - |         2|     12900|1.7364e-06|       0.4|    1.9586|    56.126|
+[ INFO : 2026-10-13 10:27:49,477 ] - |         2|     12900|1.7364e-06|       0.4|    1.9704|    56.101|
+[ INFO : 2026-10-13 10:29:16,661 ] - |         2|     13000|1.7325e-06|       0.4|    1.9586|    56.135|
+[ INFO : 2026-10-13 10:29:16,661 ] - |         2|     13000|1.7325e-06|       0.4|    1.9711|     56.09|
+[ INFO : 2026-10-13 10:30:43,732 ] - |         2|     13100|1.7286e-06|       0.4|    1.9585|    56.144|
+[ INFO : 2026-10-13 10:30:43,733 ] - |         2|     13100|1.7286e-06|       0.4|    1.9709|    56.095|
+[ INFO : 2026-10-13 10:32:10,863 ] - |         2|     13200|1.7247e-06|       0.4|    1.9583|    56.149|
+[ INFO : 2026-10-13 10:32:10,863 ] - |         2|     13200|1.7247e-06|       0.4|      1.97|    56.112|
+[ INFO : 2026-10-13 10:33:38,000 ] - |         2|     13300|1.7208e-06|       0.4|    1.9587|    56.162|
+[ INFO : 2026-10-13 10:33:38,000 ] - |         2|     13300|1.7208e-06|       0.4|    1.9694|    56.129|
+[ INFO : 2026-10-13 10:35:05,067 ] - |         2|     13400|1.7169e-06|       0.4|    1.9588|     56.16|
+[ INFO : 2026-10-13 10:35:05,067 ] - |         2|     13400|1.7169e-06|       0.4|    1.9691|    56.131|
+[ INFO : 2026-10-13 10:36:32,146 ] - |         2|     13500|1.7131e-06|       0.4|    1.9581|    56.173|
+[ INFO : 2026-10-13 10:36:32,146 ] - |         2|     13500|1.7131e-06|       0.4|    1.9695|    56.131|
+[ INFO : 2026-10-13 10:37:59,160 ] - |         2|     13600|1.7092e-06|       0.4|    1.9575|    56.192|
+[ INFO : 2026-10-13 10:37:59,161 ] - |         2|     13600|1.7092e-06|       0.4|    1.9688|    56.137|
+[ INFO : 2026-10-13 10:39:26,271 ] - |         2|     13700|1.7054e-06|       0.4|     1.957|    56.202|
+[ INFO : 2026-10-13 10:39:26,272 ] - |         2|     13700|1.7054e-06|       0.4|    1.9683|    56.137|
+[ INFO : 2026-10-13 10:40:53,292 ] - |         2|     13800|1.7016e-06|       0.4|    1.9569|    56.202|
+[ INFO : 2026-10-13 10:40:53,292 ] - |         2|     13800|1.7016e-06|       0.4|    1.9685|     56.13|
+[ INFO : 2026-10-13 10:42:20,284 ] - |         2|     13900|1.6977e-06|       0.4|    1.9565|    56.203|
+[ INFO : 2026-10-13 10:42:20,285 ] - |         2|     13900|1.6977e-06|       0.4|    1.9689|    56.108|
+[ INFO : 2026-10-13 10:43:47,306 ] - |         2|     14000|1.6939e-06|       0.4|     1.956|    56.221|
+[ INFO : 2026-10-13 10:43:47,306 ] - |         2|     14000|1.6939e-06|       0.4|    1.9691|    56.115|
+[ INFO : 2026-10-13 10:45:14,404 ] - |         2|     14100|1.6901e-06|       0.4|    1.9697|    56.114|
+[ INFO : 2026-10-13 10:45:14,405 ] - |         2|     14100|1.6901e-06|       0.4|    1.9555|    56.232|
+[ INFO : 2026-10-13 10:46:41,487 ] - |         2|     14200|1.6863e-06|       0.4|    1.9557|    56.232|
+[ INFO : 2026-10-13 10:46:41,487 ] - |         2|     14200|1.6863e-06|       0.4|    1.9697|    56.111|
+[ INFO : 2026-10-13 10:48:08,527 ] - |         2|     14300|1.6825e-06|       0.4|    1.9553|    56.249|
+[ INFO : 2026-10-13 10:48:08,527 ] - |         2|     14300|1.6825e-06|       0.4|    1.9694|    56.121|
+[ INFO : 2026-10-13 10:49:35,463 ] - |         2|     14400|1.6788e-06|       0.4|    1.9684|    56.141|
+[ INFO : 2026-10-13 10:49:35,463 ] - |         2|     14400|1.6788e-06|       0.4|    1.9554|    56.241|
+[ INFO : 2026-10-13 10:51:02,564 ] - |         2|     14500| 1.675e-06|       0.4|    1.9555|    56.247|
+[ INFO : 2026-10-13 10:51:02,565 ] - |         2|     14500| 1.675e-06|       0.4|    1.9683|    56.148|
+[ INFO : 2026-10-13 10:52:29,561 ] - |         2|     14600|1.6712e-06|       0.4|    1.9551|     56.25|
+[ INFO : 2026-10-13 10:52:29,562 ] - |         2|     14600|1.6712e-06|       0.4|    1.9676|    56.139|
+[ INFO : 2026-10-13 10:53:56,603 ] - |         2|     14700|1.6675e-06|       0.4|    1.9555|    56.238|
+[ INFO : 2026-10-13 10:53:56,604 ] - |         2|     14700|1.6675e-06|       0.4|    1.9672|    56.138|
+[ INFO : 2026-10-13 10:55:23,683 ] - |         2|     14800|1.6637e-06|       0.4|    1.9551|    56.256|
+[ INFO : 2026-10-13 10:55:23,683 ] - |         2|     14800|1.6637e-06|       0.4|    1.9669|    56.152|
+[ INFO : 2026-10-13 10:56:50,766 ] - |         2|     14900|  1.66e-06|       0.4|    1.9557|    56.256|
+[ INFO : 2026-10-13 10:56:50,767 ] - |         2|     14900|  1.66e-06|       0.4|    1.9668|    56.169|
+[ INFO : 2026-10-13 10:58:17,909 ] - |         2|     15000|1.6563e-06|       0.4|    1.9556|     56.26|
+[ INFO : 2026-10-13 10:58:17,910 ] - |         2|     15000|1.6563e-06|       0.4|    1.9668|    56.172|
+[ INFO : 2026-10-13 10:59:44,990 ] - |         2|     15100|1.6525e-06|       0.4|    1.9557|    56.273|
+[ INFO : 2026-10-13 10:59:44,990 ] - |         2|     15100|1.6525e-06|       0.4|    1.9668|    56.175|
+[ INFO : 2026-10-13 11:01:12,157 ] - |         2|     15200|1.6488e-06|       0.4|    1.9557|    56.281|
+[ INFO : 2026-10-13 11:01:12,157 ] - |         2|     15200|1.6488e-06|       0.4|    1.9665|    56.186|
+[ INFO : 2026-10-13 11:02:39,252 ] - |         2|     15300|1.6451e-06|       0.4|    1.9561|    56.278|
+[ INFO : 2026-10-13 11:02:39,252 ] - |         2|     15300|1.6451e-06|       0.4|    1.9664|    56.185|
+[ INFO : 2026-10-13 11:04:06,377 ] - |         2|     15400|1.6414e-06|       0.4|    1.9559|    56.287|
+[ INFO : 2026-10-13 11:04:06,378 ] - |         2|     15400|1.6414e-06|       0.4|    1.9666|    56.185|
+[ INFO : 2026-10-13 11:05:33,505 ] - |         2|     15500|1.6377e-06|       0.4|    1.9555|    56.279|
+[ INFO : 2026-10-13 11:05:33,505 ] - |         2|     15500|1.6377e-06|       0.4|    1.9661|    56.205|
+[ INFO : 2026-10-13 11:07:00,686 ] - |         2|     15600|1.6341e-06|       0.4|    1.9545|    56.288|
+[ INFO : 2026-10-13 11:07:00,686 ] - |         2|     15600|1.6341e-06|       0.4|    1.9654|    56.215|
+[ INFO : 2026-10-13 11:08:27,738 ] - |         2|     15700|1.6304e-06|       0.4|    1.9544|    56.288|
+[ INFO : 2026-10-13 11:08:27,738 ] - |         2|     15700|1.6304e-06|       0.4|    1.9653|    56.213|
+[ INFO : 2026-10-13 11:09:54,742 ] - |         2|     15800|1.6267e-06|       0.4|    1.9543|    56.289|
+[ INFO : 2026-10-13 11:09:54,743 ] - |         2|     15800|1.6267e-06|       0.4|    1.9649|    56.211|
+[ INFO : 2026-10-13 11:11:21,813 ] - |         2|     15900|1.6231e-06|       0.4|    1.9543|    56.293|
+[ INFO : 2026-10-13 11:11:21,813 ] - |         2|     15900|1.6231e-06|       0.4|     1.965|    56.213|
+[ INFO : 2026-10-13 11:12:48,842 ] - |         2|     16000|1.6194e-06|       0.4|    1.9541|    56.295|
+[ INFO : 2026-10-13 11:12:48,842 ] - |         2|     16000|1.6194e-06|       0.4|     1.964|    56.232|
+[ INFO : 2026-10-13 11:14:15,941 ] - |         2|     16100|1.6158e-06|       0.4|    1.9541|    56.303|
+[ INFO : 2026-10-13 11:14:15,941 ] - |         2|     16100|1.6158e-06|       0.4|    1.9632|    56.235|
+[ INFO : 2026-10-13 11:15:43,034 ] - |         2|     16200|1.6121e-06|       0.4|    1.9538|    56.304|
+[ INFO : 2026-10-13 11:15:43,034 ] - |         2|     16200|1.6121e-06|       0.4|    1.9627|    56.245|
+[ INFO : 2026-10-13 11:17:10,143 ] - |         2|     16300|1.6085e-06|       0.4|    1.9622|    56.253|
+[ INFO : 2026-10-13 11:17:10,143 ] - |         2|     16300|1.6085e-06|       0.4|    1.9541|    56.307|
+[ INFO : 2026-10-13 11:18:37,168 ] - |         2|     16400|1.6049e-06|       0.4|    1.9546|    56.296|
+[ INFO : 2026-10-13 11:18:37,168 ] - |         2|     16400|1.6049e-06|       0.4|    1.9619|    56.256|
+[ INFO : 2026-10-13 11:20:04,145 ] - |         2|     16500|1.6013e-06|       0.4|     1.954|    56.298|
+[ INFO : 2026-10-13 11:20:04,146 ] - |         2|     16500|1.6013e-06|       0.4|    1.9613|    56.259|
+[ INFO : 2026-10-13 11:21:31,279 ] - |         2|     16600|1.5977e-06|       0.4|    1.9539|    56.303|
+[ INFO : 2026-10-13 11:21:31,279 ] - |         2|     16600|1.5977e-06|       0.4|    1.9607|     56.28|
+[ INFO : 2026-10-13 11:22:58,347 ] - |         2|     16700|1.5941e-06|       0.4|    1.9533|    56.321|
+[ INFO : 2026-10-13 11:22:58,347 ] - |         2|     16700|1.5941e-06|       0.4|    1.9609|    56.288|
+[ INFO : 2026-10-13 11:24:25,392 ] - |         2|     16800|1.5905e-06|       0.4|    1.9527|    56.332|
+[ INFO : 2026-10-13 11:24:25,392 ] - |         2|     16800|1.5905e-06|       0.4|    1.9609|    56.292|
+[ INFO : 2026-10-13 11:25:52,465 ] - |         2|     16900| 1.587e-06|       0.4|    1.9527|    56.338|
+[ INFO : 2026-10-13 11:25:52,465 ] - |         2|     16900| 1.587e-06|       0.4|    1.9607|    56.292|
+[ INFO : 2026-10-13 11:27:19,486 ] - |         2|     17000|1.5834e-06|       0.4|    1.9522|    56.343|
+[ INFO : 2026-10-13 11:27:19,486 ] - |         2|     17000|1.5834e-06|       0.4|    1.9608|    56.286|
+[ INFO : 2026-10-13 11:28:46,506 ] - |         2|     17100|1.5798e-06|       0.4|    1.9522|    56.346|
+[ INFO : 2026-10-13 11:28:46,507 ] - |         2|     17100|1.5798e-06|       0.4|    1.9609|    56.289|
+[ INFO : 2026-10-13 11:30:13,525 ] - |         2|     17200|1.5763e-06|       0.4|    1.9526|    56.351|
+[ INFO : 2026-10-13 11:30:13,525 ] - |         2|     17200|1.5763e-06|       0.4|    1.9605|     56.29|
+[ INFO : 2026-10-13 11:31:40,550 ] - |         2|     17300|1.5728e-06|       0.4|    1.9526|    56.361|
+[ INFO : 2026-10-13 11:31:40,550 ] - |         2|     17300|1.5728e-06|       0.4|    1.9598|    56.299|
+[ INFO : 2026-10-13 11:33:07,631 ] - |         2|     17400|1.5692e-06|       0.4|    1.9517|    56.372|
+[ INFO : 2026-10-13 11:33:07,631 ] - |         2|     17400|1.5692e-06|       0.4|    1.9593|    56.309|
+[ INFO : 2026-10-13 11:34:34,811 ] - |         2|     17500|1.5657e-06|       0.4|    1.9525|    56.368|
+[ INFO : 2026-10-13 11:34:34,812 ] - |         2|     17500|1.5657e-06|       0.4|    1.9586|    56.336|
+[ INFO : 2026-10-13 11:36:01,862 ] - |         2|     17600|1.5622e-06|       0.4|     1.952|    56.368|
+[ INFO : 2026-10-13 11:36:01,862 ] - |         2|     17600|1.5622e-06|       0.4|    1.9578|    56.339|
+[ INFO : 2026-10-13 11:37:28,935 ] - |         2|     17700|1.5587e-06|       0.4|    1.9577|    56.335|
+[ INFO : 2026-10-13 11:37:28,935 ] - |         2|     17700|1.5587e-06|       0.4|    1.9518|    56.376|
+[ INFO : 2026-10-13 11:38:56,080 ] - |         2|     17800|1.5552e-06|       0.4|    1.9515|    56.384|
+[ INFO : 2026-10-13 11:38:56,080 ] - |         2|     17800|1.5552e-06|       0.4|    1.9579|    56.324|
+[ INFO : 2026-10-13 11:40:23,225 ] - |         2|     17900|1.5517e-06|       0.4|    1.9513|    56.382|
+[ INFO : 2026-10-13 11:40:23,225 ] - |         2|     17900|1.5517e-06|       0.4|    1.9577|    56.323|
+[ INFO : 2026-10-13 11:41:50,293 ] - |         2|     18000|1.5482e-06|       0.4|    1.9511|    56.388|
+[ INFO : 2026-10-13 11:41:50,293 ] - |         2|     18000|1.5482e-06|       0.4|    1.9569|    56.337|
+[ INFO : 2026-10-13 11:43:17,320 ] - |         2|     18100|1.5447e-06|       0.4|     1.951|    56.398|
+[ INFO : 2026-10-13 11:43:17,320 ] - |         2|     18100|1.5447e-06|       0.4|    1.9565|    56.345|
+[ INFO : 2026-10-13 11:44:44,342 ] - |         2|     18200|1.5412e-06|       0.4|    1.9507|    56.408|
+[ INFO : 2026-10-13 11:44:44,342 ] - |         2|     18200|1.5412e-06|       0.4|    1.9564|    56.349|
+[ INFO : 2026-10-13 11:46:11,344 ] - |         2|     18300|1.5378e-06|       0.4|    1.9506|    56.414|
+[ INFO : 2026-10-13 11:46:11,344 ] - |         2|     18300|1.5378e-06|       0.4|    1.9558|    56.357|
+[ INFO : 2026-10-13 11:47:38,357 ] - |         2|     18400|1.5343e-06|       0.4|     1.956|    56.352|
+[ INFO : 2026-10-13 11:47:38,357 ] - |         2|     18400|1.5343e-06|       0.4|    1.9507|    56.416|
+[ INFO : 2026-10-13 11:49:05,426 ] - |         2|     18500|1.5309e-06|       0.4|      1.95|    56.429|
+[ INFO : 2026-10-13 11:49:05,427 ] - |         2|     18500|1.5309e-06|       0.4|     1.956|    56.349|
+[ INFO : 2026-10-13 11:50:32,481 ] - |         2|     18600|1.5274e-06|       0.4|      1.95|    56.434|
+[ INFO : 2026-10-13 11:50:32,482 ] - |         2|     18600|1.5274e-06|       0.4|    1.9562|    56.347|
+[ INFO : 2026-10-13 11:51:59,625 ] - |         2|     18700| 1.524e-06|       0.4|    1.9497|    56.435|
+[ INFO : 2026-10-13 11:51:59,625 ] - |         2|     18700| 1.524e-06|       0.4|    1.9554|    56.354|
+[ INFO : 2026-10-13 11:53:26,697 ] - |         2|     18800|1.5206e-06|       0.4|    1.9497|    56.437|
+[ INFO : 2026-10-13 11:53:26,697 ] - |         2|     18800|1.5206e-06|       0.4|    1.9553|    56.355|
+[ INFO : 2026-10-13 11:54:53,784 ] - |         2|     18900|1.5172e-06|       0.4|    1.9499|    56.439|
+[ INFO : 2026-10-13 11:54:53,785 ] - |         2|     18900|1.5172e-06|       0.4|    1.9554|     56.35|
+[ INFO : 2026-10-13 11:56:20,836 ] - |         2|     19000|1.5138e-06|       0.4|    1.9503|    56.446|
+[ INFO : 2026-10-13 11:56:20,836 ] - |         2|     19000|1.5138e-06|       0.4|    1.9548|    56.368|
+[ INFO : 2026-10-13 11:57:47,939 ] - |         2|     19100|1.5103e-06|       0.4|    1.9505|    56.449|
+[ INFO : 2026-10-13 11:57:47,940 ] - |         2|     19100|1.5103e-06|       0.4|    1.9546|    56.375|
+[ INFO : 2026-10-13 11:59:15,009 ] - |         2|     19200| 1.507e-06|       0.4|    1.9508|    56.455|
+[ INFO : 2026-10-13 11:59:15,010 ] - |         2|     19200| 1.507e-06|       0.4|     1.954|    56.383|
+[ INFO : 2026-10-13 12:00:42,082 ] - |         2|     19300|1.5036e-06|       0.4|    1.9508|    56.458|
+[ INFO : 2026-10-13 12:00:42,082 ] - |         2|     19300|1.5036e-06|       0.4|    1.9539|    56.385|
+[ INFO : 2026-10-13 12:02:09,184 ] - |         2|     19400|1.5002e-06|       0.4|    1.9509|    56.459|
+[ INFO : 2026-10-13 12:02:09,185 ] - |         2|     19400|1.5002e-06|       0.4|    1.9537|    56.393|
+[ INFO : 2026-10-13 12:03:36,274 ] - |         2|     19500|1.4968e-06|       0.4|    1.9508|    56.466|
+[ INFO : 2026-10-13 12:03:36,274 ] - |         2|     19500|1.4968e-06|       0.4|    1.9535|    56.401|
+[ INFO : 2026-10-13 12:05:03,361 ] - |         2|     19600|1.4935e-06|       0.4|    1.9533|    56.411|
+[ INFO : 2026-10-13 12:05:03,362 ] - |         2|     19600|1.4935e-06|       0.4|    1.9506|    56.482|
+[ INFO : 2026-10-13 12:06:30,535 ] - |         2|     19700|1.4901e-06|       0.4|    1.9507|     56.49|
+[ INFO : 2026-10-13 12:06:30,536 ] - |         2|     19700|1.4901e-06|       0.4|    1.9531|    56.418|
+[ INFO : 2026-10-13 12:07:57,557 ] - |         2|     19800|1.4868e-06|       0.4|    1.9504|    56.497|
+[ INFO : 2026-10-13 12:07:57,557 ] - |         2|     19800|1.4868e-06|       0.4|     1.953|     56.43|
+[ INFO : 2026-10-13 12:09:24,637 ] - |         2|     19900|1.4834e-06|       0.4|    1.9508|     56.49|
+[ INFO : 2026-10-13 12:09:24,637 ] - |         2|     19900|1.4834e-06|       0.4|     1.953|    56.435|
+[ INFO : 2026-10-13 12:10:51,806 ] - |         2|     20000|1.4801e-06|       0.4|    1.9503|    56.491|
+[ INFO : 2026-10-13 12:10:51,806 ] - |         2|     20000|1.4801e-06|       0.4|    1.9525|     56.44|
+[ INFO : 2026-10-13 12:12:18,880 ] - |         2|     20100|1.4768e-06|       0.4|    1.9502|    56.498|
+[ INFO : 2026-10-13 12:12:18,881 ] - |         2|     20100|1.4768e-06|       0.4|    1.9523|    56.449|
+[ INFO : 2026-10-13 12:13:45,926 ] - |         2|     20200|1.4734e-06|       0.4|     1.952|    56.452|
+[ INFO : 2026-10-13 12:13:45,928 ] - |         2|     20200|1.4734e-06|       0.4|    1.9503|    56.498|
+[ INFO : 2026-10-13 12:15:12,987 ] - |         2|     20300|1.4701e-06|       0.4|    1.9504|    56.501|
+[ INFO : 2026-10-13 12:15:12,987 ] - |         2|     20300|1.4701e-06|       0.4|    1.9517|    56.459|
+[ INFO : 2026-10-13 12:16:40,075 ] - |         2|     20400|1.4668e-06|       0.4|    1.9505|    56.504|
+[ INFO : 2026-10-13 12:16:40,075 ] - |         2|     20400|1.4668e-06|       0.4|    1.9514|    56.473|
+[ INFO : 2026-10-13 12:18:07,161 ] - |         2|     20500|1.4635e-06|       0.4|    1.9501|    56.507|
+[ INFO : 2026-10-13 12:18:07,161 ] - |         2|     20500|1.4635e-06|       0.4|    1.9513|    56.483|
+[ INFO : 2026-10-13 12:19:34,267 ] - |         2|     20600|1.4602e-06|       0.4|    1.9497|    56.514|
+[ INFO : 2026-10-13 12:19:34,268 ] - |         2|     20600|1.4602e-06|       0.4|    1.9511|    56.487|
+[ INFO : 2026-10-13 12:21:01,310 ] - |         2|     20700| 1.457e-06|       0.4|      1.95|    56.513|
+[ INFO : 2026-10-13 12:21:01,311 ] - |         2|     20700| 1.457e-06|       0.4|    1.9509|    56.493|
+[ INFO : 2026-10-13 12:22:28,379 ] - |         2|     20800|1.4537e-06|       0.4|    1.9495|    56.519|
+[ INFO : 2026-10-13 12:22:28,379 ] - |         2|     20800|1.4537e-06|       0.4|    1.9505|    56.499|
+[ INFO : 2026-10-13 12:23:55,586 ] - |         2|     20900|1.4504e-06|       0.4|    1.9492|    56.526|
+[ INFO : 2026-10-13 12:23:55,587 ] - |         2|     20900|1.4504e-06|       0.4|    1.9504|     56.51|
+[ INFO : 2026-10-13 12:25:22,785 ] - |         2|     21000|1.4472e-06|       0.4|    1.9496|    56.532|
+[ INFO : 2026-10-13 12:25:22,785 ] - |         2|     21000|1.4472e-06|       0.4|    1.9505|    56.513|
+[ INFO : 2026-10-13 12:26:49,839 ] - |         2|     21100|1.4439e-06|       0.4|      1.95|    56.515|
+[ INFO : 2026-10-13 12:26:49,840 ] - |         2|     21100|1.4439e-06|       0.4|    1.9492|     56.55|
+[ INFO : 2026-10-13 12:28:17,002 ] - |         2|     21200|1.4407e-06|       0.4|    1.9504|    56.519|
+[ INFO : 2026-10-13 12:28:17,002 ] - |         2|     21200|1.4407e-06|       0.4|    1.9496|    56.553|
+[ INFO : 2026-10-13 12:29:44,064 ] - |         2|     21300|1.4374e-06|       0.4|    1.9491|    56.566|
+[ INFO : 2026-10-13 12:29:44,064 ] - |         2|     21300|1.4374e-06|       0.4|    1.9497|    56.533|
+[ INFO : 2026-10-13 12:31:11,136 ] - |         2|     21400|1.4342e-06|       0.4|    1.9489|    56.577|
+[ INFO : 2026-10-13 12:31:11,137 ] - |         2|     21400|1.4342e-06|       0.4|     1.949|    56.542|
+[ INFO : 2026-10-13 12:32:38,206 ] - |         2|     21500| 1.431e-06|       0.4|     1.949|    56.583|
+[ INFO : 2026-10-13 12:32:38,206 ] - |         2|     21500| 1.431e-06|       0.4|    1.9488|    56.544|
+[ INFO : 2026-10-13 12:34:05,211 ] - |         2|     21600|1.4278e-06|       0.4|    1.9483|    56.593|
+[ INFO : 2026-10-13 12:34:05,212 ] - |         2|     21600|1.4278e-06|       0.4|    1.9487|    56.548|
+[ INFO : 2026-10-13 12:35:32,241 ] - |         2|     21700|1.4246e-06|       0.4|    1.9485|    56.585|
+[ INFO : 2026-10-13 12:35:32,241 ] - |         2|     21700|1.4246e-06|       0.4|    1.9488|    56.549|
+[ INFO : 2026-10-13 12:36:59,272 ] - |         2|     21800|1.4214e-06|       0.4|    1.9483|    56.593|
+[ INFO : 2026-10-13 12:36:59,272 ] - |         2|     21800|1.4214e-06|       0.4|    1.9487|    56.556|
+[ INFO : 2026-10-13 12:38:26,308 ] - |         2|     21900|1.4182e-06|       0.4|    1.9483|    56.594|
+[ INFO : 2026-10-13 12:38:26,308 ] - |         2|     21900|1.4182e-06|       0.4|    1.9485|    56.567|
+[ INFO : 2026-10-13 12:39:53,335 ] - |         2|     22000| 1.415e-06|       0.4|    1.9482|    56.591|
+[ INFO : 2026-10-13 12:39:53,335 ] - |         2|     22000| 1.415e-06|       0.4|    1.9484|     56.58|
+[ INFO : 2026-10-13 12:41:20,435 ] - |         2|     22100|1.4118e-06|       0.4|    1.9478|    56.601|
+[ INFO : 2026-10-13 12:41:20,435 ] - |         2|     22100|1.4118e-06|       0.4|    1.9484|    56.586|
+[ INFO : 2026-10-13 12:42:47,664 ] - |         2|     22200|1.4086e-06|       0.4|    1.9473|    56.613|
+[ INFO : 2026-10-13 12:42:47,664 ] - |         2|     22200|1.4086e-06|       0.4|    1.9482|    56.589|
+[ INFO : 2026-10-13 12:44:14,711 ] - |         2|     22300|1.4055e-06|       0.4|     1.947|    56.623|
+[ INFO : 2026-10-13 12:44:14,712 ] - |         2|     22300|1.4055e-06|       0.4|    1.9484|    56.592|
+[ INFO : 2026-10-13 12:45:41,769 ] - |         2|     22400|1.4023e-06|       0.4|    1.9469|    56.632|
+[ INFO : 2026-10-13 12:45:41,769 ] - |         2|     22400|1.4023e-06|       0.4|    1.9481|    56.596|
+[ INFO : 2026-10-13 12:47:09,080 ] - |         2|     22500|1.3992e-06|       0.4|    1.9467|    56.637|
+[ INFO : 2026-10-13 12:47:09,080 ] - |         2|     22500|1.3992e-06|       0.4|    1.9478|    56.604|
+[ INFO : 2026-10-13 12:48:36,103 ] - |         2|     22600| 1.396e-06|       0.4|    1.9465|    56.643|
+[ INFO : 2026-10-13 12:48:36,103 ] - |         2|     22600| 1.396e-06|       0.4|    1.9476|    56.611|
+[ INFO : 2026-10-13 12:50:03,202 ] - |         2|     22700|1.3929e-06|       0.4|    1.9465|    56.644|
+[ INFO : 2026-10-13 12:50:03,203 ] - |         2|     22700|1.3929e-06|       0.4|    1.9473|    56.616|
+[ INFO : 2026-10-13 12:51:30,357 ] - |         2|     22800|1.3897e-06|       0.4|    1.9463|    56.643|
+[ INFO : 2026-10-13 12:51:30,357 ] - |         2|     22800|1.3897e-06|       0.4|    1.9471|    56.625|
+[ INFO : 2026-10-13 12:52:57,421 ] - |         2|     22900|1.3866e-06|       0.4|    1.9456|    56.646|
+[ INFO : 2026-10-13 12:52:57,421 ] - |         2|     22900|1.3866e-06|       0.4|    1.9461|    56.648|
+[ INFO : 2026-10-13 12:54:24,420 ] - |         2|     23000|1.3835e-06|       0.4|    1.9457|    56.657|
+[ INFO : 2026-10-13 12:54:24,420 ] - |         2|     23000|1.3835e-06|       0.4|    1.9458|    56.654|
+[ INFO : 2026-10-13 12:55:51,454 ] - |         2|     23100|1.3804e-06|       0.4|    1.9458|    56.657|
+[ INFO : 2026-10-13 12:55:51,455 ] - |         2|     23100|1.3804e-06|       0.4|    1.9455|    56.659|
+[ INFO : 2026-10-13 12:57:18,409 ] - |         2|     23200|1.3773e-06|       0.4|    1.9455|    56.657|
+[ INFO : 2026-10-13 12:57:18,410 ] - |         2|     23200|1.3773e-06|       0.4|    1.9453|    56.664|
+[ INFO : 2026-10-13 12:58:45,462 ] - |         2|     23300|1.3742e-06|       0.4|    1.9456|    56.658|
+[ INFO : 2026-10-13 12:58:45,462 ] - |         2|     23300|1.3742e-06|       0.4|    1.9451|    56.665|
+[ INFO : 2026-10-13 13:00:12,659 ] - |         2|     23400|1.3711e-06|       0.4|    1.9457|    56.666|
+[ INFO : 2026-10-13 13:00:12,660 ] - |         2|     23400|1.3711e-06|       0.4|    1.9445|    56.672|
+[ INFO : 2026-10-13 13:01:39,772 ] - |         2|     23500| 1.368e-06|       0.4|    1.9459|    56.674|
+[ INFO : 2026-10-13 13:01:39,773 ] - |         2|     23500| 1.368e-06|       0.4|    1.9442|    56.681|
+[ INFO : 2026-10-13 13:03:06,773 ] - |         2|     23600| 1.365e-06|       0.4|    1.9457|    56.682|
+[ INFO : 2026-10-13 13:03:06,773 ] - |         2|     23600| 1.365e-06|       0.4|    1.9441|     56.69|
+[ INFO : 2026-10-13 13:04:33,972 ] - |         2|     23700|1.3619e-06|       0.4|    1.9454|    56.687|
+[ INFO : 2026-10-13 13:04:33,973 ] - |         2|     23700|1.3619e-06|       0.4|    1.9438|      56.7|
+[ INFO : 2026-10-13 13:06:01,027 ] - |         2|     23800|1.3588e-06|       0.4|     1.945|    56.691|
+[ INFO : 2026-10-13 13:06:01,027 ] - |         2|     23800|1.3588e-06|       0.4|    1.9443|      56.7|
+[ INFO : 2026-10-13 13:07:29,127 ] - |         2|     23900|1.3558e-06|       0.4|    1.9449|    56.689|
+[ INFO : 2026-10-13 13:07:29,127 ] - |         2|     23900|1.3558e-06|       0.4|    1.9438|    56.708|
+[ INFO : 2026-10-13 13:08:56,711 ] - |         2|     24000|1.3527e-06|       0.4|    1.9444|    56.703|
+[ INFO : 2026-10-13 13:08:56,712 ] - |         2|     24000|1.3527e-06|       0.4|    1.9438|    56.709|
+[ INFO : 2026-10-13 13:10:24,259 ] - |         2|     24100|1.3497e-06|       0.4|    1.9442|    56.712|
+[ INFO : 2026-10-13 13:10:24,260 ] - |         2|     24100|1.3497e-06|       0.4|    1.9442|    56.707|
+[ INFO : 2026-10-13 13:11:51,816 ] - |         2|     24200|1.3467e-06|       0.4|     1.944|    56.715|
+[ INFO : 2026-10-13 13:11:51,816 ] - |         2|     24200|1.3467e-06|       0.4|    1.9441|    56.706|
+[ INFO : 2026-10-13 13:13:19,029 ] - |         2|     24300|1.3436e-06|       0.4|    1.9432|    56.722|
+[ INFO : 2026-10-13 13:13:19,029 ] - |         2|     24300|1.3436e-06|       0.4|    1.9437|    56.717|
+[ INFO : 2026-10-13 13:14:46,274 ] - |         2|     24400|1.3406e-06|       0.4|    1.9425|    56.741|
+[ INFO : 2026-10-13 13:14:46,274 ] - |         2|     24400|1.3406e-06|       0.4|    1.9431|    56.728|
+[ INFO : 2026-10-13 13:16:13,444 ] - |         2|     24500|1.3376e-06|       0.4|    1.9424|    56.742|
+[ INFO : 2026-10-13 13:16:13,444 ] - |         2|     24500|1.3376e-06|       0.4|    1.9429|    56.731|
+[ INFO : 2026-10-13 13:17:40,628 ] - |         2|     24600|1.3346e-06|       0.4|    1.9424|    56.745|
+[ INFO : 2026-10-13 13:17:40,628 ] - |         2|     24600|1.3346e-06|       0.4|    1.9429|    56.733|
+[ INFO : 2026-10-13 13:19:07,798 ] - |         2|     24700|1.3316e-06|       0.4|    1.9419|    56.754|
+[ INFO : 2026-10-13 13:19:07,799 ] - |         2|     24700|1.3316e-06|       0.4|    1.9427|    56.742|
+[ INFO : 2026-10-13 13:20:34,971 ] - |         2|     24800|1.3286e-06|       0.4|    1.9429|    56.742|
+[ INFO : 2026-10-13 13:20:34,971 ] - |         2|     24800|1.3286e-06|       0.4|    1.9419|    56.761|
+[ INFO : 2026-10-13 13:22:02,141 ] - |         2|     24900|1.3256e-06|       0.4|    1.9415|    56.769|
+[ INFO : 2026-10-13 13:22:02,141 ] - |         2|     24900|1.3256e-06|       0.4|    1.9427|    56.752|
