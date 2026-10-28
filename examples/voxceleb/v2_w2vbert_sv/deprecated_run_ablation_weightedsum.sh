@@ -1,4 +1,5 @@
 #!/bin/bash
+echo 'DEPRECATED: scalar variance baseline; use run_gaussian_diag_weightedsum.sh for per-feature variance.' >&2
 
 # Ablation 2: NO layer adapter + NO MHFA -> simple weighted sum + uncertainty.
 # Verifies the contribution of the multi-head frame attention (MHFA) by
@@ -41,8 +42,8 @@ stage3_eval_exp=${stage3_exp}/eval
 stage3_num_avg=1
 
 gpus="[2,3]"
-checkpoint=
-# checkpoint=$stage1_exp/models/model_5.pt
+# checkpoint=
+checkpoint=$stage1_exp/models/model_10.pt
 trials="vox1_O_cleaned.kaldi vox1_E_cleaned.kaldi vox1_H_cleaned.kaldi"
 score_norm_method="asnorm"  # asnorm/snorm
 top_n=300

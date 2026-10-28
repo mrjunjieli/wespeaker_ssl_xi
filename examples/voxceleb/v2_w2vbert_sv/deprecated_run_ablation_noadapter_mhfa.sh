@@ -1,7 +1,12 @@
 #!/bin/bash
+echo 'DEPRECATED: scalar-per-head variance baseline; use run_gaussian_diag_noadapter.sh for per-feature variance.' >&2
 
-# Three-stage recipe for W2V-BERT 2.0 + MHFA-LN Gaussian log-precision:
-#   stage 1: frozen-frontend backend training           (fixed, unchanged)
+# Ablation 1: NO layer adapter + MHFA.
+# Verifies the contribution of the per-layer adapter by removing it while
+# keeping the MHFA-LN Gaussian log-precision backend unchanged.
+#
+# Three-stage recipe:
+#   stage 1: frozen-frontend backend training
 #   stage 2: joint fine-tuning, 3s chunks + stage-1 augmentation, margin 0.2
 #   stage 3: large-margin fine-tuning (LMFT), 5s chunks, with augmentation,
 #            margin 0.2 -> 0.4
@@ -14,15 +19,15 @@ data=data
 data_type="shard"
 
 
-exp="exp/v2_w2vbert_sv/mhfa_ln_guassian_lightadapter"
+exp="exp/v2_w2vbert_sv/mhfa_ln_guassian_noadapter"
 # Stage 1: frozen frontend training (fixed, do not change)
-stage1_config=conf/mhfa_gaussian_logprec_stage1.yaml
+stage1_config=conf/mhfa_gaussian_logprec_noadapter_stage1.yaml
 stage1_exp="$exp"_stage1
 stage1_eval_exp=${stage1_exp}/eval
 stage1_num_avg=4
 
 # Stage 2: joint fine-tuning (3s chunks + stage-1 augmentation, margin 0.2)
-stage2_config=conf/mhfa_gaussian_logprec_stage2_joint.yaml
+stage2_config=conf/mhfa_gaussian_logprec_noadapter_stage2_joint.yaml
 stage2_exp="$exp"_stage2_joint
 stage2_eval_exp=${stage2_exp}/eval
 stage2_num_avg=1
@@ -30,7 +35,7 @@ stage2_num_avg=1
 # Stage 3: large-margin fine-tuning (5s chunks, with augmentation, margin 0.2->0.4)
 #   target-gap adaptive per-sample margin (gap is detached)
 #   direction: smaller gap (harder) -> larger margin (margin = base + span*z)
-stage3_config=conf/mhfa_gaussian_logprec_stage3_lmft.yaml
+stage3_config=conf/mhfa_gaussian_logprec_noadapter_stage3_lmft.yaml
 stage3_exp="$exp"_stage3_lmft_gap_margin_0.4
 stage3_eval_exp=${stage3_exp}/eval
 stage3_num_avg=1
@@ -180,15 +185,6 @@ fi
 
 if [ ${stage} -le 15 ] && [ ${stop_stage} -ge 15 ]; then
   echo "Stage 15: AS-norm and uncertainty-aware AS-norm (stage-3) ..."
-  # local/score_norm.sh \
-  #   --stage 1 --stop-stage 3 \
-  #   --score_norm_method $score_norm_method \
-  #   --cohort_set vox2_dev \
-  #   --top_n $top_n \
-  #   --data ${data} \
-  #   --exp_dir ${stage3_eval_exp} \
-  #   --trials "$trials"
-
   local/score_norm_uncertainty.sh \
     --stage 1 --stop-stage 3 \
     --score_norm_method $score_norm_method \
